@@ -146,25 +146,30 @@
         .tech-card h3 svg { transition: transform 0.3s ease; }
         .tech-card.open h3 svg { transform: rotate(180deg); }
 
-        /* Estilos para lista de Modelo de Negocio */
-        .revenue-item {
-             border-left: 4px solid var(--color-borgona);
-             padding-left: 1rem;
-             margin-bottom: 1rem;
-             transition: background-color 0.3s ease;
+        /* Estilos para lista de Modelo de Negocio (DISEÑO IMAGEN) */
+        .revenue-card {
+             background-color: var(--color-crema);
+             padding: 1rem;
+             border-radius: 0.5rem;
+             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+             cursor: pointer;
          }
-         .revenue-item:hover {
-             background-color: #fffbeb; /* Un crema más claro */
+         .revenue-card:hover {
+             transform: scale(1.03);
+             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
          }
-         .revenue-item b { color: var(--color-ladrillo); }
+         .revenue-card b { color: var(--color-ladrillo); font-weight: 600; font-size: 1.1rem; }
+         .revenue-card p { color: var(--color-texto-oscuro); font-size: 0.9rem; }
+
 
          /* Estilo para TAM/SAM/SOM */
         .market-circle { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
         .market-circle:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(140, 28, 61, 0.3); }
         .market-label { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
         .market-label:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-
-         /* Chart.js Container */
+        
+        /* Chart.js Container */
          .chart-container {
             position: relative;
             width: 100%;
@@ -186,7 +191,7 @@
 
     <!-- Chosen Palette: Aurea Palette (#F8E88C, #D8A66B, #8C1C3D, #5A0E14) -->
     <!-- Application Structure Plan: Single-page scrolling application with 11 sections. Sticky top navigation. Interactive elements: hover effects on team, animations on scroll, clickable tech sections, clickable market sizes. Structure chosen for linear investor pitch storytelling. -->
-    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS). | TAM/SAM/SOM (Compare/Organize) -> Chart.js Doughnut Chart (Canvas) + JS Click interaction. | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS). | Tech Pillars (Organize/Inform) -> Clickable Cards (HTML/JS). | Revenue Model (Organize/Inform) -> Styled HTML List. | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS). | Library/Method: Vanilla JS, Chart.js, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS). | TAM/SAM/SOM (Compare/Organize) -> Chart.js Doughnut Chart (Canvas) + JS Click interaction. | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS). | Tech Pillars (Organize/Inform) -> Clickable Cards (HTML/JS). | Revenue Model (Organize/Inform) -> Styled HTML Cards (per image). | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS). | Library/Method: Vanilla JS, Chart.js, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <header class="sticky top-0 z-50 bg-white shadow-md">
@@ -235,7 +240,7 @@
             </div>
         </section>
 
-        <!-- Diapositiva 2: El Problema -->
+        <!-- Diapositiva 2: El Problema (Actualizado) -->
         <section id="problema" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 9.3 Mil Millones Atrapados en la Desconfianza</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
@@ -252,12 +257,12 @@
                      <p class="text-oscuro">Perdidos por búsqueda en redes sociales caóticas.</p>
                  </div>
             </div>
-            <p classt="mt-8 text-lg text-center text-oscuro md:px-16">
+            <p class="mt-8 text-lg text-center text-oscuro md:px-16">
                 El mercado de belleza en Perú es enorme (S/ 9,339 millones en 2024), pero la mitad de las consumidoras no accede a servicios profesionales por <b>fricción en la búsqueda</b> y un <b>miedo paralizante</b> a la mala calidad, falta de higiene y precios inflados.
             </p>
         </section>
 
-        <!-- Diapositiva 3: Nuestra Clienta -->
+        <!-- Diapositiva 3: Nuestra Clienta (Actualizado) -->
         <section id="cliente" class="relative min-h-screen flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-claro rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva3.png');">
             <div class="bg-image-overlay bg-ladrillo bg-opacity-60 rounded-lg"></div>
@@ -299,7 +304,7 @@
             </div>
         </section>
 
-        <!-- Diapositiva 5: Tecnología Clave -->
+        <!-- Diapositiva 5: Tecnología Clave (Actualizado) -->
         <section id="tecnologia" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
              <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Innovación Tecnológica: Blockchain + IA para Confianza Real</h2>
              <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -355,52 +360,51 @@
              <p class="mt-8 text-lg text-center text-claro fade-in observed" style="animation-delay: 1.0s;">La tecnología creando transparencia absoluta y eliminando el miedo.</p>
         </section>
 
-        <!-- Diapositiva 7: Modelo de Negocio -->
+        <!-- Diapositiva 7: Modelo de Negocio (Actualizado con Diseño de Imagen) -->
         <section id="modelo-negocio" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
              <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Modelo Híbrido: Valor para Todos, Ingresos Diversificados</h2>
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+                 
+                 <!-- Columna Izquierda: Fuentes de Ingreso (Nuevo diseño) -->
                  <div class="fade-in observed" style="animation-delay: 0.2s;">
-                    <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso Principales:</h3>
-                    <ul class="list-none space-y-1">
-                         <li class="revenue-item">
-                             <b class="text-ladrillo">Comisión Profesional:</b> Variable (<b>15%</b> Plan Free, <b>10%</b> Growth, <b>6%</b> Premium). El profesional paga al generar ingresos.
-                         </li>
-                         <li class="revenue-item">
-                             <b class="text-ladrillo">Suscripción B2B (Profesional):</b> Modelo Freemium con tiers:
-                             <ul class="list-disc list-inside ml-4 text-sm text-oscuro">
-                                 <li><b>Free (S/0):</b> Perfil básico, comisión 15%.</li>
-                                 <li><b>Growth (S/29/mes):</b> Comisión reducida (10%), analytics básicos.</li>
-                                 <li><b>Premium (S/49/mes):</b> Comisión mínima (6%), acceso a IA (Chrono-Booking), datos IoT, visibilidad top.</li>
-                             </ul>
-                         </li>
-                          <li class="revenue-item">
-                             <b class="text-ladrillo">Suscripción B2C (Cliente - Opcional):</b>
-                              <ul class="list-disc list-inside ml-4 text-sm text-oscuro">
-                                 <li><b>Free:</b> Búsqueda y reserva estándar.</li>
-                                 <li><b>AureaPlus (S/9/mes):</b> Acceso a RA ilimitado (GlamTry), descuentos exclusivos (financiados por Aurea), prioridad agenda, más Beauty Tokens.</li>
-                              </ul>
-                         </li>
-                         <li class="revenue-item">
-                             <b class="text-ladrillo">Otros Flujos:</b> Comisión Marketplace B2B (8% sobre insumos), Publicidad segmentada B2B.
-                         </li>
-                    </ul>
+                    <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso:</h3>
+                    <div class="space-y-4">
+                        <div class="revenue-card">
+                            <b class="text-ladrillo text-lg">Comisión Profesional:</b>
+                            <p class="text-oscuro text-sm">Variable (<b>15%</b> Free -> <b>6%</b> Premium). Profesional paga al generar ingreso.</p>
+                        </div>
+                        <div class="revenue-card">
+                            <b class="text-ladrillo text-lg">Suscripción B2B (Profesional):</b>
+                            <p class="text-oscuro text-sm">Freemium (S/0, S/29, S/49) con acceso a IA/IoT. Ingreso recurrente.</p>
+                        </div>
+                        <div class="revenue-card">
+                            <b class="text-ladrillo text-lg">Suscripción B2C (Opcional):</b>
+                            <p class="text-oscuro text-sm">AureaPlus (S/9) para RA, descuentos. Monetiza usuarias <i>premium</i>.</p>
+                        </div>
+                        <div class="revenue-card">
+                            <b class="text-ladrillo text-lg">Otros Flujos:</b>
+                            <p class="text-oscuro text-sm">Comisión Marketplace (8%), Publicidad B2B.</p>
+                        </div>
+                    </div>
                  </div>
-                 <div class="text-center fade-in observed" style="animation-delay: 0.4s;">
+
+                 <!-- Columna Derecha: Formas de Pago (Nuevo diseño) -->
+                 <div class="fade-in observed" style="animation-delay: 0.4s;">
                      <h3 class="text-2xl font-semibold text-borgona mb-4">Formas de Pago:</h3>
-                     <div class="flex flex-wrap justify-center items-center gap-4">
-                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Yape</span>
-                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Plin</span>
-                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Niubiz</span>
-                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Visa/MC</span>
-                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">AMEX</span>
-                         <span class="bg-borgona text-crema px-3 py-1 rounded-full text-sm flex items-center"><span class="icon-token mr-1"></span>Tokens (BCP Ready)</span>
+                     <div class="flex flex-wrap justify-start items-center gap-3 mb-4">
+                        <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Yape</span>
+                        <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Plin</span>
+                        <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Niubiz</span>
+                        <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Visa/MC</span>
+                        <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">AMEX</span>
+                         <span class="bg-borgona text-crema px-4 py-2 rounded-full text-sm font-medium flex items-center"><span class="icon-token mr-1"></span>Tokens (BCP Ready)</span>
                      </div>
-                      <p class="mt-6 text-oscuro">Aceptamos todos los pagos locales (incluyendo AMEX) y estamos listos para integrar tokens digitales, alineados con la innovación del BCP.</p>
+                      <p class="text-oscuro">Aceptamos todos los pagos locales (incluyendo AMEX) y estamos listos para integrar tokens digitales, alineados con la innovación del BCP.</p>
                  </div>
              </div>
         </section>
 
-         <!-- Diapositiva 8: Estrategia de Crecimiento y Fidelización -->
+         <!-- Diapositiva 8: Estrategia de Crecimiento y Fidelización (Actualizado) -->
         <section id="crecimiento" class="min-h-screen flex flex-col justify-center bg-crema rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Creando un Ecosistema Leal y Confiable</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -454,7 +458,7 @@
                         </div>
                         <div class="details"><b>Estrategia de Marca</b>, Adquisición de Usuarios, Crecimiento</div>
                     </div>
-                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.8s;">
+                     <div class="team-card bg-crema rounded-lg shadow-lg text-center fade-in observed" style="animation-delay: 0.8s;">
                         <div class="card-content">
                              <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=CT" alt="Celeste Taya" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
                              <h3 class="font-semibold text-ladrillo">Celeste Taya</h3>
@@ -471,19 +475,20 @@
                         <div class="details"><b>Modelo Financiero</b>, Inversión, Sostenibilidad</div>
                     </div>
                 </div>
-                 <p class="mt-8 text-lg text-center text-oscuro font-semibold fade-in observed" style="animation-delay: 1.2s;">Combinamos la pasión por la belleza con la experiencia tecnológica y de negocio necesaria para hacer de Aurea un éxito.</p>
+                 <p class="mt-8 text-lg text-center text-claro font-semibold fade-in observed" style="animation-delay: 1.2s;">Combinamos la pasión por la belleza con la experiencia tecnológica y de negocio necesaria para hacer de Aurea un éxito.</p>
             </div>
         </section>
 
-        <!-- Diapositiva 10: Potencial de Mercado (Actualizado) -->
+        <!-- Diapositiva 10: Potencial de Mercado (Actualizado con TAM-SAM-SOM Belleza.pdf) -->
         <section id="mercado" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Oportunidad de Mercado: Confianza = Crecimiento Exponencial</h2>
+            
             <div id="market-chart-container" class="relative w-full max-w-xl mx-auto h-96 flex items-center justify-center fade-in observed" style="animation-delay: 0.2s;">
-                <!-- Contenedor del Gráfico y Labels -->
                 <div class="relative chart-container" style="height: 350px; max-width: 450px;">
                     <canvas id="marketChart"></canvas>
                 </div>
             </div>
+            
             <!-- Detalles ocultos -->
             <div id="market-details" class="mt-4 text-center text-oscuro text-sm h-16 transition-all duration-300">
                 <p id="tam-details" class="hidden"><b>Mercado Total (LATAM): US$ 22.5 Mil Millones.</b> Oportunidad teórica total en ~225M mujeres 20+, gasto potencial US$100/año.</p>
@@ -611,7 +616,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const marketData = {
                 labels: [
-                    ['SOM (Lima)', '(Cuota 1%-10%)'], 
+                    ['SAM Lima (Base SOM)', '(45% Penetración)'], 
                     ['Resto SAM (Perú)', '(45% Penetración)'], 
                     ['Brecha de Adopción (Perú)', '(55% No Usuarios de Servicios)'], 
                     ['Resto TAM (LATAM)']
@@ -651,7 +656,11 @@
                             position: 'bottom',
                             labels: {
                                 color: '#1f2937', // text-oscuro
-                                font: { size: 12, family: 'Poppins' }
+                                font: { size: 12, family: 'Poppins' },
+                                filter: function(item, chart) {
+                                    // Muestra solo las etiquetas principales
+                                    return typeof item.text === 'string' || (Array.isArray(item.text) && item.text.length > 0);
+ }
                             }
                         },
                         title: {
