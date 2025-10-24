@@ -149,40 +149,103 @@
         /* Estilos para lista de Modelo de Negocio (DISEÑO IMAGEN) */
         .revenue-card {
              background-color: var(--color-crema);
-             padding: 1rem;
-             border-radius: 0.5rem;
-             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+             padding: 1.25rem; /* p-5 */
+             border-radius: 0.5rem; /* rounded-lg */
+             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); /* shadow */
              transition: transform 0.3s ease, box-shadow 0.3s ease;
              cursor: pointer;
          }
          .revenue-card:hover {
              transform: scale(1.03);
-             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* hover:shadow-lg */
          }
-         .revenue-card b { color: var(--color-ladrillo); font-weight: 600; font-size: 1.1rem; }
-         .revenue-card p { color: var(--color-texto-oscuro); font-size: 0.9rem; }
+         .revenue-card b { 
+             color: var(--color-ladrillo); 
+             font-weight: 600; /* semibold */
+             font-size: 1.125rem; /* text-lg */
+             display: block; /* Asegura que esté en su propia línea */
+             margin-bottom: 0.25rem; /* espacio debajo del título */
+         }
+         .revenue-card p { 
+             color: var(--color-texto-oscuro); 
+             font-size: 0.9rem; /* text-sm */
+             line-height: 1.4;
+         }
 
 
          /* Estilo para TAM/SAM/SOM */
-        .market-circle { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
-        .market-circle:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(140, 28, 61, 0.3); }
-        .market-label { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
-        .market-label:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        
-        /* Chart.js Container */
-         .chart-container {
+        .market-visual-container {
             position: relative;
             width: 100%;
-            max-width: 450px; /* Reducido para doughnut */
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px; /* Altura base */
-            max-height: 400px;
+            max-width: 500px; /* Tamaño máximo para los círculos */
+            aspect-ratio: 1 / 1; /* Hace el contenedor cuadrado */
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4rem; /* Espacio debajo del gráfico */
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px; /* Altura para pantallas medianas y grandes */
-            }
+        .market-circle-bg {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(248, 232, 140, 0.1); /* Crema muy suave */
+            border: 2px solid rgba(140, 28, 61, 0.3); /* Color de borde ligero */
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .market-circle-outer { width: 100%; height: 100%; z-index: 30; border-style: dashed; } /* TAM */
+        .market-circle-middle { width: 70%; height: 70%; z-index: 40; border-color: var(--color-borgona); } /* SAM */
+        .market-circle-inner { 
+            width: 45%; 
+            height: 45%; 
+            z-index: 50; 
+            border-color: var(--color-tierra);
+            background-color: var(--color-tierra); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .market-circle-inner:hover { transform: scale(1.05); }
+
+
+        .market-label-box {
+            position: absolute;
+            background-color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            color: var(--color-texto-oscuro);
+            font-size: 0.8rem; /* Ajustado para ser más pequeño */
+            line-height: 1.3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(140, 28, 61, 0.1);
+            z-index: 60;
+        }
+        .market-label-box:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .market-label-box strong {
+            display: block;
+            font-size: 1rem; /* Ajustado */
+            color: var(--color-ladrillo);
+            margin-bottom: 0.25rem;
+        }
+        /* Posicionamiento específico de las etiquetas */
+        #label-tam { top: 10%; left: 10%; transform: translate(-50%, -50%); }
+        #label-sam { bottom: 10%; right: 10%; transform: translate(50%, 50%); }
+        
+        /* Chart.js Container (Oculto, ya no se usa) */
+         .chart-container {
+            display: none;
         }
 
     </style>
@@ -191,7 +254,7 @@
 
     <!-- Chosen Palette: Aurea Palette (#F8E88C, #D8A66B, #8C1C3D, #5A0E14) -->
     <!-- Application Structure Plan: Single-page scrolling application with 11 sections. Sticky top navigation. Interactive elements: hover effects on team, animations on scroll, clickable tech sections, clickable market sizes. Structure chosen for linear investor pitch storytelling. -->
-    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS). | TAM/SAM/SOM (Compare/Organize) -> Chart.js Doughnut Chart (Canvas) + JS Click interaction. | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS). | Tech Pillars (Organize/Inform) -> Clickable Cards (HTML/JS). | Revenue Model (Organize/Inform) -> Styled HTML Cards (per image). | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS). | Library/Method: Vanilla JS, Chart.js, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS). | TAM/SAM/SOM (Compare/Organize) -> CSS Concentric Circles + JS Click interaction (Based on user image). | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS). | Tech Pillars (Organize/Inform) -> Clickable Cards (HTML/JS). | Revenue Model (Organize/Inform) -> Styled HTML Cards (per image). | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS). | Library/Method: Vanilla JS, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <header class="sticky top-0 z-50 bg-white shadow-md">
@@ -229,12 +292,12 @@
 
     <main class="container mx-auto px-6 py-8">
 
-        <!-- Diapositiva 1: Título -->
+        <!-- Diapositiva 1: Título (Actualizado con Logo) -->
         <section id="titulo" class="relative min-h-screen flex flex-col justify-center items-center text-center bg-cover bg-center rounded-lg shadow-xl p-8 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva1.png');">
             <div class="bg-image-overlay bg-image-overlay-darker rounded-lg"></div>
             <div class="content-behind-image flex flex-col items-center">
-                 <div class="w-32 h-32 bg-ladrillo rounded-full mb-6 flex items-center justify-center text-claro text-4xl font-bold shadow-lg">A</div>
+                 <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_biglogo_imagen.png" alt="Aurea Logo" class="w-48 h-auto mb-6 shadow-lg fade-in observed" style="max-width: 200px;">
                  <h1 class="text-4xl md:text-5xl font-bold text-crema mb-4">Aurea: Belleza Verificada, Confianza Asegurada.</h1>
                  <p class="text-xl text-tierra font-light">El Ecosistema Digital que Conecta Talento Verificado con Clientas Empoderadas.</p>
             </div>
@@ -370,25 +433,25 @@
                     <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso:</h3>
                     <div class="space-y-4">
                         <div class="revenue-card">
-                            <b class="text-ladrillo text-lg">Comisión Profesional:</b>
-                            <p class="text-oscuro text-sm">Variable (<b>15%</b> Free -> <b>6%</b> Premium). Profesional paga al generar ingreso.</p>
+                            <b>Comisión Profesional:</b>
+                            <p>Variable (<b>15%</b> Free -> <b>6%</b> Premium). Profesional paga al generar ingreso.</p>
                         </div>
                         <div class="revenue-card">
-                            <b class="text-ladrillo text-lg">Suscripción B2B (Profesional):</b>
-                            <p class="text-oscuro text-sm">Freemium (S/0, S/29, S/49) con acceso a IA/IoT. Ingreso recurrente.</p>
+                            <b>Suscripción B2B (Profesional):</b>
+                            <p>Freemium (S/0, S/29, S/49) con acceso a IA/IoT. Ingreso recurrente.</p>
                         </div>
                         <div class="revenue-card">
-                            <b class="text-ladrillo text-lg">Suscripción B2C (Opcional):</b>
-                            <p class="text-oscuro text-sm">AureaPlus (S/9) para RA, descuentos. Monetiza usuarias <i>premium</i>.</p>
+                            <b>Suscripción B2C (Opcional):</b>
+                            <p>AureaPlus (S/9) para RA, descuentos. Monetiza usuarias <i>premium</i>.</p>
                         </div>
                         <div class="revenue-card">
-                            <b class="text-ladrillo text-lg">Otros Flujos:</b>
-                            <p class="text-oscuro text-sm">Comisión Marketplace (8%), Publicidad B2B.</p>
+                            <b>Otros Flujos:</b>
+                            <p>Comisión Marketplace (8%), Publicidad B2B.</p>
                         </div>
                     </div>
                  </div>
 
-                 <!-- Columna Derecha: Formas de Pago (Nuevo diseño) -->
+                 <!-- Columna Derecha: Formas de Pago (Actualizado con AMEX) -->
                  <div class="fade-in observed" style="animation-delay: 0.4s;">
                      <h3 class="text-2xl font-semibold text-borgona mb-4">Formas de Pago:</h3>
                      <div class="flex flex-wrap justify-start items-center gap-3 mb-4">
@@ -479,23 +542,43 @@
             </div>
         </section>
 
-        <!-- Diapositiva 10: Potencial de Mercado (Actualizado con TAM-SAM-SOM Belleza.pdf) -->
+        <!-- Diapositiva 10: Potencial de Mercado (Actualizado con TAM-SAM-SOM Belleza.pdf y diseño de imagen) -->
         <section id="mercado" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Oportunidad de Mercado: Confianza = Crecimiento Exponencial</h2>
             
-            <div id="market-chart-container" class="relative w-full max-w-xl mx-auto h-96 flex items-center justify-center fade-in observed" style="animation-delay: 0.2s;">
-                <div class="relative chart-container" style="height: 350px; max-width: 450px;">
-                    <canvas id="marketChart"></canvas>
+            <div class="market-visual-container">
+                <!-- Círculo más grande: TAM -->
+                <div class="market-circle-bg market-circle-outer"></div>
+                <!-- Círculo intermedio: SAM -->
+                <div class="market-circle-bg market-circle-middle"></div>
+                <!-- Círculo más pequeño: SOM -->
+                <div class="market-circle-bg market-circle-inner"></div>
+
+                <!-- Etiquetas flotantes (Datos Actualizados) -->
+                <div id="label-tam" class="market-label-box" data-target="tam-details">
+                    TAM (LATAM)<br>
+                    <strong>US$ 22.5B+</strong><br>
+                    <span class="text-xs text-gray-500">~225M 'Sofías' (Mujeres 20+)</span>
+                </div>
+                <div id="label-sam" class="market-label-box" data-target="sam-details">
+                    SAM (Perú)<br>
+                    <strong>US$ 513 M</strong><br>
+                    <span class="text-xs text-gray-500">~5.1M 'Sofías' (45% penetración)</span>
+                </div>
+                <div id="label-som" class="market-label-box" data-target="som-details" style="background-color: var(--color-tierra); color: white;">
+                    SOM (Lima)<br>
+                    <strong style="color: white;">US$ 1.6M - 15.6M</strong><br>
+                    <span class="text-xs text-white opacity-80">(Cuota 1%-10% SAM Lima)</span>
                 </div>
             </div>
             
-            <!-- Detalles ocultos -->
+            <!-- Detalles ocultos para Interactividad (Datos Actualizados) -->
             <div id="market-details" class="mt-4 text-center text-oscuro text-sm h-16 transition-all duration-300">
                 <p id="tam-details" class="hidden"><b>Mercado Total (LATAM): US$ 22.5 Mil Millones.</b> Oportunidad teórica total en ~225M mujeres 20+, gasto potencial US$100/año.</p>
                 <p id="sam-details" class="hidden"><b>Mercado Disponible (Perú): US$ 513 Millones.</b> Mercado realista (45% penetración servicios) de ~5.1M usuarias activas, valor actual subestimado por informalidad.</p>
                 <p id="som-details" class="hidden"><b>Mercado Obtenible (Lima): US$ 1.6M - 15.6M.</b> Cuota realista (1%-10%) del SAM Lima (US$ 155.5M) como estrategia de entrada.</p>
             </div>
-            <p class="mt-4 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Nuestro SOM inicial en Lima es significativo, con un potencial enorme al cerrar la "Brecha de Adopción de Servicios" (del 45% al 90%) en el SAM peruano.</p>
+            <p class="mt-4 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Atacamos un mercado masivo con una necesidad insatisfecha de confianza y eficiencia, empezando por Lima.</p>
         </section>
 
         <!-- Diapositiva 11: Cierre y Llamada a la Acción -->
@@ -564,7 +647,7 @@
         });
 
         // Script interactividad TAM-SAM-SOM
-        const marketLabels = document.querySelectorAll('.market-label, .market-circle[data-target]');
+        const marketLabels = document.querySelectorAll('.market-label-box');
         const marketDetailsContainer = document.getElementById('market-details');
         const allDetailParagraphs = marketDetailsContainer.querySelectorAll('p');
         let currentDetail = null;
@@ -572,6 +655,8 @@
         marketLabels.forEach(label => {
             label.addEventListener('click', () => {
                 const targetId = label.getAttribute('data-target');
+                const targetDetail = document.getElementById(targetId);
+                
                 allDetailParagraphs.forEach(p => {
                     if (p.id === targetId) {
                         if(currentDetail === p) {
@@ -585,6 +670,7 @@
                         p.classList.add('hidden');
                     }
                 });
+                
                 if (currentDetail) {
                     marketDetailsContainer.style.height = currentDetail.offsetHeight + 'px';
                 } else {
@@ -614,104 +700,12 @@
         // --- Chart.js ---
         // Espera a que el DOM esté completamente cargado para ejecutar el script del gráfico
         document.addEventListener('DOMContentLoaded', () => {
-            const marketData = {
-                labels: [
-                    ['SAM Lima (Base SOM)', '(45% Penetración)'], 
-                    ['Resto SAM (Perú)', '(45% Penetración)'], 
-                    ['Brecha de Adopción (Perú)', '(55% No Usuarios de Servicios)'], 
-                    ['Resto TAM (LATAM)']
-                ],
-                datasets: [{
-                    label: 'Potencial de Mercado (en M USD)',
-                    data: [
-                        155.5, // SAM Lima (base para SOM 1.6M-15.6M)
-                        (513 - 155.5), // Resto SAM Perú
-                        (1140 - 513), // Brecha de Adopción (TAM Perú - SAM Perú)
-                        (22500 - 1140) // Resto TAM LATAM
-                    ],
-                    backgroundColor: [
-                        'rgba(216, 166, 107, 1)',  // Tierra (SAM Lima)
-                        'rgba(140, 28, 61, 0.8)',  // Borgona (Resto SAM Perú)
-                        'rgba(248, 232, 140, 0.7)', // Crema (Brecha Adopción)
-                        'rgba(90, 14, 20, 0.5)'     // Ladrillo (Resto LATAM)
-                    ],
-                    borderColor: [
-                        '#FFFFFF',
-                        '#FFFFFF',
-                        '#FFFFFF',
-                        '#FFFFFF'
-                    ],
-                    borderWidth: 2
-                }]
-            };
-
-            const marketChartConfig = {
-                type: 'doughnut',
-                data: marketData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: '#1f2937', // text-oscuro
-                                font: { size: 12, family: 'Poppins' },
-                                filter: function(item, chart) {
-                                    // Muestra solo las etiquetas principales
-                                    return typeof item.text === 'string' || (Array.isArray(item.text) && item.text.length > 0);
- }
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Distribución Potencial del Mercado (SAM/TAM en M USD)',
-                            color: '#5A0E14', // text-ladrillo
-                            font: { size: 16, family: 'Poppins', weight: '600' }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: function(tooltipItems) {
-                                    const item = tooltipItems[0];
-                                    let label = item.chart.data.labels[item.dataIndex];
-                                    if (Array.isArray(label)) {
-                                      return label.join(' ');
-                                    } else {
-                                      return label;
-                                    }
-                                },
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact' }).format(context.parsed * 1000000);
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%'
-                }
-            };
-
-            const marketChartCtx = document.getElementById('marketChart');
-            if (marketChartCtx) {
-                try {
-                     new Chart(marketChartCtx.getContext('2d'), marketChartConfig);
-                } catch (e) {
-                    console.error("Error al renderizar el gráfico de mercado:", e);
-                    marketChartCtx.parentElement.innerHTML = "<p class='text-red-500 text-center'>Error al cargar el gráfico.</p>";
-                }
-            } else {
-                console.error('Elemento canvas "marketChart" no encontrado.');
-                const chartContainer = document.getElementById('market-chart-container');
-                if (chartContainer) {
-                     chartContainer.innerHTML = "<p class='text-center text-red-500'>Error: Canvas 'marketChart' no encontrado.</p>";
-                }
-            }
+            // El gráfico ha sido reemplazado por el diseño de círculos concéntricos de CSS/HTML.
+            // El script de Chart.js ya no es necesario para esta diapositiva.
+            // Si tuvieras otros gráficos, irían aquí.
+            
+            // Script para corregir error de tipeo en el hover de las team cards (si existiera)
+            // (El CSS actual ya maneja esto correctamente)
         });
 
     </script>
