@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurea - Pitch para Inversionistas</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -38,6 +39,11 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 1rem;
         }
         .team-card:hover {
             transform: translateY(-5px);
@@ -48,24 +54,30 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: rgba(140, 28, 61, 0.9);
+            background-color: rgba(140, 28, 61, 0.95);
             color: white;
-            padding: 0.75rem;
+            padding: 1rem;
             text-align: center;
             opacity: 0;
             transform: translateY(100%);
             transition: opacity 0.3s ease, transform 0.3s ease;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            height: auto;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .team-card:hover .details {
             opacity: 1;
             transform: translateY(0);
         }
-         .team-card h3, .team-card p.text-sm {
-            transition: transform 0.3s ease;
-        }
-        .team-card:hover h3, .team-card:hover p.text-sm {
-             transform: translateY(-30px); /* Ajusta para que el texto suba más */
+         .team-card .card-content {
+             transition: transform 0.3s ease;
+             padding-bottom: 80px;
+         }
+        .team-card:hover .card-content {
+             transform: translateY(-10px);
         }
 
         /* Animaciones Scroll JS */
@@ -101,12 +113,10 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
             z-index: 1;
-            border-radius: 0.5rem; /* Coincide con el borde de la sección si aplica */
+            border-radius: 0.5rem;
         }
-         /* Overlay más oscuro para texto claro */
-         .bg-image-overlay-darker {
-             background-color: rgba(0, 0, 0, 0.6);
-         }
+         .bg-image-overlay-darker { background-color: rgba(0, 0, 0, 0.6); }
+         .bg-image-overlay-lighter { background-color: rgba(255, 255, 255, 0.6); }
         .content-behind-image {
             position: relative;
             z-index: 2;
@@ -114,32 +124,69 @@
 
         /* Estilos Mockups */
         .mockup-container { perspective: 1000px; }
-        .mockup-img { transition: transform 0.5s ease; }
+        .mockup-img { transition: transform 0.5s ease; border-radius: 1rem; }
         .mockup-container:hover .mockup-img { transform: scale(1.05) rotateY(5deg); }
 
         /* Altura mínima secciones */
         section {
-            min-height: 90vh; /* Ajusta según sea necesario, 90vh para asegurar espacio */
-            padding-top: 5rem; /* Evita que el contenido quede debajo del header fijo */
+            min-height: 90vh;
+            padding-top: 5rem;
             padding-bottom: 4rem;
-            scroll-margin-top: 60px; /* Ajusta esto según la altura de tu header */
+            scroll-margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        #titulo { min-height: 100vh; padding-top: 0; padding-bottom: 0; scroll-margin-top: 0;} /* Full viewport para título */
+        #titulo { min-height: 100vh; padding-top: 0; padding-bottom: 0; scroll-margin-top: 0;}
 
-        /* Estilo para citas APA - Simplificado (removido) */
-        /* .cite {
-            font-size: 0.7rem;
-            color: #6b7280;
-            margin-left: 4px;
-        } */
+        /* Estilo interactivo para secciones de tecnología */
+        .tech-card { cursor: pointer; }
+        .tech-details { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .tech-card.open .tech-details { max-height: 500px; }
+        .tech-card h3 svg { transition: transform 0.3s ease; }
+        .tech-card.open h3 svg { transform: rotate(180deg); }
+
+        /* Estilos para lista de Modelo de Negocio */
+        .revenue-item {
+             border-left: 4px solid var(--color-borgona);
+             padding-left: 1rem;
+             margin-bottom: 1rem;
+             transition: background-color 0.3s ease;
+         }
+         .revenue-item:hover {
+             background-color: #fffbeb; /* Un crema más claro */
+         }
+         .revenue-item b { color: var(--color-ladrillo); }
+
+         /* Estilo para TAM/SAM/SOM */
+        .market-circle { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .market-circle:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(140, 28, 61, 0.3); }
+        .market-label { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .market-label:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+         /* Chart.js Container */
+         .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px; /* Reducido para doughnut */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Altura base */
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px; /* Altura para pantallas medianas y grandes */
+            }
+        }
 
     </style>
 </head>
 <body class="bg-gray-100 text-oscuro">
 
     <!-- Chosen Palette: Aurea Palette (#F8E88C, #D8A66B, #8C1C3D, #5A0E14) -->
-    <!-- Application Structure Plan: Single-page scrolling application with 11 sections mirroring the pitch deck. A sticky top navigation enables jumping between key parts (Problem, Client, Team, Solution, Tech, Prototype, Business Model, Growth, Market, Ask). Interactive elements include hover effects on team cards, animations on scroll for key data/sections, and visually distinct clickable areas for technology details. Structure chosen for linear storytelling suitable for investors, enhanced by quick navigation and engaging micro-interactions. -->
-    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS), High impact/clarity. | TAM/SAM/SOM (Compare/Organize) -> Nested HTML Divs (Concentric Circles), Standard/intuitive market sizing visual. | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover, Interactive credential display. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS), Visualizes app flow. | Tech Pillars (Organize/Inform) -> Styled Cards (HTML/CSS), Allows detail on demand. | Revenue Model (Organize/Inform) -> Styled HTML List/Table, Clear financial streams presentation. | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS), Simple summary. | Library/Method: Vanilla JS, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Application Structure Plan: Single-page scrolling application with 11 sections. Sticky top navigation. Interactive elements: hover effects on team, animations on scroll, clickable tech sections, clickable market sizes. Structure chosen for linear investor pitch storytelling. -->
+    <!-- Visualization & Content Choices: Market Size/Users/Time (Inform) -> Large Text + Icons (Unicode/CSS). | TAM/SAM/SOM (Compare/Organize) -> Chart.js Doughnut Chart (Canvas) + JS Click interaction. | Team (Inform/Organize) -> HTML Grid + CSS/JS Hover. | Prototype (Demonstrate) -> Image Placeholders (HTML/CSS). | Tech Pillars (Organize/Inform) -> Clickable Cards (HTML/JS). | Revenue Model (Organize/Inform) -> Styled HTML List. | Growth/Loyalty (Organize) -> List + Icons (Unicode/CSS). | Library/Method: Vanilla JS, Chart.js, Tailwind CSS. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <header class="sticky top-0 z-50 bg-white shadow-md">
@@ -148,12 +195,12 @@
             <div class="hidden md:flex space-x-6">
                 <a href="#problema" class="text-borgona hover:text-ladrillo text-sm">Problema</a>
                 <a href="#cliente" class="text-borgona hover:text-ladrillo text-sm">Cliente</a>
-                <a href="#equipo" class="text-borgona hover:text-ladrillo text-sm">Equipo</a>
                 <a href="#solucion" class="text-borgona hover:text-ladrillo text-sm">Solución</a>
                 <a href="#tecnologia" class="text-borgona hover:text-ladrillo text-sm">Tecnología</a>
                 <a href="#prototipo" class="text-borgona hover:text-ladrillo text-sm">Prototipo</a>
                 <a href="#modelo-negocio" class="text-borgona hover:text-ladrillo text-sm">Modelo</a>
                 <a href="#crecimiento" class="text-borgona hover:text-ladrillo text-sm">Crecimiento</a>
+                <a href="#equipo" class="text-borgona hover:text-ladrillo text-sm">Equipo</a>
                 <a href="#mercado" class="text-borgona hover:text-ladrillo text-sm">Mercado</a>
                 <a href="#cierre" class="text-borgona hover:text-ladrillo text-sm">Inversión</a>
             </div>
@@ -161,15 +208,15 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
-        <div id="mobile-menu" class="md:hidden hidden bg-white py-2 absolute w-full shadow-lg">
+        <div id="mobile-menu" class="md:hidden hidden bg-white py-2 absolute w-full shadow-lg z-40">
             <a href="#problema" class="block px-6 py-2 text-borgona hover:bg-crema">Problema</a>
             <a href="#cliente" class="block px-6 py-2 text-borgona hover:bg-crema">Cliente</a>
-            <a href="#equipo" class="block px-6 py-2 text-borgona hover:bg-crema">Equipo</a>
             <a href="#solucion" class="block px-6 py-2 text-borgona hover:bg-crema">Solución</a>
             <a href="#tecnologia" class="block px-6 py-2 text-borgona hover:bg-crema">Tecnología</a>
             <a href="#prototipo" class="block px-6 py-2 text-borgona hover:bg-crema">Prototipo</a>
             <a href="#modelo-negocio" class="block px-6 py-2 text-borgona hover:bg-crema">Modelo</a>
             <a href="#crecimiento" class="block px-6 py-2 text-borgona hover:bg-crema">Crecimiento</a>
+            <a href="#equipo" class="block px-6 py-2 text-borgona hover:bg-crema">Equipo</a>
             <a href="#mercado" class="block px-6 py-2 text-borgona hover:bg-crema">Mercado</a>
             <a href="#cierre" class="block px-6 py-2 text-borgona hover:bg-crema">Inversión</a>
         </div>
@@ -190,23 +237,23 @@
 
         <!-- Diapositiva 2: El Problema -->
         <section id="problema" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
-            <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 10 Mil Millones Atrapados en la Fricción y la Desconfianza</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 9.3 Mil Millones Atrapados en la Desconfianza</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
                 <div class="p-6 bg-crema rounded-lg shadow fade-in observed">
-                    <div class="text-5xl font-bold text-borgona mb-2 ">+15M</div>
-                    <p class="text-oscuro">Usuarios en Perú</p>
+                    <div class="text-5xl font-bold text-borgona mb-2 ">90%</div>
+                    <p class="text-oscuro">De mujeres peruanas usan productos de belleza...</p>
                 </div>
                 <div class="p-6 bg-crema rounded-lg shadow fade-in observed" style="animation-delay: 0.2s;">
-                     <div class="text-5xl font-bold text-borgona mb-2 "><span class="icon-clock"></span>90 min</div>
-                     <p class="text-oscuro">Perdidos por Búsqueda</p>
+                     <div class="text-5xl font-bold text-borgona mb-2 ">...PERO SOLO 45%</div>
+                     <p class="text-oscuro">Visita salones. Hay una "Brecha de Adopción" por desconfianza.</p>
                  </div>
                  <div class="p-6 bg-crema rounded-lg shadow fade-in observed" style="animation-delay: 0.4s;">
-                     <div class="text-5xl font-bold text-borgona mb-2 "><span class="icon-shield-broken"></span>#1</div>
-                     <p class="text-oscuro">Miedo: Calidad/Higiene</p>
+                     <div class="text-5xl font-bold text-borgona mb-2 "><span class="icon-clock"></span>~90 min</div>
+                     <p class="text-oscuro">Perdidos por búsqueda en redes sociales caóticas.</p>
                  </div>
             </div>
-            <p class="mt-8 text-lg text-center text-oscuro md:px-16">
-                Más de 12 millones de mujeres buscan belleza en redes, enfrentando un proceso manual, caótico y lleno de desconfianza. Esta fricción les cuesta tiempo, dinero y tranquilidad, frenando un mercado millonario.
+            <p classt="mt-8 text-lg text-center text-oscuro md:px-16">
+                El mercado de belleza en Perú es enorme (S/ 9,339 millones en 2024), pero la mitad de las consumidoras no accede a servicios profesionales por <b>fricción en la búsqueda</b> y un <b>miedo paralizante</b> a la mala calidad, falta de higiene y precios inflados.
             </p>
         </section>
 
@@ -221,7 +268,7 @@
                 <div class="md:w-2/3 md:pl-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-crema mb-4 fade-in observed" style="animation-delay: 0.2s;">Sofía: La Joven Profesional Digital Frustrada</h2>
                     <ul class="list-disc list-inside space-y-2 mb-4 text-lg text-claro fade-in observed" style="animation-delay: 0.4s;">
-                        <li><b>Perfil:</b> 23 años, Asistente de Diseño, Surco. Presupuesto S/ 1.3k-2k/mes.</li>
+                        <li><b>Perfil:</b> 23 años, Asistente de Banca, Surco. Presupuesto S/ 1.3k-2k/mes.</li>
                         <li><b>Necesidad:</b> Imagen profesional impecable.</li>
                     </ul>
                     <p class="text-2xl italic text-crema p-4 bg-borgona rounded-lg shadow fade-in observed" style="animation-delay: 0.6s;">
@@ -232,7 +279,7 @@
             </div>
         </section>
 
-         <!-- Diapositiva 5: La Solución -->
+        <!-- Diapositiva 4: La Solución -->
         <section id="solucion" class="min-h-screen flex flex-col justify-center bg-borgona text-claro rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-crema mb-6 text-center fade-in observed">Aurea: El Ecosistema de Confianza Verificada</h2>
             <p class="text-xl text-center mb-8 fade-in observed" style="animation-delay: 0.2s;">Plataforma digital que <b>verifica</b> profesionales y <b>conecta</b> clientas con su <i>match</i> ideal.</p>
@@ -252,69 +299,89 @@
             </div>
         </section>
 
-        <!-- Diapositiva 6: Tecnología Clave -->
+        <!-- Diapositiva 5: Tecnología Clave -->
         <section id="tecnologia" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
              <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Innovación Tecnológica: Blockchain + IA para Confianza Real</h2>
              <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                 <div class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in observed" style="animation-delay: 0.2s;">
-                    <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center"><span class="icon-blockchain text-3xl mr-2"></span> Blockchain (Confianza Inmutable)</h3>
-                    <ul class="list-disc list-inside space-y-1 text-oscuro">
-                         <li><b>Pasaporte de Belleza Verificado:</b> Historial inmutable (identidad, certificados, reseñas 100% reales).</li>
-                         <li><b>Smart Contracts (Pagos Seguros):</b> Pago en <i>escrow</i> liberado solo con satisfacción. Preparado para tokens (BCP).</li>
-                    </ul>
+                 <div id="tech-blockchain" class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in observed" style="animation-delay: 0.2s;">
+                    <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center justify-between cursor-pointer">
+                        <span><span class="icon-blockchain text-3xl mr-2"></span> Blockchain (Confianza Inmutable)</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </h3>
+                    <div class="tech-details mt-2">
+                        <ul class="list-disc list-inside space-y-1 text-oscuro">
+                             <li><b>Pasaporte de Belleza Verificado:</b> Historial inmutable (identidad, antecedentes, certificados, reseñas 100% reales).</li>
+                             <li><b>Smart Contracts (Pagos Seguros):</b> Pago en <i>escrow</i> liberado solo con satisfacción. Preparado para tokens (BCP).</li>
+                        </ul>
+                    </div>
                  </div>
-                  <div class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in observed" style="animation-delay: 0.4s;">
-                     <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center"><span class="icon-ai text-3xl mr-2"></span> Inteligencia Artificial (Eficiencia y Match)</h3>
-                     <ul class="list-disc list-inside space-y-1 text-oscuro">
-                          <li><b>BeautyMatch AI:</b> Algoritmo que analiza estilo e inspiración para conectar con el profesional ideal y verificado.</li>
-                          <li>(Opcional: Chrono-Booking AI - Agenda inteligente)</li>
-                     </ul>
+                  <div id="tech-ai" class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in observed" style="animation-delay: 0.4s;">
+                     <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center justify-between cursor-pointer">
+                        <span><span class="icon-ai text-3xl mr-2"></span> Inteligencia Artificial (Eficiencia y Match)</span>
+                         <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                     </h3>
+                     <div class="tech-details mt-2">
+                         <ul class="list-disc list-inside space-y-1 text-oscuro">
+                              <li><b>BeautyMatch AI:</b> Algoritmo que analiza estilo e inspiración para conectar con el profesional ideal y verificado.</li>
+                              <li><b>Chrono-Booking AI:</b> Agenda inteligente que automatiza citas recurrentes.</li>
+                              <li><b>IA Visión Computacional:</b> Para validación inicial de higiene.</li>
+                         </ul>
+                     </div>
                   </div>
              </div>
         </section>
 
-        <!-- Diapositiva 7: Prototipo Digital -->
+        <!-- Diapositiva 6: Prototipo Digital -->
         <section id="prototipo" class="min-h-screen flex flex-col justify-center bg-tierra text-claro rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
              <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Así Funciona la Confianza: Un Vistazo a Aurea</h2>
              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                  <div class="mockup-container text-center fade-in observed" style="animation-delay: 0.2s;">
-                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=1.+Subir+Foto+(IA)" alt="Prototipo Aurea - Búsqueda IA" class="mockup-img rounded-lg shadow-lg mx-auto border-4 border-crema mb-2">
+                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=1.+Subir+Foto+(IA)" alt="Prototipo Aurea - Búsqueda IA" class="mockup-img shadow-lg mx-auto border-4 border-crema mb-2">
                      <p class="text-sm font-semibold text-ladrillo">1. Sofía sube inspiración</p>
                  </div>
                   <div class="mockup-container text-center fade-in observed" style="animation-delay: 0.4s;">
-                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=2.+Resultados+Verificados+(IA+Blockchain)" alt="Prototipo Aurea - Resultados Verificados" class="mockup-img rounded-lg shadow-lg mx-auto border-4 border-crema mb-2">
+                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=2.+Resultados+Verificados+(IA+Blockchain)" alt="Prototipo Aurea - Resultados Verificados" class="mockup-img shadow-lg mx-auto border-4 border-crema mb-2">
                      <p class="text-sm font-semibold text-ladrillo">2. Recibe Matches Confiables</p>
                  </div>
                   <div class="mockup-container text-center fade-in observed" style="animation-delay: 0.6s;">
-                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=3.+Pasaporte+Blockchain+(Reseñas+Reales)" alt="Prototipo Aurea - Pasaporte Blockchain" class="mockup-img rounded-lg shadow-lg mx-auto border-4 border-crema mb-2">
+                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=3.+Pasaporte+Blockchain+(Reseñas+Reales)" alt="Prototipo Aurea - Pasaporte Blockchain" class="mockup-img shadow-lg mx-auto border-4 border-crema mb-2">
                      <p class="text-sm font-semibold text-ladrillo">3. Revisa Historial Inmutable</p>
                  </div>
                   <div class="mockup-container text-center fade-in observed" style="animation-delay: 0.8s;">
-                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=4.+Reserva+con+Pago+Seguro+(Escrow)" alt="Prototipo Aurea - Pago Seguro" class="mockup-img rounded-lg shadow-lg mx-auto border-4 border-crema mb-2">
+                     <img src="https://placehold.co/200x400/F8E88C/5A0E14?text=4.+Reserva+con+Pago+Seguro+(Escrow)" alt="Prototipo Aurea - Pago Seguro" class="mockup-img shadow-lg mx-auto border-4 border-crema mb-2">
                      <p class="text-sm font-semibold text-ladrillo">4. Reserva con Garantía</p>
                  </div>
              </div>
              <p class="mt-8 text-lg text-center text-claro fade-in observed" style="animation-delay: 1.0s;">La tecnología creando transparencia absoluta y eliminando el miedo.</p>
         </section>
 
-        <!-- Diapositiva 8: Modelo de Negocio -->
+        <!-- Diapositiva 7: Modelo de Negocio -->
         <section id="modelo-negocio" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
              <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Modelo Híbrido: Valor para Todos, Ingresos Diversificados</h2>
              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                  <div class="fade-in observed" style="animation-delay: 0.2s;">
-                    <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso:</h3>
-                    <ul class="list-none space-y-3">
-                         <li class="p-4 bg-crema rounded shadow transition-shadow hover:shadow-md">
-                             <b class="text-ladrillo">Comisión Profesional:</b> Variable (15% Free -> 6% Premium). Paga al generar ingreso.
+                    <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso Principales:</h3>
+                    <ul class="list-none space-y-1">
+                         <li class="revenue-item">
+                             <b class="text-ladrillo">Comisión Profesional:</b> Variable (<b>15%</b> Plan Free, <b>10%</b> Growth, <b>6%</b> Premium). El profesional paga al generar ingresos.
                          </li>
-                         <li class="p-4 bg-crema rounded shadow transition-shadow hover:shadow-md">
-                             <b class="text-ladrillo">Suscripción B2B:</b> Freemium (S/0, S/29, S/49) con acceso a IA/IoT. Ingreso recurrente.
+                         <li class="revenue-item">
+                             <b class="text-ladrillo">Suscripción B2B (Profesional):</b> Modelo Freemium con tiers:
+                             <ul class="list-disc list-inside ml-4 text-sm text-oscuro">
+                                 <li><b>Free (S/0):</b> Perfil básico, comisión 15%.</li>
+                                 <li><b>Growth (S/29/mes):</b> Comisión reducida (10%), analytics básicos.</li>
+                                 <li><b>Premium (S/49/mes):</b> Comisión mínima (6%), acceso a IA (Chrono-Booking), datos IoT, visibilidad top.</li>
+                             </ul>
                          </li>
-                          <li class="p-4 bg-crema rounded shadow transition-shadow hover:shadow-md">
-                             <b class="text-ladrillo">Suscripción B2C (Opcional):</b> AureaPlus (S/9) para RA, descuentos. Monetiza usuarias <i>premium</i>.
+                          <li class="revenue-item">
+                             <b class="text-ladrillo">Suscripción B2C (Cliente - Opcional):</b>
+                              <ul class="list-disc list-inside ml-4 text-sm text-oscuro">
+                                 <li><b>Free:</b> Búsqueda y reserva estándar.</li>
+                                 <li><b>AureaPlus (S/9/mes):</b> Acceso a RA ilimitado (GlamTry), descuentos exclusivos (financiados por Aurea), prioridad agenda, más Beauty Tokens.</li>
+                              </ul>
                          </li>
-                          <li class="p-4 bg-crema rounded shadow transition-shadow hover:shadow-md">
-                             <b class="text-ladrillo">Otros:</b> Comisión Marketplace (8%), Publicidad B2B.
+                         <li class="revenue-item">
+                             <b class="text-ladrillo">Otros Flujos:</b> Comisión Marketplace B2B (8% sobre insumos), Publicidad segmentada B2B.
                          </li>
                     </ul>
                  </div>
@@ -325,61 +392,105 @@
                         <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Plin</span>
                         <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Niubiz</span>
                         <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Visa/MC</span>
+                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">AMEX</span>
                          <span class="bg-borgona text-crema px-3 py-1 rounded-full text-sm flex items-center"><span class="icon-token mr-1"></span>Tokens (BCP Ready)</span>
                      </div>
-                      <p class="mt-6 text-oscuro">Aceptamos todos los pagos locales y estamos listos para integrar tokens digitales, alineados con la innovación del BCP.</p>
+                      <p class="mt-6 text-oscuro">Aceptamos todos los pagos locales (incluyendo AMEX) y estamos listos para integrar tokens digitales, alineados con la innovación del BCP.</p>
                  </div>
              </div>
         </section>
 
-         <!-- Diapositiva 9: Estrategia de Crecimiento y Fidelización -->
+         <!-- Diapositiva 8: Estrategia de Crecimiento y Fidelización -->
         <section id="crecimiento" class="min-h-screen flex flex-col justify-center bg-crema rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
             <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Creando un Ecosistema Leal y Confiable</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.2s;">
                     <span class="icon-token text-4xl text-borgona mb-3 inline-block"></span>
                     <h3 class="text-xl font-semibold text-ladrillo mb-2">Tecno-Lealtad</h3>
-                    <p class="text-oscuro"><b>Beauty Tokens</b> (Blockchain) para recompensas. <b>Pasaporte Blockchain</b> como activo de retención.</p>
+                    <p class="text-oscuro"><b>Beauty Tokens VIP</b> (Blockchain) con tiers y beneficios. <b>Pasaporte Blockchain</b> como activo de retención (alto costo de salida).</p>
                 </div>
                 <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.4s;">
                      <span class="icon-seal text-4xl text-borgona mb-3 inline-block"></span>
                     <h3 class="text-xl font-semibold text-ladrillo mb-2">Confianza Externa</h3>
-                    <p class="text-oscuro"><b>Convenios</b> con entidades para <b>Certificaciones de Higiene</b> (IoT/IA) validadas.</p>
+                    <p class="text-oscuro"><b>Convenios</b> con entidades para validar <b>Certificaciones de Higiene</b> (escalonadas: IA -> IoT -> Partner Oficial).</p>
                 </div>
                  <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.6s;">
                      <span class="icon-event text-4xl text-borgona mb-3 inline-block"></span>
                      <h3 class="text-xl font-semibold text-ladrillo mb-2">Comunidad & Marketing</h3>
-                     <p class="text-oscuro"><b>Patrocinios</b> de marcas y <b>Eventos</b> ("Aurea Fest") para generar visibilidad y confianza <i>offline</i>.</p>
+                     <p class="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
                  </div>
             </div>
              <p class="mt-8 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
         </section>
 
-        <!-- Diapositiva 10: Potencial de Mercado -->
-        <section id="mercado" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
-            <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Oportunidad de Mercado: S/ 10 Mil Millones Esperando Confianza</h2>
-            <!-- Representación visual TAM-SAM-SOM con Divs -->
-            <div class="relative w-full max-w-lg mx-auto h-80 flex items-center justify-center fade-in observed" style="animation-delay: 0.2s;">
-                <div class="absolute rounded-full border-4 border-ladrillo opacity-30 animate-pulse" style="width: 100%; height: 100%;"></div>
-                <div class="absolute rounded-full border-4 border-borgona opacity-50 animate-pulse" style="width: 75%; height: 75%; animation-delay: 0.5s;"></div>
-                <div class="absolute rounded-full bg-tierra flex flex-col items-center justify-center text-center p-4 shadow-lg" style="width: 50%; height: 50%;">
-                    <h3 class="font-bold text-ladrillo text-lg">SOM (Lima)</h3>
-                    <p class="text-2xl font-bold text-white">S/ 500 M</p>
-                    <p class="text-sm text-ladrillo">(1.5M 'Sofías')</p>
+        <!-- Diapositiva 9: El Equipo Fundador (Nueva Posición) -->
+        <section id="equipo" class="relative min-h-screen flex flex-col justify-center bg-cover bg-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
+                 style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva4.png');">
+             <div class="bg-image-overlay bg-tierra bg-opacity-70 rounded-lg"></div>
+             <div class="content-behind-image w-full">
+                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-10 text-center fade-in observed">El Equipo Apasionado Detrás de Aurea</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
+                    <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.2s;">
+                        <div class="card-content">
+                            <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=MM" alt="Marilin Medina" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
+                            <h3 class="font-semibold text-ladrillo">Marilin Medina</h3>
+                            <p class="text-sm text-borgona">CEO</p>
+                        </div>
+                        <div class="details"><b>Liderazgo</b>, <b>Visión Estratégica</b>, Alianzas</div>
+                    </div>
+                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.4s;">
+                        <div class="card-content">
+                            <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=EM" alt="Eric Mozombite" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
+                            <h3 class="font-semibold text-ladrillo">Eric Mozombite</h3>
+                            <p class="text-sm text-borgona">CTO</p>
+                        </div>
+                        <div class="details">Desarrollo Plataforma, <b>Arquitectura Blockchain & IA</b></div>
+                    </div>
+                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.6s;">
+                        <div class="card-content">
+                             <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=AR" alt="Ashly Rosas" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
+                             <h3 class="font-semibold text-ladrillo">Ashly Rosas</h3>
+                             <p class="text-sm text-borgona">CMO</p>
+                        </div>
+                        <div class="details"><b>Estrategia de Marca</b>, Adquisición de Usuarios, Crecimiento</div>
+                    </div>
+                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.8s;">
+                        <div class="card-content">
+                             <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=CT" alt="Celeste Taya" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
+                             <h3 class="font-semibold text-ladrillo">Celeste Taya</h3>
+                             <p class="text-sm text-borgona">COO</p>
+                        </div>
+                        <div class="details">Operaciones, <b>Procesos de Verificación</b>, Soporte</div>
+                    </div>
+                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 1.0s;">
+                         <div class="card-content">
+                            <img src="https://placehold.co/150x150/8C1C3D/FFFFFF?text=MT" alt="Milagros Tornero" class="w-24 h-24 rounded-full mx-auto mb-3 border-4 border-borgona object-cover">
+                            <h3 class="font-semibold text-ladrillo">Milagros Tornero</h3>
+                            <p class="text-sm text-borgona">CFO</p>
+                         </div>
+                        <div class="details"><b>Modelo Financiero</b>, Inversión, Sostenibilidad</div>
+                    </div>
                 </div>
-                 <!-- Textos explicativos alrededor -->
-                 <div class="absolute top-0 left-0 transform -translate-x-1/4 -translate-y-1/2 bg-white p-2 rounded shadow text-center fade-in observed" style="animation-delay: 0.4s;">
-                    <h4 class="font-semibold text-ladrillo text-sm">TAM (LATAM)</h4>
-                    <p class="text-lg font-bold text-borgona">US$ 50B+</p>
-                    <p class="text-xs text-gray-600">([BUSCAR DATO] M 'Sofías')</p>
-                 </div>
-                  <div class="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/2 bg-white p-2 rounded shadow text-center fade-in observed" style="animation-delay: 0.6s;">
-                     <h4 class="font-semibold text-ladrillo text-sm">SAM (Perú)</h4>
-                     <p class="text-lg font-bold text-borgona">S/ 10 Mil M</p>
-                     <p class="text-xs text-gray-600">([BUSCAR DATO] M 'Sofías')</p>
-                  </div>
+                 <p class="mt-8 text-lg text-center text-oscuro font-semibold fade-in observed" style="animation-delay: 1.2s;">Combinamos la pasión por la belleza con la experiencia tecnológica y de negocio necesaria para hacer de Aurea un éxito.</p>
             </div>
-            <p class="mt-8 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Atacamos un mercado masivo con una necesidad insatisfecha de confianza y eficiencia, empezando por Lima.</p>
+        </section>
+
+        <!-- Diapositiva 10: Potencial de Mercado (Actualizado) -->
+        <section id="mercado" class="min-h-screen flex flex-col justify-center bg-white rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed">
+            <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Oportunidad de Mercado: Confianza = Crecimiento Exponencial</h2>
+            <div id="market-chart-container" class="relative w-full max-w-xl mx-auto h-96 flex items-center justify-center fade-in observed" style="animation-delay: 0.2s;">
+                <!-- Contenedor del Gráfico y Labels -->
+                <div class="relative chart-container" style="height: 350px; max-width: 450px;">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+            <!-- Detalles ocultos -->
+            <div id="market-details" class="mt-4 text-center text-oscuro text-sm h-16 transition-all duration-300">
+                <p id="tam-details" class="hidden"><b>Mercado Total (LATAM): US$ 22.5 Mil Millones.</b> Oportunidad teórica total en ~225M mujeres 20+, gasto potencial US$100/año.</p>
+                <p id="sam-details" class="hidden"><b>Mercado Disponible (Perú): US$ 513 Millones.</b> Mercado realista (45% penetración servicios) de ~5.1M usuarias activas, valor actual subestimado por informalidad.</p>
+                <p id="som-details" class="hidden"><b>Mercado Obtenible (Lima): US$ 1.6M - 15.6M.</b> Cuota realista (1%-10%) del SAM Lima (US$ 155.5M) como estrategia de entrada.</p>
+            </div>
+            <p class="mt-4 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Nuestro SOM inicial en Lima es significativo, con un potencial enorme al cerrar la "Brecha de Adopción de Servicios" (del 45% al 90%) en el SAM peruano.</p>
         </section>
 
         <!-- Diapositiva 11: Cierre y Llamada a la Acción -->
@@ -416,37 +527,184 @@
         });
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
                  if (!mobileMenu.classList.contains('hidden')) {
                      mobileMenu.classList.add('hidden');
+                 }
+                 const targetId = link.getAttribute('href');
+                 if (targetId.startsWith('#')) {
+                     e.preventDefault();
+                     const targetElement = document.querySelector(targetId);
+                     if (targetElement) {
+                         const headerOffset = document.querySelector('header').offsetHeight;
+                         const elementPosition = targetElement.getBoundingClientRect().top;
+                         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                         window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                     }
                  }
             });
         });
 
-        // Script Animaciones Scroll (Intersection Observer)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+        // Script interactividad Tech Cards (Acordeón)
+        document.querySelectorAll('.tech-card').forEach(card => {
+            const header = card.querySelector('h3');
+            if (header) {
+                header.addEventListener('click', () => {
+                    document.querySelectorAll('.tech-card.open').forEach(openCard => {
+                        if (openCard !== card) openCard.classList.remove('open');
+                    });
+                    card.classList.toggle('open');
+                });
+            }
+        });
 
+        // Script interactividad TAM-SAM-SOM
+        const marketLabels = document.querySelectorAll('.market-label, .market-circle[data-target]');
+        const marketDetailsContainer = document.getElementById('market-details');
+        const allDetailParagraphs = marketDetailsContainer.querySelectorAll('p');
+        let currentDetail = null;
+
+        marketLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                const targetId = label.getAttribute('data-target');
+                allDetailParagraphs.forEach(p => {
+                    if (p.id === targetId) {
+                        if(currentDetail === p) {
+                             p.classList.add('hidden');
+                             currentDetail = null;
+                        } else {
+                             p.classList.remove('hidden');
+                             currentDetail = p;
+                        }
+                    } else {
+                        p.classList.add('hidden');
+                    }
+                });
+                if (currentDetail) {
+                    marketDetailsContainer.style.height = currentDetail.offsetHeight + 'px';
+                } else {
+                    marketDetailsContainer.style.height = '4rem'; // Altura base
+                }
+            });
+        });
+
+
+        // Script Animaciones Scroll (Intersection Observer)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Descomentar si se quiere que la animación ocurra solo una vez
-                    // observer.unobserve(entry.target);
+                    // observer.unobserve(entry.target); // Descomentar para animar solo una vez
                 } else {
-                    // Descomentar si se quiere reiniciar la animación al salir de vista
-                    // entry.target.classList.remove('visible');
+                    entry.target.classList.remove('visible'); // Opcional: Reiniciar animación al salir
                 }
             });
         }, observerOptions);
-
         document.querySelectorAll('.fade-in').forEach(el => {
            el.classList.add('observed');
            observer.observe(el);
         });
+        
+        // --- Chart.js ---
+        // Espera a que el DOM esté completamente cargado para ejecutar el script del gráfico
+        document.addEventListener('DOMContentLoaded', () => {
+            const marketData = {
+                labels: [
+                    ['SOM (Lima)', '(Cuota 1%-10%)'], 
+                    ['Resto SAM (Perú)', '(45% Penetración)'], 
+                    ['Brecha de Adopción (Perú)', '(55% No Usuarios de Servicios)'], 
+                    ['Resto TAM (LATAM)']
+                ],
+                datasets: [{
+                    label: 'Potencial de Mercado (en M USD)',
+                    data: [
+                        155.5, // SAM Lima (base para SOM 1.6M-15.6M)
+                        (513 - 155.5), // Resto SAM Perú
+                        (1140 - 513), // Brecha de Adopción (TAM Perú - SAM Perú)
+                        (22500 - 1140) // Resto TAM LATAM
+                    ],
+                    backgroundColor: [
+                        'rgba(216, 166, 107, 1)',  // Tierra (SAM Lima)
+                        'rgba(140, 28, 61, 0.8)',  // Borgona (Resto SAM Perú)
+                        'rgba(248, 232, 140, 0.7)', // Crema (Brecha Adopción)
+                        'rgba(90, 14, 20, 0.5)'     // Ladrillo (Resto LATAM)
+                    ],
+                    borderColor: [
+                        '#FFFFFF',
+                        '#FFFFFF',
+                        '#FFFFFF',
+                        '#FFFFFF'
+                    ],
+                    borderWidth: 2
+                }]
+            };
+
+            const marketChartConfig = {
+                type: 'doughnut',
+                data: marketData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#1f2937', // text-oscuro
+                                font: { size: 12, family: 'Poppins' }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribución Potencial del Mercado (SAM/TAM en M USD)',
+                            color: '#5A0E14', // text-ladrillo
+                            font: { size: 16, family: 'Poppins', weight: '600' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact' }).format(context.parsed * 1000000);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            };
+
+            const marketChartCtx = document.getElementById('marketChart');
+            if (marketChartCtx) {
+                try {
+                     new Chart(marketChartCtx.getContext('2d'), marketChartConfig);
+                } catch (e) {
+                    console.error("Error al renderizar el gráfico de mercado:", e);
+                    marketChartCtx.parentElement.innerHTML = "<p class='text-red-500 text-center'>Error al cargar el gráfico.</p>";
+                }
+            } else {
+                console.error('Elemento canvas "marketChart" no encontrado.');
+                const chartContainer = document.getElementById('market-chart-container');
+                if (chartContainer) {
+                     chartContainer.innerHTML = "<p class='text-center text-red-500'>Error: Canvas 'marketChart' no encontrado.</p>";
+                }
+            }
+        });
+
     </script>
 </body>
 </html>
