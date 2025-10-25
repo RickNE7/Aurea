@@ -6,7 +6,7 @@
     <title>Aurea - Pitch para Inversionistas</title>
     <link rel="icon" href="https://raw.githubusercontent.com/RickNE7/Aurea/refs/heads/main/AUREA_biglogo_imagen.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- No se necesita Chart.js para el gráfico de mercado basado en CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -43,9 +43,9 @@
             height: 220px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding-top: 1rem;
+            justify-content: center; /* Centrado vertical */
+            align-items: center; /* Centrado horizontal */
+            /* padding-top: 1rem; REMOVIDO para centrar */
             cursor: pointer;
         }
         .team-card:hover {
@@ -53,15 +53,15 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         .team-card .initials-circle {
-            width: 6rem;
-            height: 6rem;
-            border-radius: 9999px;
-            margin-bottom: 0.75rem;
+            width: 6rem; /* w-24 */
+            height: 6rem; /* h-24 */
+            border-radius: 9999px; /* rounded-full */
+            margin-bottom: 0.75rem; /* mb-3 */
             border: 4px solid var(--color-borgona);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.25rem;
+            font-size: 2rem; /* Ajustado para "CEO" */
             font-weight: 600;
             color: var(--color-texto-claro);
             background-color: var(--color-borgona);
@@ -154,6 +154,7 @@
         }
          .bg-image-overlay-darker { background-color: rgba(0, 0, 0, 0.6); }
          .bg-image-overlay-lighter { background-color: rgba(255, 255, 255, 0.8); }
+         .bg-opacity-30 { background-color: rgba(255, 255, 255, 0.7); } /* 30% opacidad (70% transp) */
         .content-behind-image {
             position: relative;
             z-index: 2;
@@ -162,7 +163,7 @@
         /* Estilos Mockups */
         .mockup-container { perspective: 1000px; }
         .mockup-img { 
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
+            transition: transform 0.5s ease, box-shadow 0.3s ease; 
             border-radius: 1rem; 
             height: 320px; 
             width: 100%; 
@@ -260,8 +261,10 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 1rem;
+            opacity: 0.25; /* Transparencia 75% */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Añadida transition */
         }
-        .market-circle-inner:hover { transform: scale(1.05); }
+        .market-circle-inner:hover { transform: scale(1.05); opacity: 1; }
 
 
         .market-label-box {
@@ -291,7 +294,22 @@
         }
         #label-tam { top: 10%; left: 10%; transform: translate(-50%, -50%); }
         #label-sam { bottom: 10%; right: 10%; transform: translate(50%, 50%); }
-
+        /* Nuevo label para SOM */
+        #label-som {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 60;
+            background-color: var(--color-tierra);
+            border-color: var(--color-tierra);
+            opacity: 0.25; /* Transparencia 75% */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Añadida transition */
+        }
+        #label-som:hover { opacity: 1; }
+        #label-som .title { color: var(--color-ladrillo); font-weight: 600; font-size: 1rem; } /* Estilo para "SOM (Lima)" */
+        #label-som strong { color: var(--color-borgona); font-size: 1.5rem; } /* Color Borgoña para el monto */
+        #label-som .subtext { color: var(--color-texto-oscuro); font-size: 0.8rem; } /* Color oscuro para el texto */
+        
     </style>
 </head>
 <body class="bg-gray-100 text-oscuro">
@@ -347,10 +365,10 @@
             </div>
         </section>
 
-        <!-- Diapositiva 2: El Problema (Actualizado con Fondo) -->
+        <!-- Diapositiva 2: El Problema (Actualizado con Fondo y Opacidad) -->
         <section id="problema" class="relative min-h-screen flex flex-col justify-center bg-cover bg-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva2.png');">
-            <div class="bg-image-overlay bg-image-overlay-lighter rounded-lg"></div>
+            <div class="bg-image-overlay bg-white bg-opacity-70 rounded-lg"></div> <!-- 70% opacidad blanco = 30% opacidad imagen -->
             <div class="content-behind-image">
                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 9.3 Mil Millones Atrapados en la Desconfianza</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
@@ -373,13 +391,16 @@
             </div>
         </section>
 
-        <!-- Diapositiva 3: Nuestra Clienta (Actualizado con Fondo y Título) -->
+        <!-- Diapositiva 3: Nuestra Clienta (Actualizado con Fondo, Título y Opacidad) -->
         <section id="cliente" class="relative min-h-screen flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-claro rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva3.png');">
-            <div class="bg-image-overlay bg-ladrillo bg-opacity-75 rounded-lg"></div> <!-- Opacidad 75% = 25% transparente -->
+            <div class="bg-image-overlay bg-ladrillo bg-opacity-70 rounded-lg"></div> <!-- 70% opacidad ladrillo -->
             <div class="content-behind-image flex flex-col md:flex-row justify-center items-center w-full">
                 <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0">
-                     <img src="https://placehold.co/300x300/F8E88C/5A0E14?text=Sof%C3%ADa" alt="Buyer Persona Sofía" class="rounded-full mx-auto md:mx-0 shadow-lg w-48 h-48 md:w-64 md:h-64 object-cover border-4 border-crema fade-in observed">
+                     <!-- Círculo Borgoña 75% Transparente -->
+                     <div class="rounded-full mx-auto md:mx-0 shadow-lg w-48 h-48 md:w-64 md:h-64 border-4 border-crema fade-in observed bg-borgona bg-opacity-25 flex items-center justify-center">
+                         <span class="text-crema text-6xl font-bold">Sofía</span>
+                     </div>
                 </div>
                 <div class="md:w-2/3 md:pl-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-crema mb-4 fade-in observed" style="animation-delay: 0.2s;">La Joven Profesional Digital Frustrada</h2>
@@ -395,28 +416,28 @@
             </div>
         </section>
 
-        <!-- Diapositiva 4: La Solución (Actualizado con Fondo y Recuadro) -->
+        <!-- Diapositiva 4: La Solución (Actualizado con Fondo y 2 Recuadros) -->
         <section id="solucion" class="relative min-h-screen flex flex-col justify-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva5.png');">
             <div class="bg-image-overlay bg-tierra bg-opacity-70 rounded-lg"></div>
             <div class="content-behind-image">
                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center fade-in observed">Aurea: El Ecosistema de Confianza Verificada</h2>
                 <p class="text-xl text-center text-oscuro mb-8 fade-in observed" style="animation-delay: 0.2s;">Plataforma digital que <b>verifica</b> profesionales y <b>conecta</b> clientas con su <i>match</i> ideal.</p>
-                <!-- Recuadro Borgoña -->
-                <div class="bg-borgona p-6 md:p-8 rounded-lg shadow-xl fade-in observed" style="animation-delay: 0.4s;">
-                    <div class="flex flex-col md:flex-row justify-around items-center text-center">
-                        <div class="mb-6 md:mb-0">
-                            <h3 class="text-2xl font-semibold text-crema mb-2">Para Sofía:</h3>
-                            <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Cero Fricción</b></p>
-                            <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Confianza Absoluta</b></p>
-                            <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Descubrimiento Inteligente</b></p>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-semibold text-crema mb-2">Para Profesionales:</h3>
-                            <p class="text-tierra text-lg">✨ <b>Visibilidad</b></p>
-                            <p class="text-tierra text-lg">🛡️ <b>Reputación Verificada</b></p>
-                            <p class="text-tierra text-lg">📈 <b>Clientes Constantes</b></p>
-                        </div>
+                
+                <div class="flex flex-col md:flex-row justify-around items-stretch text-center gap-6">
+                    <!-- Recuadro 1: Para Sofía -->
+                    <div class="bg-borgona p-6 md:p-8 rounded-lg shadow-xl fade-in observed flex-1 flex flex-col justify-center" style="animation-delay: 0.4s;">
+                        <h3 class="text-2xl font-semibold text-crema mb-2">Para Sofía:</h3>
+                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Cero Fricción</b></p>
+                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Confianza Absoluta</b></p>
+                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Descubrimiento Inteligente</b></p>
+                    </div>
+                    <!-- Recuadro 2: Para Profesionales -->
+                    <div class="bg-borgona p-6 md:p-8 rounded-lg shadow-xl fade-in observed flex-1 flex flex-col justify-center" style="animation-delay: 0.6s;">
+                        <h3 class="text-2xl font-semibold text-crema mb-2">Para Profesionales:</h3>
+                        <p class="text-tierra text-lg">✨ <b>Visibilidad</b></p>
+                        <p class="text-tierra text-lg">🛡️ <b>Reputación Verificada</b></p>
+                        <p class="text-tierra text-lg">📈 <b>Clientes Constantes</b></p>
                     </div>
                 </div>
             </div>
@@ -557,10 +578,10 @@
                      <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.6s;">
                          <span class="icon-event text-4xl text-borgona mb-3 inline-block"></span>
                          <h3 class="text-xl font-semibold text-ladrillo mb-2">Comunidad & Marketing</h3>
-                         <p class="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
+                         <p class.="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
                      </div>
                 </div>
-                 <p class="mt-8 text-lg text-center text-oscuro fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
+                 <p class="mt-8 text-lg text-center text-oscuro font-semibold fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
             </div>
         </section>
 
@@ -588,7 +609,7 @@
                         </div>
                     </div>
                     
-                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.6s;" data-member="ashly">
+                     <div classA="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.6s;" data-member="ashly">
                         <div class="card-content">
                              <div class="initials-circle">CMO</div>
                              <h3 class="font-semibold text-ladrillo">Ashly Rosas</h3>
@@ -616,7 +637,7 @@
             </div>
         </section>
 
-        <!-- Diapositiva 10: Potencial de Mercado (Actualizado con TAM-SAM-SOM) -->
+        <!-- Diapositiva 10: Potencial de Mercado (Actualizado con TAM-SAM-SOM y Fondo) -->
         <section id="mercado" class="relative min-h-screen flex flex-col justify-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva10.png');">
             <div class="bg-image-overlay bg-white bg-opacity-80 rounded-lg"></div>
@@ -630,7 +651,7 @@
                     <div class="market-circle-bg market-circle-middle"></div>
                     <!-- Círculo más pequeño: SOM -->
                     <div class="market-circle-inner market-label-box" data-target="som-details">
-                        <span class="font-semibold text-lg" style="color: var(--color-ladrillo);">SOM (Lima)</span>
+                        <span class="font-semibold text-lg text-ladrillo" style="color: var(--color-ladrillo);">SOM (Lima)</span>
                         <strong style="color: white; font-size: 1.5rem;">US$ 1.6M - 15.6M</strong>
                         <span class="text-xs text-white opacity-80">(Cuota 1%-10% SAM Lima)</span>
                     </div>
@@ -658,7 +679,7 @@
             </div>
         </section>
 
-        <!-- Diapositiva 11: Cierre y Llamada a la Acción -->
+        <!-- Diapositiva 11: Cierre y Llamada a la Acción (Actualizado) -->
         <section id="cierre" class="relative min-h-screen flex flex-col justify-center items-center text-center rounded-lg shadow-xl p-8 md:p-12 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva11.png');">
             <div class="bg-image-overlay bg-ladrillo bg-opacity-70 rounded-lg"></div>
@@ -677,9 +698,7 @@
                     <span class="icon-graph" title="Alcanzar 50k Usuarias"></span>
                 </div>
                 <p class="text-xl text-tierra font-light mb-8 fade-in observed" style="animation-delay: 0.8s;">Únete a nosotros para construir el futuro de la belleza verificada.</p>
-                <div class="fade-in observed" style="animation-delay: 1.0s;">
-                     <p class="text-crema">[Email de Contacto] | [Sitio Web Propuesto]</p>
-                </div>
+                <!-- Línea de contacto eliminada -->
             </div>
         </section>
 
@@ -813,7 +832,7 @@
                     modalContentInner.innerHTML = `
                         <h3 class="text-3xl font-bold text-ladrillo mb-2">${member.name}</h3>
                         <p class="text-xl font-semibold text-borgona mb-4">${member.role}</p>
-                        <div class="text-left text-oscuro space-y-2">
+                        <div class"text-left text-oscuro space-y-2">
                             <p>${member.qualities.replace(/\n/g, '<br>')}</p>
                         </div>
                     `;
