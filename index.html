@@ -261,7 +261,7 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 1rem;
-            /* opacity: 0.25; */ /* Removido */
+            opacity: 1; /* SOM Visible por defecto */
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .market-circle-inner:hover { transform: scale(1.05); }
@@ -303,10 +303,10 @@
             background-color: white; /* Fondo blanco */
             color: var(--color-texto-oscuro); /* Texto oscuro */
             border-color: var(--color-tierra); /* Borde tierra */
-            /* opacity: 0.25; */ /* Removido */
+            opacity: 1; /* SOM Visible por defecto */
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        #label-som:hover { opacity: 1; }
+        #label-som:hover { transform: translate(-50%, -50%) scale(1.05); }
         #label-som .title { color: var(--color-ladrillo); font-weight: 600; font-size: 1rem; }
         #label-som strong { color: var(--color-borgona); font-size: 1.5rem; }
         #label-som .subtext { color: var(--color-texto-oscuro); font-size: 0.8rem; }
@@ -667,10 +667,10 @@
                         <span class="text-xs text-gray-500">~5.1M Sofías (45% penetración)</span>
                     </div>
                     <!-- NUEVO Label para SOM, centrado -->
-                    <div id="label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 60; background-color: var(--color-tierra); border-color: var(--color-tierra); opacity: 1;"> <!-- Visible por defecto -->
+                    <div id="label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 60; background-color: white; border-color: var(--color-tierra); opacity: 1;"> <!-- Visible por defecto -->
                         <span class="title" style="color: var(--color-ladrillo); font-weight: 600; font-size: 1rem;">SOM (Lima)</span><br>
                         <strong class="text-borgona" style="font-size: 1.5rem; color: var(--color-borgona);">US$ 1.6M - 15.6M</strong><br>
-                        <span class="subtext" style="color: var(--color-texto-oscuro); font-size: 0.8rem;">(Cuota 1%-10% SAM Lima)</span>
+                        <span class="subtext" style="color: #6b7280; font-size: 0.75rem;">(Cuota 1%-10% SAM Lima)</span>
                     </div>
                 </div>
                 
