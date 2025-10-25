@@ -261,10 +261,10 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 1rem;
-            opacity: 0.25; /* Transparencia 75% */
-            transition: opacity 0.3s ease, transform 0.3s ease; /* Añadida transition */
+            /* opacity: 0.25; */ /* Removido por solicitud */
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        .market-circle-inner:hover { transform: scale(1.05); opacity: 1; }
+        .market-circle-inner:hover { transform: scale(1.05); }
 
 
         .market-label-box {
@@ -302,8 +302,8 @@
             z-index: 60;
             background-color: var(--color-tierra);
             border-color: var(--color-tierra);
-            opacity: 0.25; /* Transparencia 75% */
-            transition: opacity 0.3s ease, transform 0.3s ease; /* Añadida transition */
+            /* opacity: 0.25; */ /* Removido por solicitud */
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         #label-som:hover { opacity: 1; }
         #label-som .title { color: var(--color-ladrillo); font-weight: 600; font-size: 1rem; } /* Estilo para "SOM (Lima)" */
@@ -578,7 +578,7 @@
                      <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.6s;">
                          <span class="icon-event text-4xl text-borgona mb-3 inline-block"></span>
                          <h3 class="text-xl font-semibold text-ladrillo mb-2">Comunidad & Marketing</h3>
-                         <p class.="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
+                         <p class="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
                      </div>
                 </div>
                  <p class="mt-8 text-lg text-center text-oscuro font-semibold fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
@@ -609,7 +609,7 @@
                         </div>
                     </div>
                     
-                     <div classA="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.6s;" data-member="ashly">
+                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in observed" style="animation-delay: 0.6s;" data-member="ashly">
                         <div class="card-content">
                              <div class="initials-circle">CMO</div>
                              <h3 class="font-semibold text-ladrillo">Ashly Rosas</h3>
@@ -650,10 +650,8 @@
                     <!-- Círculo intermedio: SAM -->
                     <div class="market-circle-bg market-circle-middle"></div>
                     <!-- Círculo más pequeño: SOM -->
-                    <div class="market-circle-inner market-label-box" data-target="som-details">
-                        <span class="font-semibold text-lg text-ladrillo" style="color: var(--color-ladrillo);">SOM (Lima)</span>
-                        <strong style="color: white; font-size: 1.5rem;">US$ 1.6M - 15.6M</strong>
-                        <span class="text-xs text-white opacity-80">(Cuota 1%-10% SAM Lima)</span>
+                    <div class="market-circle-inner" data-target="som-details">
+                        <!-- Contenido removido para poner en label flotante -->
                     </div>
 
                     <!-- Etiquetas flotantes (Datos Actualizados) -->
@@ -666,6 +664,12 @@
                         SAM (Perú)<br>
                         <strong>US$ 513 M</strong><br>
                         <span class="text-xs text-gray-500">~5.1M Sofías (45% penetración)</span>
+                    </div>
+                    <!-- NUEVO Label para SOM, centrado -->
+                    <div id="label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <span class="title">SOM (Lima)</span>
+                        <strong>US$ 1.6M - 15.6M</strong>
+                        <span class="subtext">(Cuota 1%-10% SAM Lima)</span>
                     </div>
                 </div>
                 
@@ -832,7 +836,7 @@
                     modalContentInner.innerHTML = `
                         <h3 class="text-3xl font-bold text-ladrillo mb-2">${member.name}</h3>
                         <p class="text-xl font-semibold text-borgona mb-4">${member.role}</p>
-                        <div class"text-left text-oscuro space-y-2">
+                        <div class="text-left text-oscuro space-y-2">
                             <p>${member.qualities.replace(/\n/g, '<br>')}</p>
                         </div>
                     `;
