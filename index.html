@@ -261,7 +261,7 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 1rem;
-            /* opacity: 0.25; */ /* Removido por solicitud */
+            /* opacity: 0.25; */ /* Removido */
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .market-circle-inner:hover { transform: scale(1.05); }
@@ -300,15 +300,16 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 60;
-            background-color: var(--color-tierra);
-            border-color: var(--color-tierra);
-            /* opacity: 0.25; */ /* Removido por solicitud */
+            background-color: white; /* Fondo blanco */
+            color: var(--color-texto-oscuro); /* Texto oscuro */
+            border-color: var(--color-tierra); /* Borde tierra */
+            /* opacity: 0.25; */ /* Removido */
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
         #label-som:hover { opacity: 1; }
-        #label-som .title { color: var(--color-ladrillo); font-weight: 600; font-size: 1rem; } /* Estilo para "SOM (Lima)" */
-        #label-som strong { color: var(--color-borgona); font-size: 1.5rem; } /* Color Borgoña para el monto */
-        #label-som .subtext { color: var(--color-texto-oscuro); font-size: 0.8rem; } /* Color oscuro para el texto */
+        #label-som .title { color: var(--color-ladrillo); font-weight: 600; font-size: 1rem; }
+        #label-som strong { color: var(--color-borgona); font-size: 1.5rem; }
+        #label-som .subtext { color: var(--color-texto-oscuro); font-size: 0.8rem; }
         
     </style>
 </head>
@@ -561,9 +562,9 @@
          <!-- Diapositiva 8: Estrategia de Crecimiento y Fidelización (Actualizado con Fondo) -->
         <section id="crecimiento" class="relative min-h-screen flex flex-col justify-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva9.png');">
-            <div class="bg-image-overlay bg-crema bg-opacity-80 rounded-lg"></div>
+            <div class="bg-image-overlay bg-image-overlay-darker rounded-lg"></div> <!-- Overlay oscuro para texto blanco -->
             <div class="content-behind-image">
-                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Creando un Ecosistema Leal y Confiable</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-crema mb-8 text-center fade-in observed">Creando un Ecosistema Leal y Confiable</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in observed" style="animation-delay: 0.2s;">
                         <span class="icon-token text-4xl text-borgona mb-3 inline-block"></span>
@@ -581,7 +582,7 @@
                          <p class="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
                      </div>
                 </div>
-                 <p class="mt-8 text-lg text-center text-oscuro font-semibold fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
+                 <p class="mt-8 text-lg text-center text-claro font-semibold fade-in observed" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
             </div>
         </section>
 
@@ -650,7 +651,7 @@
                     <!-- Círculo intermedio: SAM -->
                     <div class="market-circle-bg market-circle-middle"></div>
                     <!-- Círculo más pequeño: SOM -->
-                    <div class="market-circle-inner" data-target="som-details">
+                    <div class="market-circle-inner market-circle-bg" data-target="som-details" style="opacity: 1;"> <!-- SOM Visible por defecto -->
                         <!-- Contenido removido para poner en label flotante -->
                     </div>
 
@@ -666,10 +667,10 @@
                         <span class="text-xs text-gray-500">~5.1M Sofías (45% penetración)</span>
                     </div>
                     <!-- NUEVO Label para SOM, centrado -->
-                    <div id="label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <span class="title">SOM (Lima)</span>
-                        <strong>US$ 1.6M - 15.6M</strong>
-                        <span class="subtext">(Cuota 1%-10% SAM Lima)</span>
+                    <div id="label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 60; background-color: var(--color-tierra); border-color: var(--color-tierra); opacity: 1;"> <!-- Visible por defecto -->
+                        <span class="title" style="color: var(--color-ladrillo); font-weight: 600; font-size: 1rem;">SOM (Lima)</span><br>
+                        <strong class="text-borgona" style="font-size: 1.5rem; color: var(--color-borgona);">US$ 1.6M - 15.6M</strong><br>
+                        <span class="subtext" style="color: var(--color-texto-oscuro); font-size: 0.8rem;">(Cuota 1%-10% SAM Lima)</span>
                     </div>
                 </div>
                 
