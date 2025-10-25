@@ -45,7 +45,6 @@
             flex-direction: column;
             justify-content: center; /* Centrado vertical */
             align-items: center; /* Centrado horizontal */
-            /* padding-top: 1rem; REMOVIDO para centrar */
             cursor: pointer;
         }
         .team-card:hover {
@@ -70,6 +69,10 @@
         .team-card:hover .initials-circle {
             transform: scale(1.1);
         }
+        /* Estilos .card-content (removidos padding y transform) */
+         .team-card .card-content {
+             transition: transform 0.3s ease;
+         }
 
         /* Modal del Equipo */
         .modal-overlay {
