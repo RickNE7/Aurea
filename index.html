@@ -11,7 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth; 
+            scroll-snap-type: y mandatory; /* Hace que se ajuste a cada diapositiva */
+        }
         body { font-family: 'Poppins', sans-serif; }
 
         /* Paleta Aurea */
@@ -69,10 +72,6 @@
         .team-card:hover .initials-circle {
             transform: scale(1.1);
         }
-        /* Estilos .card-content (removidos padding y transform) */
-         .team-card .card-content {
-             transition: transform 0.3s ease;
-         }
 
         /* Modal del Equipo */
         .modal-overlay {
@@ -144,7 +143,7 @@
         .icon-seal::before { content: '📜'; }
         .icon-event::before { content: '🎉'; }
 
-        /* Overlay Imágenes Fondo */
+        /* Overlay Imágenes Fondo (Opacidad aumentada) */
         .bg-image-overlay {
             position: absolute;
             top: 0;
@@ -155,9 +154,10 @@
             z-index: 1;
             border-radius: 0.5rem;
         }
-         .bg-image-overlay-darker { background-color: rgba(0, 0, 0, 0.6); }
-         .bg-image-overlay-lighter { background-color: rgba(255, 255, 255, 0.8); }
-         .bg-opacity-30 { background-color: rgba(255, 255, 255, 0.7); } /* 30% opacidad (70% transp) */
+         .bg-image-overlay-darker { background-color: rgba(0, 0, 0, 0.8); } /* Aumentado de 0.6 a 0.8 */
+         .bg-image-overlay-lighter { background-color: rgba(255, 255, 255, 0.9); } /* Aumentado de 0.8 a 0.9 */
+         .bg-opacity-80 { background-color: rgba(255, 255, 255, 0.8); } /* Estandarizado a 80% */
+         .bg-opacity-70 { background-color: rgba(0, 0, 0, 0.7); } /* Opacidad base para fondos oscuros */
         .content-behind-image {
             position: relative;
             z-index: 2;
@@ -180,17 +180,24 @@
             box-shadow: 0 20px 25px -5px rgba(248, 232, 140, 0.3), 0 10px 10px -5px rgba(248, 232, 140, 0.2); /* Sombra "reluciente" crema */
         }
 
-        /* Altura mínima secciones */
+        /* Altura de Pantalla Completa para Secciones */
         section {
-            min-height: 90vh;
+            height: 100vh; /* Cada diapositiva ocupa el 100% de la altura */
             padding-top: 5rem;
             padding-bottom: 4rem;
             scroll-margin-top: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            scroll-snap-align: start; /* Se ajusta al inicio de la sección */
         }
-        #titulo { min-height: 100vh; padding-top: 0; padding-bottom: 0; scroll-margin-top: 0;}
+        #titulo { 
+            height: 100vh; 
+            padding-top: 0; 
+            padding-bottom: 0; 
+            scroll-margin-top: 0;
+            scroll-snap-align: start;
+        }
 
         /* Estilo interactivo para secciones de tecnología */
         .tech-card { cursor: pointer; }
@@ -372,7 +379,7 @@
         <!-- Diapositiva 2: El Problema (Actualizado con Fondo y Opacidad) -->
         <section id="problema" class="relative min-h-screen flex flex-col justify-center bg-cover bg-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva2.png');">
-            <div class="bg-image-overlay bg-white bg-opacity-70 rounded-lg"></div> <!-- 70% opacidad blanco = 30% opacidad imagen -->
+            <div class="bg-image-overlay bg-white bg-opacity-80 rounded-lg"></div> <!-- 80% opacidad blanco -->
             <div class="content-behind-image">
                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 9.3 Mil Millones Atrapados en la Desconfianza</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
@@ -398,7 +405,7 @@
         <!-- Diapositiva 3: Nuestra Clienta (Actualizado con Fondo, Título y Opacidad) -->
         <section id="cliente" class="relative min-h-screen flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-claro rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva3.png');">
-            <div class="bg-image-overlay bg-ladrillo bg-opacity-70 rounded-lg"></div> <!-- 70% opacidad ladrillo -->
+            <div class="bg-image-overlay bg-ladrillo bg-opacity-80 rounded-lg"></div> <!-- 80% opacidad ladrillo -->
             <div class="content-behind-image flex flex-col md:flex-row justify-center items-center w-full">
                 <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0">
                      <!-- Círculo Borgoña 75% Transparente -->
@@ -423,7 +430,7 @@
         <!-- Diapositiva 4: La Solución (Actualizado con Fondo y 2 Recuadros) -->
         <section id="solucion" class="relative min-h-screen flex flex-col justify-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva5.png');">
-            <div class="bg-image-overlay bg-tierra bg-opacity-70 rounded-lg"></div>
+            <div class="bg-image-overlay bg-tierra bg-opacity-80 rounded-lg"></div> <!-- 80% opacidad tierra -->
             <div class="content-behind-image">
                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center fade-in observed">Aurea: El Ecosistema de Confianza Verificada</h2>
                 <p class="text-xl text-center text-oscuro mb-8 fade-in observed" style="animation-delay: 0.2s;">Plataforma digital que <b>verifica</b> profesionales y <b>conecta</b> clientas con su <i>match</i> ideal.</p>
@@ -486,7 +493,7 @@
         <!-- Diapositiva 6: Prototipo Digital (Actualizado) -->
         <section id="prototipo" class="relative min-h-screen flex flex-col justify-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed bg-cover bg-center"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva7.png');">
-             <div class="bg-image-overlay bg-tierra bg-opacity-70 rounded-lg"></div>
+             <div class="bg-image-overlay bg-tierra bg-opacity-80 rounded-lg"></div> <!-- 80% opacidad tierra -->
              <div class="content-behind-image">
                  <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center fade-in observed">Así Funciona la Confianza: Un Vistazo a Aurea</h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -592,7 +599,7 @@
         <!-- Diapositiva 9: El Equipo Fundador (Nueva Posición e Interactivo) -->
         <section id="equipo" class="relative min-h-screen flex flex-col justify-center bg-cover bg-center rounded-lg shadow-lg p-8 md:p-12 mb-16 fade-in observed"
                  style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva4.png');">
-             <div class="bg-image-overlay bg-tierra bg-opacity-70 rounded-lg"></div>
+             <div class="bg-image-overlay bg-tierra bg-opacity-80 rounded-lg"></div> <!-- 80% opacidad tierra -->
              <div class="content-behind-image w-full">
                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-10 text-center fade-in observed">El Equipo Apasionado Detrás de Aurea</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
