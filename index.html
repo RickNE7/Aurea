@@ -1,1007 +1,592 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUREA: Trayectoria de Innovación (EA2 + EA3)</title>
-    <link rel="icon" href="https://raw.githubusercontent.com/RickNE7/Aurea/refs/heads/main/AUREA_biglogo_imagen.ico" type="image/x-icon">
+    <title>SPA Interactiva - EA3 Proyecto Aurea</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Paleta de colores: Valkiria Rose (#C67891, #A33C54, #7D142D, #4A081F) -->
+    
+    <!-- 
+    Plan de Estructura de la Aplicación: 
+    La arquitectura sigue los 8 pasos formales del informe EA3.
+    Una barra de navegación fija (sticky) permite la interactividad.
+    Paso 1: Problema, Mercado y Perfil (Buyer Persona).
+    Paso 2: Objetivos (General y Específico).
+    Paso 3: Tipo de Investigación (Cuali/Cuanti).
+    Paso 4: Hipótesis (El dolor es la inseguridad económica).
+    Paso 5: Muestra (Teórica vs. Real).
+    Paso 6: Técnicas (Enlaces a Herramientas).
+    Paso 7: Análisis de Datos (Hallazgos Cuali y Cuanti, incl. gráficos y videos).
+    Paso 8: Conclusiones (Hipótesis Aceptada y Recomendaciones).
+    -->
+    
+    <!-- 
+    Visualización y Elección de Contenido:
+    - Todos los pasos están en secciones <section> con un ID (ej. id="paso1") para la navegación.
+    - Mercado (S/ 9.3B): Objetivo: Informar. Método: HTML/Tailwind.
+    - Buyer Persona: Objetivo: Informar. Método: Tarjeta HTML (2 columnas Pains/Gains).
+    - Objetivos: Objetivo: Organizar. Método: Lista HTML estilizada.
+    - Tipo de Inv: Objetivo: Comparar. Método: Tarjetas HTML (con 'flex' para altura igual).
+    - Muestra (Teórica vs. Real): Objetivo: Comparar. Método: Tarjetas HTML (con 'flex' para altura igual).
+    - Herramientas (Enlaces): Objetivo: Organizar. Método: Lista de enlaces HTML.
+    - Análisis Cuali: Objetivo: Comparar. Método: Tabla HTML.
+    - YouTube Miniaturas: Objetivo: Informar. Método: Grid de Imágenes HTML.
+    - P1: Riesgo (60%): Objetivo: Comparar (Composición). Método: Gráfica de Dona (Chart.js/Canvas). (Cumple 'torta')
+    - P1.b: Impacto (70%): Objetivo: Comparar (Distribución). Método: Gráfica de Barras (Chart.js/Canvas). (Cumple 'barra')
+    - P2: Deseo (60%): Objetivo: Comparar (Composición). Método: Gráfica de Torta (Chart.js/Canvas). (Cumple 'torta')
+    - Recomendaciones: Objetivo: Organizar. Método: 3 Tarjetas HTML (con 'flex' para altura igual).
+    -->
+
     <style>
-        html { 
-            scroll-behavior: smooth; 
-            scroll-snap-type: y mandatory;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEFBF6; /* Crema muy claro */
+            padding-top: 64px; /* Espacio para el header fijo */
         }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: #f3f4f6; /* Color de fondo gris claro para la página */
-        }
-        :root {
-            --color-crema: #F8E88C;
-            --color-tierra: #D8A66B;
-            --color-borgona: #8C1C3D;
-            --color-ladrillo: #5A0E14;
-            --color-texto-oscuro: #1f2937;
-            --color-texto-claro: #f9fafb;
-        }
-        .bg-crema { background-color: var(--color-crema); }
-        .bg-tierra { background-color: var(--color-tierra); }
-        .bg-borgona { background-color: var(--color-borgona); }
-        .bg-ladrillo { background-color: var(--color-ladrillo); }
-        .text-crema { color: var(--color-crema); }
-        .text-tierra { color: var(--color-tierra); }
-        .text-borgona { color: var(--color-borgona); }
-        .text-ladrillo { color: var(--color-ladrillo); }
-        .text-oscuro { color: var(--color-texto-oscuro); }
-        .text-claro { color: var(--color-texto-claro); }
-        .border-borgona { border-color: var(--color-borgona); }
-
-        /* Estilos de Diapositiva (Contenedor de Pantalla Completa) */
-        section {
-            height: 100vh; /* 100% de la altura del viewport */
-            height: 100dvh; /* Altura dinámica para móviles */
-            scroll-margin-top: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; /* Centra el slide */
-            scroll-snap-align: start;
+        .chart-container {
             position: relative;
-            padding: 1rem;
-        }
-        
-        /* Contenido de Slide 16:9 */
-        .slide-content {
             width: 100%;
-            max-width: 1400px;
-            aspect-ratio: 16 / 9;
-            padding: 2.5rem 3rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Altura base responsiva */
+            max-height: 320px;
         }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 320px;
+                max-height: 350px;
+            }
+        }
+        /* Paleta de colores */
+        .color-dark-maroon { color: #4A081F; }
+        .color-maroon { color: #7D142D; }
+        .color-deep-pink { color: #A33C54; }
+        .color-light-rose { color: #C67891; }
         
-        /* Fondo de diapositivas (compartido por ambas presentaciones) */
-        .slide-bg {
-             position: absolute;
-             top: 0; left: 0; right: 0; bottom: 0;
-             background-size: cover;
-             background-position: center;
-             z-index: 1;
-             border-radius: 0.5rem;
-        }
+        .bg-dark-maroon { background-color: #4A081F; }
+        .bg-deep-pink { background-color: #A33C54; }
         
-        /* Overlays (compartido por ambas presentaciones) */
-        .bg-image-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 2; /* Encima del fondo de imagen */
-            border-radius: 0.5rem;
-        }
-        .bg-image-overlay-darker { background-color: rgba(0, 0, 0, 0.7); }
-        .bg-image-overlay-lighter { background-color: rgba(255, 255, 255, 0.85); }
-        .bg-ladrillo-overlay { background-color: rgba(90, 14, 20, 0.8); }
-        .bg-tierra-overlay { background-color: rgba(216, 166, 107, 0.85); }
-        .bg-white-overlay { background-color: rgba(255, 255, 255, 0.85); }
-        .bg-crema-overlay { background-color: rgba(248, 232, 140, 0.85); }
+        .border-maroon { border-color: #7D142D; }
+        .border-deep-pink { border-color: #A33C54; }
+        .border-light-rose { border-color: #C67891; }
 
-        .content-behind-image { position: relative; z-index: 3; }
-
-        /* Estilos de Botón de Portada */
-        .option-button {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-align: center;
+        /* Estilo para anclas de header (compensación) */
+        section[id] {
+            scroll-margin-top: 80px; 
         }
-        .option-button:hover { transform: scale(1.05); }
-
-        /* Pitch y Research Styles */
-        .badge {
-            display: inline-block; padding: 0.25rem 0.75rem; border-radius: 99px;
-            font-weight: 600; font-size: 0.875rem; text-transform: uppercase;
-        }
-        .badge-borgona { background-color: var(--color-borgona); color: var(--color-crema); }
-        .badge-crema { background-color: var(--color-crema); color: var(--color-ladrillo); }
-        .prompt-ia { background-color: #0d1117; color: #c9d1d9; font-family: 'Courier New', Courier, monospace; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid #30363d; }
-        .team-card .initials-circle {
-            width: 6rem; height: 6rem; border-radius: 9999px; margin-bottom: 0.75rem; border: 4px solid var(--color-borgona); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; color: var(--color-texto-claro); background-color: var(--color-borgona); transition: transform 0.3s ease;
-        }
-        .icon-check::before { content: '✓'; color: #4CAF50; font-weight: bold; margin-right: 4px; }
-        .icon-clock::before { content: '⏳'; margin-right: 4px; }
-        .icon-rocket::before { content: '🚀'; }
-        .icon-chip::before { content: '💻'; }
-        .icon-graph::before { content: '📈'; }
-        .icon-token::before { content: '🪙'; }
-        .icon-seal::before { content: '📜'; }
-        .icon-event::before { content: '🎉'; }
-        .mockup-img { height: 320px; width: 100%; object-fit: cover; border: 4px solid var(--color-crema); }
-
-        /* Estilos Específicos para EA3 */
-        .question-card { border-left: 5px solid var(--color-borgona); padding: 1rem; border-radius: 0.25rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .bar-chart-container { display: flex; justify-content: center; align-items: end; height: 12rem; }
-        .bar { width: 4rem; margin: 0 0.5rem; background-color: var(--color-tierra); transition: height 0.5s; }
-        .bar-borgona { background-color: var(--color-borgona); }
-
-        /* Estilos de Menú Dinámico */
-        #nav-pitch, #nav-research {
-            display: none;
-            width: 100%;
-            justify-content: space-around;
-            padding: 0.5rem 0;
-            background-color: white;
-        }
-        
-        /* Botón Flotante */
-        #floating-home-btn {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            z-index: 70;
-            background-color: var(--color-ladrillo);
-            color: var(--color-crema);
-            padding: 0.75rem;
-            border-radius: 9999px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease;
-        }
-        #floating-home-btn:hover {
-            transform: scale(1.1);
-        }
-        
     </style>
 </head>
-<body class="bg-gray-100 text-oscuro">
+<body class="text-gray-800">
 
-    <!-- Header / Navigation -->
-    <header class="sticky top-0 z-50 bg-white shadow-md">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#portada" class="text-xl font-bold text-ladrillo">Proyecto Aurea</a>
-            
-            <div id="nav-pitch" class="hidden md:flex space-x-4 text-sm">
-                <!-- Menú de PITCH (EA2) -->
-                <a href="#pitch-problema" class="text-borgona hover:text-ladrillo">Problema</a>
-                <a href="#pitch-cliente" class="text-borgona hover:text-ladrillo">Cliente</a>
-                <a href="#pitch-equipo" class="text-borgona hover:text-ladrillo">Equipo</a>
-                <a href="#pitch-solucion" class="text-borgona hover:text-ladrillo">Solución</a>
-                <a href="#pitch-tecnologia" class="text-borgona hover:text-ladrillo">Tecnología</a>
-                <a href="#pitch-prototipo" class="text-borgona hover:text-ladrillo">Prototipo</a>
-                <a href="#pitch-modelo-negocio" class="text-borgona hover:text-ladrillo">Modelo</a>
-                <a href="#pitch-mercado" class="text-borgona hover:text-ladrillo">Mercado</a>
-                <a href="#pitch-cierre" class="text-borgona hover:text-ladrillo">Inversión</a>
+    <!-- HEADER INTERACTIVO -->
+    <header class="sticky top-0 z-50 bg-white shadow-md w-full">
+        <nav class="container mx-auto flex justify-between items-center p-4">
+            <div class="text-lg md:text-xl font-bold color-dark-maroon">Proyecto Aurea: EA3 (Grupo 5)</div>
+            <!-- Navegación para Desktop -->
+            <div class="hidden md:flex flex-wrap space-x-3 lg:space-x-4">
+                <a href="#paso1" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 1: Problema</a>
+                <a href="#paso2" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 2: Objetivos</a>
+                <a href="#paso3" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 3: Tipo</a>
+                <a href="#paso4" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 4: Hipótesis</a>
+                <a href="#paso5" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 5: Muestra</a>
+                <a href="#paso6" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 6: Técnicas</a>
+                <a href="#paso7" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 7: Análisis</a>
+                <a href="#paso8" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 8: Conclusión</a>
             </div>
-
-            <div id="nav-research" class="hidden md:flex space-x-4 text-sm">
-                 <!-- Menú de INVESTIGACIÓN (EA3) -->
-                <a href="#research-paso1-2" class="text-borgona hover:text-ladrillo">Problema y Objetivos</a>
-                <a href="#research-paso3-5" class="text-borgona hover:text-ladrillo">Método e Hipótesis</a>
-                <a href="#research-paso6" class="text-borgona hover:text-ladrillo">Recolección</a>
-                <a href="#research-paso7-cuali" class="text-borgona hover:text-ladrillo">Análisis (IA/Cuanti)</a>
-                <a href="#research-paso8" class="text-borgona hover:text-ladrillo">Conclusión</a>
-            </div>
-
-            <button id="mobile-menu-button" class="md:hidden text-borgona focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </nav>
-        <div id="mobile-menu" class="md:hidden hidden bg-white py-2 absolute w-full shadow-lg z-40">
-            <!-- El menú móvil se actualizará dinámicamente o mostrará todas las opciones -->
-            <a href="#portada" class="block px-6 py-2 text-borgona hover:bg-crema font-bold">Inicio</a>
-            <a href="#pitch-titulo" class="block px-6 py-2 text-borgona hover:bg-crema">Pitch (EA2)</a>
-            <a href="#research-titulo" class="block px-6 py-2 text-borgona hover:bg-crema">Investigación (EA3)</a>
-        </div>
     </header>
 
-    <main class="container mx-auto">
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="container mx-auto p-4 md:p-8 max-w-6xl">
 
-        <!-- Diapositiva 0: Portada Unificada -->
-        <section id="portada" class="relative bg-cover bg-center"
-                 style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva1.png');">
-            <div class="bg-image-overlay bg-image-overlay-darker"></div>
-            <div class="content-behind-image flex flex-col items-center p-8">
-                 <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_biglogo_imagen.png" alt="Aurea Logo" class="w-48 h-auto mb-6 shadow-lg fade-in" style="max-width: 200px;">
-                 <h1 class="text-5xl md:text-6xl font-bold text-crema mb-10 fade-in" style="animation-delay: 0.2s;">Proyecto Aurea</h1>
-                 <div class="flex flex-col md:flex-row gap-6">
-                    <a href="#pitch-titulo" class="option-button bg-crema text-ladrillo font-bold py-4 px-8 rounded-full shadow-lg hover:bg-white transition duration-300 transform hover:scale-105 fade-in" style="animation-delay: 0.4s;">
-                        Belleza Verificada, Confianza Asegurada
-                    </a>
-                    <a href="#research-titulo" class="option-button bg-borgona text-crema font-bold py-4 px-8 rounded-full shadow-lg hover:bg-ladrillo transition duration-300 transform hover:scale-105 fade-in" style="animation-delay: 0.6s;">
-                        Plan de Investigación Integral
-                    </a>
-                 </div>
-            </div>
+        <!-- Título Principal -->
+        <section class="text-center my-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 color-dark-maroon">Validación del Proyecto Aurea</h1>
+            <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
+                Un informe interactivo de los 8 pasos de la investigación EA3.
+            </p>
         </section>
 
-        <!-- 
-        ============================================================
-        INICIO PRESENTACIÓN 1: PITCH DE INVERSIÓN (TA9 / EA2)
-        ============================================================
-        -->
-
-        <!-- Diapositiva 1: Título (Pitch) -->
-        <section id="pitch-titulo" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva1.png');"></div>
-            <div class="bg-image-overlay bg-image-overlay-darker"></div>
-            <div class="slide-content content-behind-image flex flex-col items-center text-center p-8 fade-in">
-                 <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_biglogo_imagen.png" alt="Aurea Logo" class="w-48 h-auto mb-6 shadow-lg" style="max-width: 200px;">
-                 <h1 class="text-4xl md:text-5xl font-bold text-crema mb-4">Aurea: Belleza Verificada, Confianza Asegurada.</h1>
-                 <p class="text-xl text-tierra font-light">El Ecosistema Digital que Conecta Talento Verificado con Clientas Empoderadas.</p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 2: El Problema (Pitch) -->
-        <section id="pitch-problema" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva2.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content content-behind-image fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">S/ 9.3 Mil Millones Atrapados en la Desconfianza</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-8">
-                    <div class="p-6 bg-crema rounded-lg shadow fade-in">
-                        <div class="text-5xl font-bold text-borgona mb-2 ">90%</div>
-                        <p class="text-oscuro">De mujeres peruanas usan productos de belleza...</p>
-                    </div>
-                    <div class="p-6 bg-crema rounded-lg shadow fade-in" style="animation-delay: 0.2s;">
-                         <div class="text-5xl font-bold text-borgona mb-2 ">...PERO SOLO 45%</div>
-                         <p class="text-oscuro">Visita salones. Hay una "Brecha de Adopción" por desconfianza.</p>
-                     </div>
-                     <div class="p-6 bg-crema rounded-lg shadow fade-in" style="animation-delay: 0.4s;">
-                         <div class="text-5xl font-bold text-borgona mb-2 "><span class="icon-clock"></span>~90 min</div>
-                         <p class="text-oscuro">Perdidos por búsqueda en redes sociales caóticas.</p>
-                     </div>
-                </div>
-                <p class="mt-8 text-lg text-center text-oscuro md:px-16">
-                    El mercado de belleza en Perú es enorme (S/ 9,339 millones en 2024), pero la mitad de las consumidoras no accede a servicios profesionales por <b>fricción en la búsqueda</b> y un <b>miedo paralizante</b> a la mala calidad, falta de higiene y precios inflados.
+        <!-- PASO 1: PROBLEMA Y PERFIL -->
+        <section id="paso1" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 1: Problema y Perfil</h2>
+            
+            <!-- 1.1 El Mercado -->
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 border-t-4 border-maroon mb-8">
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">1.1 El Problema Central</h3>
+                <p class="text-xl text-center text-gray-700 max-w-3xl mx-auto mb-6">
+                    Un mercado de <strong class="font-bold color-deep-pink">S/ 9.3 Mil Millones</strong> está frenado por una ineficiencia estructural: El "Caos de Gestión Manual".
                 </p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 3: Nuestra Clienta (Pitch) -->
-        <section id="pitch-cliente" class="relative text-claro" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva3.png');"></div>
-            <div class="bg-image-overlay bg-ladrillo-overlay"></div>
-            <div class="slide-content content-behind-image flex flex-col md:flex-row justify-center items-center w-full fade-in">
-                <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0">
-                     <div class="rounded-full mx-auto md:mx-0 shadow-lg w-48 h-48 md:w-64 md:h-64 border-4 border-crema fade-in bg-borgona bg-opacity-25 flex items-center justify-center">
-                         <span class="text-crema text-6xl font-bold">Sofía</span>
-                     </div>
-                </div>
-                <div class="md:w-2/3 md:pl-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-crema mb-4 fade-in" style="animation-delay: 0.2s;">La Joven Profesional Digital Frustrada</h2>
-                    <ul class="list-disc list-inside space-y-2 mb-4 text-lg text-claro fade-in" style="animation-delay: 0.4s;">
-                        <li><b>Perfil:</b> 23 años, Asistente de Banca, Surco. Presupuesto S/ 1.3k-2k/mes.</li>
-                        <li><b>Necesidad:</b> Imagen profesional impecable.</li>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    El mercado peruano de belleza (S/ 8.8B en 2023) opera con una alta fricción. La profesional independiente depende de un caótico sistema manual (WhatsApp, DMs, Yape/Plin) para gestionar su negocio.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mt-4">
+                    Este "abismo entre el descubrimiento y la reserva" genera un constante <strong class="font-bold">desgaste mental</strong> y, como validamos, una <strong class="font-bold">pérdida económica directa</strong> y recurrente.
+                </p>
+                <div class="mt-6 border-t pt-4">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase">Fuentes de Mercado:</h4>
+                    <!-- ACTUALIZACIÓN: Se agrega el enlace al PDF de TA6 -->
+                    <ul class="text-sm text-gray-600 list-none space-y-1 mt-2">
+                        <li><a href="https://raw.githubusercontent.com/RickNE7/Aurea/main/nombre_del_archivo.pdf" class="hover:underline color-maroon font-semibold">Análisis de Mercado: Ineficiencia y Centralización (TA6)</a></li>
+                        <li><a href="https://lacamara.pe/sector-cosmeticos-e-higiene-personal-facturaria-mas-de-s-9-000-millones-en-2024/" class="hover:underline color-maroon">CCL (2024): Proyección S/ 9.3 Mil Millones</a></li>
+                        <li><a href="https://logistica360.pe/sector-cosmeticos-e-higiene-esta-experimentando-un-crecimiento-notable/" class="hover:underline color-maroon">COPECOH (2024): Facturación S/ 8.8 Mil Millones</a></li>
+                        <li><a href="https://www.mincetur.gob.pe/reglamentostecnicos/informacion_general/documentos/Presentaciones_12Julio/1_Panorama_de_la_industria_cosmetica.pdf" class="hover:underline color-maroon">MINCETUR (2024): Panorama de la Industria</a></li>
                     </ul>
-                    <p class="text-2xl italic text-crema p-4 bg-borgona rounded-lg shadow fade-in" style="animation-delay: 0.6s;">
-                        "Quisiera encontrar un lugar bueno, bonito y barato cerca... ¡pero que sea <b>de confianza</b>!"
-                    </p>
-                    <p class="mt-4 text-lg text-claro fade-in" style="animation-delay: 0.8s;">Pierde horas validando opciones, sintiendo que arriesga su dinero y su imagen.</p>
                 </div>
             </div>
-        </section>
 
-        <!-- Diapositiva 4: La Solución (Pitch) -->
-        <section id="pitch-solucion" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva5.png');"></div>
-            <div class="bg-image-overlay bg-tierra-overlay"></div>
-            <div class="slide-content content-behind-image fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-6 text-center">Aurea: El Ecosistema de Confianza Verificada</h2>
-                <p class="text-xl text-center text-oscuro mb-8 fade-in" style="animation-delay: 0.2s;">Plataforma digital que <b>verifica</b> profesionales y <b>conecta</b> clientas con su <i>match</i> ideal.</p>
-                
-                <div class="flex flex-col md:flex-row justify-around items-stretch text-center gap-6">
-                    <div class="bg-borgona p-6 md:p-8 rounded-lg shadow-xl fade-in flex-1 flex flex-col justify-center" style="animation-delay: 0.4s;">
-                        <h3 class="text-2xl font-semibold text-crema mb-2">Para Sofía:</h3>
-                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Cero Fricción</b></p>
-                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Confianza Absoluta</b></p>
-                        <p class="text-tierra text-lg"><span class="icon-check"></span> <b>Descubrimiento Inteligente</b></p>
-                    </div>
-                    <div class="bg-borgona p-6 md:p-8 rounded-lg shadow-xl fade-in flex-1 flex flex-col justify-center" style="animation-delay: 0.6s;">
-                        <h3 class="text-2xl font-semibold text-crema mb-2">Para Profesionales:</h3>
-                        <p class="text-tierra text-lg">✨ <b>Visibilidad</b></p>
-                        <p class="text-tierra text-lg">🛡️ <b>Reputación Verificada</b></p>
-                        <p class="text-tierra text-lg">📈 <b>Clientes Constantes</b></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Diapositiva 5: Tecnología Clave (Pitch) -->
-        <section id="pitch-tecnologia" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva6.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content content-behind-image fade-in">
-                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center">Innovación Tecnológica: Blockchain + IA para Confianza Real</h2>
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                     <div class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in" style="animation-delay: 0.2s;">
-                        <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center justify-between cursor-pointer">
-                            <span><span class="icon-blockchain text-3xl mr-2"></span> Blockchain (Confianza Inmutable)</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </h3>
-                        <div class="tech-details mt-2">
-                            <ul class="list-disc list-inside space-y-1 text-oscuro">
-                                 <li><b>Pasaporte de Belleza Verificado:</b> Historial inmutable (identidad, antecedentes, certificados, reseñas 100% reales).</li>
-                                 <li><b>Smart Contracts (Pagos Seguros):</b> Pago en <i>escrow</i> liberado solo con satisfacción. Preparado para tokens (BCP).</li>
-                            </ul>
-                        </div>
-                     </div>
-                      <div class="tech-card p-6 bg-crema rounded-lg shadow hover:shadow-xl transition-shadow duration-300 fade-in" style="animation-delay: 0.4s;">
-                         <h3 class="text-2xl font-semibold text-borgona mb-3 flex items-center justify-between cursor-pointer">
-                            <span><span class="icon-ai text-3xl mr-2"></span> Inteligencia Artificial (Eficiencia y Match)</span>
-                             <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                         </h3>
-                         <div class="tech-details mt-2">
-                             <ul class="list-disc list-inside space-y-1 text-oscuro">
-                                  <li><b>BeautyMatch AI:</b> Algoritmo que analiza estilo e inspiración para conectar con el profesional ideal y verificado.</li>
-                                  <li><b>Chrono-Booking AI:</b> Agenda inteligente que automatiza citas recurrentes.</li>
-                                  <li><b>IA Visión Computacional:</b> Para validación inicial de higiene.</li>
-                             </ul>
-                         </div>
-                      </div>
-                 </div>
-            </div>
-        </section>
-
-        <!-- Diapositiva 6: Prototipo Digital (Pitch) -->
-        <section id="pitch-prototipo" class="relative" data-presentation="pitch">
-             <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva7.png');"></div>
-             <div class="bg-image-overlay bg-tierra-overlay"></div>
-             <div class="slide-content content-behind-image fade-in">
-                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center">Así Funciona la Confianza: Un Vistazo a Aurea</h2>
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                     <div class="mockup-container text-center fade-in" style="animation-delay: 0.2s;">
-                         <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/Funcion1.png" alt="Prototipo Aurea - Registro Sencillo" class="mockup-img shadow-xl hover:shadow-2xl transition-all duration-300 mx-auto mb-2">
-                         <p class="text-base font-semibold text-ladrillo mt-2">1. Registro rápido</p>
-                     </div>
-                      <div class="mockup-container text-center fade-in" style="animation-delay: 0.4s;">
-                         <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/Funcion2.png" alt="Prototipo Aurea - Información de perfil" class="mockup-img shadow-xl hover:shadow-2xl transition-all duration-300 mx-auto mb-2">
-                         <p class="text-base font-semibold text-ladrillo mt-2">2. Información de tu perfil</p>
-                     </div>
-                      <div class="mockup-container text-center fade-in" style="animation-delay: 0.6s;">
-                         <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/Funcion3.png" alt="Prototipo Aurea - Reserva con garantía" class="mockup-img shadow-xl hover:shadow-2xl transition-all duration-300 mx-auto mb-2">
-                         <p class="text-base font-semibold text-ladrillo mt-2">3. Reserva con garantía</p>
-                     </div>
-                      <div class="mockup-container text-center fade-in" style="animation-delay: 0.8s;">
-                         <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/Funcion4.png" alt="Prototipo Aurea - Potenciado con AI" class="mockup-img shadow-xl hover:shadow-2xl transition-all duration-300 mx-auto mb-2">
-                         <p class="text-base font-semibold text-ladrillo mt-2">4. Potenciado con AI</p>
-                     </div>
-                 </div>
-                 <div class="text-center mt-10 fade-in" style="animation-delay: 1.0s;">
-                    <a href="https://marine-violet-99448786.figma.site/" target="_blank" rel="noopener noreferrer" class="bg-borgona text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-ladrillo transition duration-300 transform hover:scale-105 inline-flex items-center">
-                        <img src="https://raw.githubusercontent.com/RickNE7/Aurea/refs/heads/main/AUREA_biglogo_imagen.ico" alt="Icono Aurea" class="w-6 h-6 mr-2">
-                        Probar Aurea App
-                    </a>
-                 </div>
-             </div>
-        </section>
-
-        <!-- Diapositiva 7: Modelo de Negocio (Pitch) -->
-        <section id="pitch-modelo-negocio" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva8.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="content-behind-image slide-content fade-in">
-                 <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center">Modelo Híbrido: Valor para Todos, Ingresos Diversificados</h2>
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-                     
-                     <div class="fade-in" style="animation-delay: 0.2s;">
-                        <h3 class="text-2xl font-semibold text-borgona mb-4">Fuentes de Ingreso:</h3>
-                        <div class="space-y-4">
-                            <div class="revenue-card">
-                                <b>Comisión Profesional:</b>
-                                <p>Variable (<b>15%</b> Free -> <b>6%</b> Premium). Profesional paga al generar ingreso.</p>
-                            </div>
-                            <div class="revenue-card">
-                                <b>Suscripción B2B (Profesional):</b>
-                                <p>Freemium (S/0, S/29, S/49) con acceso a IA/IoT. Ingreso recurrente.</p>
-                            </div>
-                            <div class="revenue-card">
-                                <b>Suscripción B2C (Opcional):</b>
-                                <p>AureaPlus (S/9) para RA, descuentos. Monetiza usuarias <i>premium</i>.</p>
-                            </div>
-                            <div class="revenue-card">
-                                <b>Otros Flujos:</b>
-                                <p>Comisión Marketplace (8%), Publicidad B2B.</p>
-                            </div>
-                        </div>
-                     </div>
-
-                     <div class="fade-in" style="animation-delay: 0.4s;">
-                         <h3 class="text-2xl font-semibold text-borgona mb-4">Formas de Pago:</h3>
-                         <div class="flex flex-wrap justify-start items-center gap-3 mb-4">
-                            <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Yape</span>
-                            <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Plin</span>
-                            <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Niubiz</span>
-                            <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">Visa/MC</span>
-                            <span class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">AMEX</span>
-                             <span class="bg-borgona text-crema px-4 py-2 rounded-full text-sm font-medium flex items-center"><span class="icon-token mr-1"></span>Tokens (BCP Ready)</span>
-                         </div>
-                          <p class="text-oscuro">Aceptamos todos los pagos locales (incluyendo AMEX) y estamos listos para integrar tokens digitales, alineados con la innovación del BCP.</p>
-                     </div>
-                 </div>
-            </div>
-        </section>
-
-         <!-- Diapositiva 8: Crecimiento (Pitch) -->
-        <section id="pitch-crecimiento" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva9.png');"></div>
-            <div class="bg-image-overlay bg-image-overlay-darker"></div>
-            <div class="slide-content content-behind-image fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-crema mb-8 text-center">Creando un Ecosistema Leal y Confiable</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in" style="animation-delay: 0.2s;">
-                        <span class="icon-token text-4xl text-borgona mb-3 inline-block"></span>
-                        <h3 class="text-xl font-semibold text-ladrillo mb-2">Tecno-Lealtad</h3>
-                        <p class="text-oscuro"><b>Beauty Tokens VIP</b> (Blockchain) con tiers y beneficios. <b>Pasaporte Blockchain</b> como activo de retención (alto costo de salida).</p>
-                    </div>
-                    <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in" style="animation-delay: 0.4s;">
-                         <span class="icon-seal text-4xl text-borgona mb-3 inline-block"></span>
-                        <h3 class="text-xl font-semibold text-ladrillo mb-2">Confianza Externa</h3>
-                        <p class="text-oscuro"><b>Convenios</b> con entidades para validar <b>Certificaciones de Higiene</b> (escalonadas: IA -> IoT -> Partner Oficial).</p>
-                    </div>
-                     <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 fade-in" style="animation-delay: 0.6s;">
-                         <span class="icon-event text-4xl text-borgona mb-3 inline-block"></span>
-                         <h3 class="text-xl font-semibold text-ladrillo mb-2">Comunidad & Marketing</h3>
-                         <p class="text-oscuro"><b>Patrocinios</b> de marcas en la app y <b>Eventos</b> ("Aurea Fest") para generar ingresos B2B y confianza <i>offline</i>.</p>
-                     </div>
-                </div>
-                 <p class="mt-8 text-lg text-center text-claro font-semibold fade-in" style="animation-delay: 0.8s;">Creamos un ecosistema donde la tecnología impulsa la lealtad y la confianza externa valida nuestra promesa.</p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 9: Equipo (Pitch) -->
-        <section id="pitch-equipo" class="relative" data-presentation="pitch">
-             <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva4.png');"></div>
-             <div class="bg-image-overlay bg-tierra-overlay"></div>
-             <div class="slide-content content-behind-image w-full fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-10 text-center">El Equipo Apasionado Detrás de Aurea</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
-                    
-                    <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in" style="animation-delay: 0.2s;" data-member="marilin">
-                        <div class="card-content">
-                            <div class="initials-circle">CEO</div>
-                            <h3 class="font-semibold text-ladrillo">Marilin Medina</h3>
-                            <p class="text-sm text-borgona">Chief Executive Officer</p>
-                        </div>
-                    </div>
-                    
-                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in" style="animation-delay: 0.4s;" data-member="eric">
-                        <div class="card-content">
-                            <div class="initials-circle">CTO</div>
-                            <h3 class="font-semibold text-ladrillo">Eric Mozombite</h3>
-                            <p class="text-sm text-borgona">Chief Technology Officer</p>
-                        </div>
-                    </div>
-                    
-                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in" style="animation-delay: 0.6s;" data-member="ashly">
-                        <div class="card-content">
-                             <div class="initials-circle">CMO</div>
-                             <h3 class="font-semibold text-ladrillo">Ashly Rosas</h3>
-                             <p class="text-sm text-borgona">Chief Marketing Officer</p>
-                        </div>
-                    </div>
-                    
-                     <div class="team-card bg-crema rounded-lg shadow-lg text-center fade-in" style="animation-delay: 0.8s;" data-member="celeste">
-                        <div class="card-content">
-                             <div class="initials-circle">COO</div>
-                             <h3 class="font-semibold text-ladrillo">Celeste Taya</h3>
-                             <p class="text-sm text-borgona">Chief Operating Officer</p>
-                        </div>
-                    </div>
-                    
-                     <div class="team-card bg-crema rounded-lg shadow-md text-center fade-in" style="animation-delay: 1.0s;" data-member="milagros">
-                         <div class="card-content">
-                            <div class="initials-circle">CFO</div>
-                            <h3 class="font-semibold text-ladrillo">Milagros Tornero</h3>
-                            <p class="text-sm text-borgona">Chief Financial Officer</p>
-                         </div>
-                    </div>
-                </div>
-                 <p class="mt-8 text-lg text-center text-claro font-semibold fade-in" style="animation-delay: 1.2s;">Combinamos la pasión por la belleza con la experiencia tecnológica y de negocio necesaria para hacer de Aurea un éxito.</p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 10: Mercado (Pitch) -->
-        <section id="pitch-mercado" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva10.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content content-behind-image fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-ladrillo mb-8 text-center">Oportunidad de Mercado: Confianza = Crecimiento Exponencial</h2>
-                
-                <div class="market-visual-container">
-                    <div class="market-circle-bg market-circle-outer"></div>
-                    <div class="market-circle-bg market-circle-middle"></div>
-                    <div id="pitch-market-inner" class="market-circle-inner market-circle-bg" data-target="som-details" style="opacity: 1;"></div>
-
-                    <div id="pitch-label-tam" class="market-label-box" data-target="tam-details">
-                        TAM (LATAM)<br>
-                        <strong>US$ 22.5B+</strong><br>
-                        <span class="text-xs text-gray-500">~225M Sofías (Mujeres 20+)</span>
-                    </div>
-                    <div id="pitch-label-sam" class="market-label-box" data-target="sam-details">
-                        SAM (Perú)<br>
-                        <strong>US$ 513 M</strong><br>
-                        <span class="text-xs text-gray-500">~5.1M Sofías (45% penetración)</span>
-                    </div>
-                    <div id="pitch-label-som" class="market-label-box" data-target="som-details" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 60; background-color: white; border-color: var(--color-tierra); opacity: 1;">
-                        <span class="title" style="color: var(--color-ladrillo); font-weight: 600; font-size: 1rem;">SOM (Lima)</span><br>
-                        <strong style="font-size: 1.5rem; color: var(--color-borgona);">US$ 1.6M - 15.55M</strong><br>
-                        <span class="subtext" style="color: #6b7280; font-size: 0.75rem;">(Cuota 1%-10% SAM Lima)</span>
-                    </div>
-                </div>
-                
-                <div id="pitch-market-details" class="mt-4 text-center text-oscuro text-sm h-16 transition-all duration-300">
-                    <p id="tam-details" class="hidden"><b>Mercado Total (LATAM):</b> US$ 22.5 Mil Millones. Oportunidad teórica total en ~225M mujeres 20+, gasto potencial US$100/año.</p>
-                    <p id="sam-details" class="hidden"><b>Mercado Disponible (Perú):</b> US$ 513 Millones. Mercado realista (45% penetración servicios) de ~5.1M usuarias activas, valor actual subestimado por informalidad.</p>
-                    <p id="som-details" class="hidden"><b>Mercado Obtenible (Lima):</b> US$ 1.56M - 15.55M. Cuota realista (1%-10%) del SAM Lima (US$ 155.5M) como estrategia de entrada.</p>
-                </div>
-                <p class="mt-4 text-lg text-center text-oscuro fade-in" style="animation-delay: 0.8s;">Atacamos un mercado masivo con una necesidad insatisfecha de confianza y eficiencia, empezando por Lima.</p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 11: Cierre (Pitch) -->
-        <section id="pitch-cierre" class="relative" data-presentation="pitch">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva11.png');"></div>
-            <div class="bg-image-overlay bg-ladrillo-overlay"></div>
-            <div class="slide-content content-behind-image flex flex-col items-center text-center fade-in">
-                <h2 class="text-4xl md:text-5xl font-bold text-crema mb-6">Invierte en Confianza. Invierte en Aurea.</h2>
-                <div class="p-8 bg-borgona rounded-lg shadow-lg mb-8 inline-block fade-in" style="animation-delay: 0.2s;">
-                    <p class="text-2xl text-crema mb-2">Buscamos:</p>
-                    <p class="text-4xl font-bold text-white">[Monto, ej. S/ 500,000]</p>
-                    <p class="text-2xl text-crema mt-1">por el</p>
-                    <p class="text-4xl font-bold text-white">[Equity, ej. 15%]</p>
-                </div>
-                <p class="text-lg text-tierra mb-6 fade-in" style="animation-delay: 0.4s;">Para:</p>
-                <div class="flex justify-center space-x-6 mb-8 text-4xl text-crema fade-in" style="animation-delay: 0.6s;">
-                    <span class="icon-rocket" title="Lanzar en Lima"></span>
-                    <span class="icon-chip" title="Escalar Tecnología Blockchain/IA"></span>
-                    <span class="icon-graph" title="Alcanzar 50k Usuarias"></span>
-                </div>
-                <p class="text-xl text-tierra font-light mb-8 fade-in" style="animation-delay: 0.8s;">Únete a nosotros para construir el futuro de la belleza verificada.</p>
-            </div>
-        </section>
-
-        <!-- 
-        ============================================================
-        INICIO PRESENTACIÓN 2: PLAN DE INVESTIGACIÓN (EA3)
-        ============================================================
-        -->
-        <section id="research-titulo" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva1.png');"></div>
-            <div class="bg-image-overlay bg-image-overlay-darker"></div>
-            <div class="slide-content research-slide text-claro text-center fade-in content-behind-image">
-                <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_biglogo_imagen.png" alt="Aurea Logo" class="w-40 h-auto mx-auto mb-6 shadow-lg">
-                <p class="badge badge-crema mb-4">EA3: Plan de Investigación Integral</p>
-                <h1 class="text-4xl md:text-5xl font-bold text-crema mb-4">Proyecto AUREA</h1>
-                <p class="text-xl text-tierra font-light">Validación del Problema, Hipótesis y Muestra para el<br>Buyer Persona Profesional: "Carla Rossi".</p>
-            </div>
-        </section>
-
-        <section id="research-paso1-2" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva6.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content research-slide grid grid-cols-1 md:grid-cols-2 gap-12 items-center fade-in content-behind-image">
-                <div>
-                    <p class="badge badge-borgona mb-4">Paso 1: Problema</p>
-                    <h2 class="text-3xl font-bold text-ladrillo mb-4">El Problema: "Gestión Caótica y Manual"</h2>
-                    <p class="text-lg text-oscuro">Las profesionales de belleza independientes (perfil "Carla Rossi") <b>frenan su crecimiento y pierden ingresos</b> debido a una gestión de negocio caótica, manual e ineficiente, basada en WhatsApp, DMs y Yape.</p>
-                    <p class="text-lg text-oscuro mt-4">Este caos genera errores de agenda, pérdida de tiempo en tareas administrativas y una alta vulnerabilidad económica ante las cancelaciones de último minuto.</p>
-                </div>
-                <div class="bg-crema p-6 rounded-lg shadow-lg h-full flex flex-col justify-center">
-                    <p class="badge badge-borgona mb-4">Paso 2: Objetivos</p>
-                    <h3 class="text-2xl font-semibold text-ladrillo mb-4">Objetivo General</h3>
-                    <p class="text-oscuro mb-4">Diseñar un plan de investigación integral para <b>validar la magnitud, frecuencia e impacto</b> del problema de la "Gestión Caótica y Manual" en las profesionales de belleza independientes en Lima.</p>
-                    <h3 class="text-2xl font-semibold text-ladrillo mb-4">Objetivo Específico</h3>
-                    <p class="text-oscuro"><b>Cuantificar el impacto económico</b> de las citas canceladas y <b>medir el nivel de frustración</b> con las herramientas manuales en una muestra de 10 profesionales validadas (Paso 7).</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="research-paso3-5" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva9.png');"></div>
-            <div class="bg-image-overlay bg-crema-overlay"></div>
-            <div class="slide-content research-slide fade-in content-behind-image">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md h-full">
-                        <p class="badge badge-borgona mb-4">Paso 3: Tipo de Investigación</p>
-                        <h3 class="text-2xl font-semibold text-ladrillo mb-3">Mixta (Híbrida)</h3>
-                        <p class="text-oscuro mb-2"><b>Cualitativa (3 Entrevistas):</b> Para descubrir el *porqué* emocional: los miedos, frustraciones y deseos de "Carla".</p>
-                        <p class="text-oscuro"><b>Cuantitativa (10 Encuestas):</b> Para dimensionar el problema, validar el perfil demográfico y medir la frecuencia de los dolores.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md h-full">
-                        <p class="badge badge-borgona mb-4">Paso 4: Hipótesis</p>
-                        <h3 class="text-2xl font-semibold text-ladrillo mb-3">Hipótesis a Validar</h3>
-                        <p class="text-oscuro">"La baja adopción de software de gestión en profesionales independientes se debe a que perciben las soluciones actuales como (1) muy caras, (2) complicadas de usar, y (3) no resuelven su principal dolor: la pérdida de ingresos por cancelaciones de último minuto."</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md h-full">
-                        <p class="badge badge-borgona mb-4">Paso 5: Muestra</p>
-                        <h3 class="text-2xl font-semibold text-ladrillo mb-3">Perfil de la Muestra</h3>
-                        <p class="text-oscuro mb-2"><b>Entrevistas:</b> 3 profesionales de belleza (Estilista, Manicurista, Lashista) que cumplan el perfil "Carla Rossi".</p>
-                        <p class="text-oscuro"><b>Encuestas:</b> 10 respuestas completas de profesionales en Lima (20-30 años), independientes y que usen métodos manuales (validadas por las 4 preguntas filtro).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="research-paso6" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva7.png');"></div>
-            <div class="bg-image-overlay bg-crema-overlay"></div>
-            <div class="slide-content fade-in content-behind-image">
-                <p class="badge badge-borgona mb-4">Paso 6: Técnicas de Recolección</p>
-                <h2 class="text-3xl font-bold text-ladrillo mb-6">Materiales de Investigación Diseñados</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-semibold text-borgona mb-3">1. Guía de Entrevista Cualitativa (3)</h3>
-                        <p class="text-oscuro mb-4">Se diseñó una presentación con autorización de grabación y la guía de <b>24 preguntas abiertas</b> (4 por cada cuadrante del Mapa de Empatía) para las 3 entrevistas por Zoom.</p>
-                        <p class="font-semibold text-oscuro">Ejemplo (Cuadrante Pains):</p>
-                        <p class="text-sm text-oscuro italic">"¿Qué impacto real tienen en tu economía mensual las citas canceladas a último minuto?"</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-semibold text-borgona mb-3">2. Encuesta Cuantitativa (10)</h3>
-                        <p class="text-oscuro mb-4">Se diseñó un Google Form con <b>4 preguntas filtro eliminatorias</b> (para encontrar a "Carla") y <b>2 preguntas de investigación</b> (para cuantificar el dolor), ambas con 3 alternativas.</p>
-                        <p class="font-semibold text-oscuro">Ejemplo (Filtro 4 - Dolor):</p>
-                        <p class="text-sm text-oscuro italic">"¿Cuál de estos riesgos te preocupa más? (A) Competencia, (B) Insumos, (C) Cancelaciones."</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="research-paso7-cuali" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva6.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content bg-white fade-in content-behind-image">
-                <p class="badge badge-borgona mb-4">Paso 7: Análisis de Datos (Cualitativo)</p>
-                <h2 class="text-3xl font-bold text-ladrillo mb-6">Análisis Cualitativo con IA</h2>
+            <!-- 1.2 El Perfil -->
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
+                <h3 class="text-2xl font-bold mb-3 color-dark-maroon">1.2 El Perfil: "Carla Rossi"</h3>
+                <p class="text-lg text-gray-700 max-w-3xl mb-6">
+                    Carla es el arquetipo de la "Talentosa Desorganizada". Es experta en su arte, pero está atrapada en el ciclo del autoempleo caótico.
+                </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-xl font-semibold text-borgona mb-3">Prompt Utilizado para la IA</h3>
-                        <div class="prompt-ia text-sm">
-                            <p>> Actúa como un analista de UX experto.</p>
-                            <p>> Lee las 3 transcripciones de entrevistas a profesionales de belleza (perfil 'Carla').</p>
-                            <p>> Extrae y lista en bullets: <b>3 insights clave</b> (el *porqué* profundo), <b>2 dolores recurrentes</b> (la frustración funcional) y <b>1 ganancia/deseo prioritario</b> (la meta emocional).</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-borgona mb-3">Resultados Obtenidos (IA)</h3>
-                        <p class="font-semibold text-oscuro">Insights Clave:</p>
-                        <ul class="list-disc list-inside text-oscuro mb-3">
-                            <li>El dolor es <b>emocional, no funcional</b>: Sienten ansiedad y "no ser empresarias reales".</li>
-                            <li>El <b>miedo a la confrontación</b> (perder la clienta) es más fuerte que el dolor de la pérdida económica por cancelación.</li>
-                            <li>Pánico al <b>"Single Point of Failure"</b>: "Si pierdo mi celular, pierdo mi negocio".</li>
+                        <h4 class="text-xl font-bold mb-4 color-maroon flex items-center">
+                            <span class="text-3xl mr-2">&#9888;</span>
+                            Dolores (Pains)
+                        </h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-lg">
+                            <li>Ansiedad por la <strong class="font-bold">pérdida económica</strong> (no por el desorden).</li>
+                            <li>Pierde <strong class="font-bold">S/ 100 - S/ 300+</strong> al mes por cancelaciones.</li>
+                            <li>Evita cobrar penalidades por <strong class="font-bold">"miedo al conflicto"</strong>.</li>
+                            <li>Sufre de "Gestión Nocturna" (responde chats fuera de horario).</li>
                         </ul>
-                        <p class="font-semibold text-oscuro">Dolores Recurrentes:</p>
-                        <p class="text-oscuro">1. Caos de agenda (errores, estrés nocturno). 2. Pérdida de ingresos por cancelaciones.</p>
-                        <p class="font-semibold text-oscuro mt-2">Deseo Prioritario:</p>
-                        <p class="text-oscuro">"Quiero sentir que tengo el control y que soy una profesional seria."</p>
                     </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="research-paso7-cuanti" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva8.png');"></div>
-            <div class="bg-image-overlay bg-white-overlay"></div>
-            <div class="slide-content bg-white fade-in content-behind-image">
-                <p class="badge badge-borgona mb-4">Paso 7: Análisis de Datos (Cuantitativo)</p>
-                <h2 class="text-3xl font-bold text-ladrillo mb-6">Análisis Cuantitativo (Resultados de 10 Encuestas)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center">
-                        <h3 class="text-xl font-semibold text-borgona mb-3">P5: Impacto Económico de Cancelaciones</h3>
-                        <p class="text-oscuro mb-4">(% de 10 encuestadas validadas)</p>
-                        <div class="bar-chart-container">
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">0%</div>
-                                <div class="bar bg-tierra" style="height: 0%"></div>
-                                <div class="text-sm font-medium mt-2">Bajo (&lt;S/ 100)</div>
-                            </div>
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">30%</div>
-                                <div class="bar bg-tierra" style="height: 30%"></div>
-                                <div class="text-sm font-medium mt-2">Medio (S/ 100-300)</div>
-                            </div>
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">70%</div>
-                                <div class="bar bar-borgona" style="height: 70%"></div>
-                                <div class="text-sm font-medium mt-2">Alto (>S/ 300)</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center">
-                        <h3 class="text-xl font-semibold text-borgona mb-3">P6: Deseo de Profesionalización</h3>
-                        <p class="text-oscuro mb-4">(% de 10 encuestadas validadas)</p>
-                         <div class="bar-chart-container">
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">0%</div>
-                                <div class="bar bg-tierra" style="height: 0%"></div>
-                                <div class="text-sm font-medium mt-2">Espacio Físico</div>
-                            </div>
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">20%</div>
-                                <div class="bar bg-tierra" style="height: 20%"></div>
-                                <div class="text-sm font-medium mt-2">Red de Contactos</div>
-                            </div>
-                            <div class="flex flex-col justify-end items-center">
-                                <div class="text-2xl font-bold text-ladrillo">80%</div>
-                                <div class="bar bar-borgona" style="height: 80%"></div>
-                                <div class="text-sm font-medium mt-2">Sistema y Métricas</div>
-                            </div>
-                        </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 color-deep-pink flex items-center">
+                            <span class="text-3xl mr-2">&#10004;</span>
+                            Deseos (Gains)
+                        </h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-lg">
+                            <li><strong class="font-bold">"Tranquilidad y Claridad Mental"</strong> (más que dinero).</li>
+                            <li>Sentirse como una <strong class="font-bold">empresaria formal</strong>.</li>
+                            <li>Tener <strong class="font-bold">métricas de ganancias</strong> y un sistema de gestión.</li>
+                            <li>Poder tomar vacaciones sin caos.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="research-paso8" class="relative" data-presentation="research">
-            <div class="slide-bg" style="background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva11.png');"></div>
-            <div class="bg-image-overlay bg-ladrillo-overlay"></div>
-            <div class="slide-content text-claro text-center fade-in content-behind-image">
-                <p class="badge badge-crema mb-4">Paso 8: Conclusiones y Recomendaciones</p>
-                <h2 class="text-4xl md:text-5xl font-bold text-crema mb-6">Hipótesis Aceptada</h2>
-                <p class="text-xl text-tierra font-light mb-6 max-w-4xl mx-auto">
-                    La evidencia combinada (Cuanti/Cuali) <b>acepta la hipótesis</b>. El 100% de la muestra usa métodos manuales. El 70% sufre un impacto económico "Alto" por cancelaciones y el 80% prioriza un "Sistema y Métricas" sobre otros factores de crecimiento.
+        <!-- PASO 2: OBJETIVOS -->
+        <section id="paso2" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 2: Objetivos</h2>
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
+                 <ul class="list-none space-y-6">
+                    <li class="flex items-start">
+                        <span class="text-3xl font-bold color-maroon mr-4 mt-1">&#9656;</span>
+                        <div>
+                            <h3 class="text-2xl font-bold color-dark-maroon mb-2">Objetivo General</h3>
+                            <p class="text-lg text-gray-700">Evaluar la magnitud del impacto del "Caos de Gestión Manual" en las profesionales, validando la necesidad de una solución centrada en la <strong class="font-bold">seguridad económica</strong>.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-3xl font-bold color-maroon mr-4 mt-1">&#9656;</span>
+                        <div>
+                            <h3 class="text-2xl font-bold color-dark-maroon mb-2">Objetivo Específico (SMART)</h3>
+                            <p class="text-lg text-gray-700">Cuantificar el impacto económico real de las citas canceladas (en S/ perdidos) y contrastarlo con la frustración emocional, para justificar que la funcionalidad clave debe ser la <strong class="font-bold">protección del ingreso</strong>.</p>
+                        </div>
+                    </li>
+                 </ul>
+            </div>
+        </section>
+
+        <!-- PASO 3: TIPO DE INVESTIGACIÓN -->
+        <section id="paso3" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 3: Tipo de Investigación</h2>
+            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-xl p-8 flex">
+                    <div>
+                        <h3 class="text-2xl font-bold color-dark-maroon mb-3">Mixta (Cualitativa)</h3>
+                        <p class="text-lg text-gray-700">Entender el <strong class="font-bold">"porqué"</strong> emocional: Ansiedad, historias de vida, miedo al conflicto.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8 flex">
+                    <div>
+                        <h3 class="text-2xl font-bold color-dark-maroon mb-3">Mixta (Cuantitativa)</h3>
+                        <p class="text-lg text-gray-700">Cuantificar el <strong class="font-bold">"cuánto"</strong> económico: Frecuencia de pérdidas, impacto en ingresos y validación masiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 4: HIPÓTESIS -->
+        <section id="paso4" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 4: Hipótesis</h2>
+            <div class="bg-dark-maroon rounded-lg shadow-xl p-8 md:p-10 text-white">
+                <p class="text-lg text-gray-200 mb-6">La investigación buscaba probar que el verdadero dolor no es el desorden, sino la <strong class="font-bold">inseguridad económica</strong>. La hipótesis fue que las profesionales no adoptan software porque las soluciones actuales son:</p>
+                <ol class="list-none space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-2xl font-bold color-light-rose mr-4">1.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold color-light-rose">Caras:</strong> Percibidas como un lujo y no como una inversión esencial.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl font-bold color-light-rose mr-4">2.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold color-light-rose">Complejas:</strong> Requieren una curva de aprendizaje que consume tiempo valioso.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl font-bold color-deep-pink mr-4">3.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold color-deep-pink">Ineficaces:</strong> No resuelven el dolor principal: la <strong class="font-bold">pérdida de ingresos por citas canceladas a último minuto</strong>.</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- PASO 5: MUESTRA -->
+        <section id="paso5" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 5: Muestra</h2>
+            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex">
+                    <div class="w-full">
+                        <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Teórica (Ideal)</h3>
+                        <p class="text-7xl font-bold color-deep-pink">357</p>
+                        <p class="text-gray-600 text-lg">encuestas requeridas para 95% de confianza sobre una población de 5,000.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex">
+                    <div class="w-full">
+                        <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Ejecutada (Real)</h3>
+                        <div class="flex justify-around items-center mt-4">
+                            <div>
+                                <p class="text-7xl font-bold color-maroon">4</p>
+                                <p class="text-gray-600 text-lg">Entrevistas Cuali (a fondo)</p>
+                            </div>
+                            <div>
+                                <p class="text-7xl font-bold color-maroon">18</p>
+                                <p class="text-gray-600 text-lg">Encuestas Cuanti (válidas)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-gray-600 mt-6 text-sm italic">Anécdota: La dificultad para agendar las 4 entrevistas (profesionales en "modo multitarea") validó el problema de "gestión caótica" desde el reclutamiento.</p>
+        </section>
+
+        <!-- PASO 6: TÉCNICAS DE RECOLECCIÓN -->
+        <section id="paso6" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 6: Técnicas de Recolección</h2>
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
+                 <h3 class="text-2xl font-bold mb-6 color-dark-maroon">Herramientas de Recolección (Evidencia)</h3>
+                 <ul class="list-none space-y-4">
+                     <li class="flex items-center text-lg">
+                        <span class="text-2xl w-8 text-center mr-3">&#128196;</span>
+                        <a href="https://www.canva.com/design/DAG2pU6Vstw/HBEAAkF6-8e9G2rwkJZyAQ/edit?utm_content=DAG2pU6Vstw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="font-semibold color-maroon hover:underline">Guía de Entrevista (Canva)</a>
+                     </li>
+                     <li class="flex items-center text-lg">
+                        <span class="text-2xl w-8 text-center mr-3">&#128203;</span>
+                        <a href="https://docs.google.com/forms/d/1UeIiOgaYZsXSjtJ7PruHKrFm3IJn94dbN-KWyLm2Gyg/edit#response=ACYDBNif8YPAD3bflgo9vo2GYgrCNYL2QiiDyytMePYBStzLtLZJ7Oag6IpROwDSW9uqYOQ" class="font-semibold color-maroon hover:underline">Formulario de Encuesta (Google Forms)</a>
+                     </li>
+                     <li class="flex items-center text-lg">
+                        <span class="text-2xl w-8 text-center mr-3">&#128202;</span>
+                        <a href="https://docs.google.com/spreadsheets/d/1jIHQO3Qo0AoBu4Qaovk_KjoPfcS7NSk8QK89uId5u9w/edit?usp=sharing" class="font-semibold color-maroon hover:underline">Resultados de Encuesta (Google Sheets)</a>
+                     </li>
+                 </ul>
+            </div>
+        </section>
+
+        <!-- PASO 7: ANÁLISIS DE DATOS -->
+        <section id="paso7" class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 7: Análisis de Datos</h2>
+            
+            <!-- 7.1 Hallazgos Cualitativos -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.1 Hallazgos Cualitativos (El "Porqué")</h3>
+                <p class="text-lg text-gray-700 max-w-3xl mb-6">
+                    El análisis de las 4 entrevistas reveló dos perfiles: el perfil validado "Carla Rossi" y el perfil "Outlier", que nos enseñó quién NO es nuestro cliente.
                 </p>
-                
-                <h3 class="text-2xl font-semibold text-crema mb-4">Recomendación Estratégica para Aurea</h3>
-                <p class="text-lg text-white max-w-3xl mx-auto bg-borgona p-4 rounded-lg shadow-inner">
-                    Aurea debe posicionarse no como una "agenda", sino como una herramienta de <b>"control, seguridad y profesionalización"</b>. La funcionalidad de <b>gestión de adelantos y políticas de cancelación</b> debe ser el pilar central de la propuesta de valor para adquirir a "Carla", ya que es su dolor económico más urgente.
+                <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
+                    <table class="w-full min-w-[700px] text-left">
+                        <thead>
+                            <tr class="border-b-2" style="border-color: #C67891;">
+                                <th class="p-4 text-lg font-semibold color-dark-maroon">Dimensión Analizada</th>
+                                <th class="p-4 text-lg font-semibold bg-deep-pink text-white">PERFIL VALIDADO (Carol, Maritza, Sara)</th>
+                                <th class="p-4 text-lg font-semibold bg-maroon text-white">PERFIL OUTLIER (Mari)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="p-4 font-semibold text-gray-800 text-base">Emoción Principal</td>
+                                <td class="p-4 text-base" style="background-color: #fdf2f5;">"Estrés", "Ansiedad", "Frustración" (por gestión).</td>
+                                <td class="p-4 text-base" style="background-color: #fcf5f7;">"No me afecta para nada" (por gestión).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold text-gray-800 text-base">Dolor Administrativo</td>
+                                <td class="p-4 text-base" style="background-color: #fdf2f5;">Gestión "Caótica" (WhatsApp en horas de trabajo, "Gestión Nocturna").</td>
+                                <td class="p-4 text-base" style="background-color: #fcf5f7;">Se siente "ordenada" (problema: falta de demanda).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold text-gray-800 text-base">Manejo de Cancelaciones</td>
+                                <td class="p-4 text-base" style="background-color: #fdf2f5;">Evitan cobrar penalidad por <strong class="font-bold">"miedo al conflicto"</strong>.</td>
+                                <td class="p-4 text-base" style="background-color: #fcf5f7;">No pide adelantos.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold text-gray-800 text-base">Deseo Principal (Gain)</td>
+                                <td class="p-4 text-base font-bold" style="background-color: #fdf2f5;"><strong class="font-bold">"Tranquilidad", "Tiempo Libre", "Claridad Mental"</strong></td>
+                                <td class="p-4 text-base font-bold" style="background-color: #fcf5f7;"><strong class="font-bold">"Más capital", "un espacio"</strong> más grande.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-8">
+                    <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Evidencia Primaria (Entrevistas)</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <a href="https://youtu.be/njjlvwjW_oA" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/njjlvwjW_oA/mqdefault.jpg" alt="Entrevista 1 (Milagros/Sara)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <a href="https://youtu.be/XMbxL6ALU1I" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/XMbxL6ALU1I/mqdefault.jpg" alt="Entrevista 2 (Celeste/Carol)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <a href="https://youtu.be/34E0x0I5FHo" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/34E0x0I5FHo/mqdefault.jpg" alt="Entrevista 3 (Celeste/Mari - Outlier)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <a href="https://youtu.be/jbK78tPDxPg" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/jbK78tPDxPg/mqdefault.jpg" alt="Entrevista 4 (Ashly/Maritza)" class="rounded-lg shadow-md w-full">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7.2 Hallazgos Cuantitativos -->
+            <div>
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.2 Hallazgos Cuantitativos (El "Cuánto")</h3>
+                <p class="text-lg text-gray-700 max-w-3xl mb-6">
+                    Los datos de las 18 encuestas válidas confirmaron las emociones cualitativas. El dolor es primariamente económico.
                 </p>
+                <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1: ¿Qué riesgo genera MÁS ansiedad?</h4>
+                            <div class="chart-container">
+                                <canvas id="anxietyChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-lg">
+                            El <strong class="font-bold text-xl color-maroon">60%</strong> prioriza la pérdida de ingresos, validando el núcleo de la hipótesis.
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1.b: Impacto Económico Mensual</h4>
+                             <div class="chart-container" style="max-width: 500px;">
+                                <canvas id="impactChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-lg">
+                            El <strong class="font-bold text-xl color-maroon">70%</strong> de las profesionales pierde entre <strong class="font-bold">S/100 y más de S/300</strong> cada mes.
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between md:col-span-2 lg:col-span-1">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P2: ¿Qué valoran para ser "Empresaria"?</h4>
+                             <div class="chart-container">
+                                <canvas id="valueChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-lg">
+                            El <strong class="font-bold text-xl color-deep-pink">60%</strong> prioriza tener <strong class="font-bold">métricas y un sistema de gestión</strong> sobre más espacio o contactos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 8: CONCLUSIÓN Y RECOMENDACIONES -->
+        <section id="paso8">
+            <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 8: Conclusiones</h2>
+            <div class="text-center mb-10">
+                <h3 class="text-4xl font-bold mb-4 color-deep-pink">Veredicto: Hipótesis Aceptada</h3>
+                <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                    La investigación confirma que el dolor primario no es solo el desorden, sino la <strong class="font-bold">ansiedad financiera</strong> y la <strong class="font-bold">pérdida económica real</strong>. Las soluciones actuales fallan porque no resuelven la <strong class="font-bold">seguridad económica</strong>.
+                </p>
+            </div>
+            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-deep-pink flex">
+                    <div>
+                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">1. Posicionamiento</h4>
+                        <p class="text-gray-700 text-lg">
+                            Aurea debe ser una herramienta de <strong class="font-bold">"Seguridad Financiera y Control Empresarial"</strong>, no una simple agenda.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-light-rose flex">
+                    <div>
+                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">2. Funcionalidad Clave</h4>
+                        <p class="text-gray-700 text-lg">
+                            Priorizar el <strong class="font-bold">Pago de Adelantos</strong> (Smart Contracts) y el <strong class="font-bold">Registro Formal de Ingresos</strong>.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-maroon flex">
+                    <div>
+                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">3. Comunicación (Pitch)</h4>
+                        <p class="text-gray-700 text-lg">
+                            Prometer <strong class="font-bold">"Tranquilidad y Crecimiento Sólido"</strong>, respondiendo al deseo cualitativo de "claridad mental".
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Modal para el Equipo (Solo para el Pitch) -->
-    <div id="team-modal" class="modal-overlay">
-        <div class="modal-content relative">
-            <span id="modal-close-btn" class="modal-close-btn">&times;</span>
-            <div id="modal-content-inner">
-                <!-- El contenido se inyectará aquí -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Botón Flotante para ir al inicio -->
-    <a href="#portada" id="floating-home-btn" class="hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-    </a>
+    <footer class="text-center p-8 mt-10">
+        <p class="text-gray-600">Informe de Validación del Proyecto Aurea | Grupo 5</p>
+    </footer>
 
     <script>
-        // Envolver todo el script en DOMContentLoaded para asegurar que el HTML esté cargado
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- NAVEGACIÓN DINÁMICA ---
-            const navPitch = document.getElementById('nav-pitch');
-            const navResearch = document.getElementById('nav-research');
-            const sections = document.querySelectorAll('section');
-            const header = document.querySelector('header');
-            const homeBtn = document.getElementById('floating-home-btn');
 
-            const updateNavVisibility = () => {
-                let activePresentation = null;
-                let currentSection = null;
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.font.size = 12;
+            Chart.defaults.color = '#333';
 
-                // Encuentra la sección que está más cerca de la parte superior del viewport
-                let minDistance = Infinity;
-                sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    const distance = Math.abs(rect.top - header.offsetHeight);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        currentSection = section;
-                    }
-                });
-
-                if (currentSection) {
-                    activePresentation = currentSection.getAttribute('data-presentation');
-                }
-                
-                // Muestra el botón de Home si no estamos en la portada
-                if (homeBtn) {
-                    if (currentSection && currentSection.id !== 'portada') {
-                        homeBtn.classList.remove('hidden');
-                    } else {
-                        homeBtn.classList.add('hidden');
-                    }
-                }
-
-                // Muestra u oculta los menús
-                if (navPitch && navResearch) {
-                    if (activePresentation === 'pitch') {
-                        navPitch.style.display = 'flex';
-                        navResearch.style.display = 'none';
-                    } else if (activePresentation === 'research') {
-                        navPitch.style.display = 'none';
-                        navResearch.style.display = 'flex';
-                    } else {
-                        // Oculta ambos si está en la portada
-                        navPitch.style.display = 'none';
-                        navResearch.style.display = 'none';
+            const customTooltipTitle = {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
                     }
                 }
             };
-            
-            // Observador para detectar qué sección está visible
-            const observerOptions = {
-                root: null,
-                rootMargin: `-${header.offsetHeight}px 0px -${window.innerHeight - header.offsetHeight - 1}px 0px`,
-                threshold: 0
+
+            const palette = {
+                deepPink: '#A33C54',
+                lightRose: '#C67891',
+                maroon: '#7D142D',
+                darkMaroon: '#4A081F',
+                lightGray: '#F0F0F0'
             };
 
-            const navObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const presentationType = entry.target.getAttribute('data-presentation');
-                        if (navPitch && navResearch) {
-                            if (presentationType === 'pitch') {
-                                navPitch.style.display = 'flex';
-                                navResearch.style.display = 'none';
-                            } else if (presentationType === 'research') {
-                                navPitch.style.display = 'none';
-                                navResearch.style.display = 'flex';
-                            } else {
-                                navPitch.style.display = 'none';
-                                navResearch.style.display = 'none';
+            const ctx1 = document.getElementById('anxietyChart')?.getContext('2d');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            ['Pérdida por', 'Cancelaciones'], 
+                            ['Competencia', 'Informal'], 
+                            ['Dudas de', 'Calidad/Higiene'] 
+                        ],
+                        datasets: [{
+                            data: [60, 20, 20],
+                            backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
+                            borderColor: '#FEFBF6',
+                            borderWidth: 6,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    font: { size: 12 }
+                                }
                             }
                         }
-                        // Botón flotante
-                        if (homeBtn) {
-                            if (entry.target.id === 'portada') {
-                                homeBtn.classList.add('hidden');
-                            } else {
-                                homeBtn.classList.remove('hidden');
-                            }
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => {
-                navObserver.observe(section);
-            });
-            
-
-            // --- Script Animaciones Scroll (Intersection Observer) UNIFICADO ---
-            const animationObserverOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            const animationObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    // Selecciona el contenido fade-in
-                    const targetContent = entry.target.querySelector('.fade-in');
-                    
-                    if (entry.isIntersecting) {
-                        if (targetContent) targetContent.classList.add('visible');
-                        else entry.target.classList.add('visible');
-                    } else {
-                        if (targetContent) targetContent.classList.remove('visible');
-                        else entry.target.classList.remove('visible');
-                    }
-                });
-            }, animationObserverOptions);
-
-            document.querySelectorAll('section').forEach(el => {
-               const content = el.querySelector('.fade-in');
-               if (content) {
-                   content.classList.add('observed');
-                   animationObserver.observe(el);
-               } else if (el.classList.contains('fade-in')) {
-                   el.classList.add('observed');
-                   animationObserver.observe(el);
-               }
-            });
-
-            // --- Script para smooth scroll de la navegación principal ---
-            const navLinks = document.querySelectorAll('header nav a, #mobile-menu a, #floating-home-btn, .option-button');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    if (link.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            const headerOffset = header.offsetHeight;
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            
-                            if (targetId === '#portada') {
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                            } else {
-                                window.scrollTo({ top: offsetPosition + 5, behavior: "smooth" });
-                            }
-                        }
-                        
-                        const mobileMenu = document.getElementById('mobile-menu');
-                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }
-                });
-            });
-            
-            // --- Script interactividad Modal Equipo (Pitch) ---
-            const teamModal = document.getElementById('team-modal');
-            const modalContentInner = document.getElementById('modal-content-inner');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-
-            if(teamModal && modalContentInner && modalCloseBtn) {
-                const teamDetails = {
-                    'marilin': {
-                        name: 'Marilin Medina',
-                        role: 'CEO (Chief Executive Officer)',
-                        qualities: '<b>Liderazgo:</b> Define la visión y estrategia de Aurea. <b>Alianzas Estratégicas:</b> Construye relaciones clave con inversores, marcas y entidades reguladoras. <b>Pasión por el Cliente:</b> Asegura que cada decisión se alinee con la confianza de Sofia.' // Corregido
-                    },
-                    'eric': {
-                        name: 'Eric Mozombite',
-                        role: 'CTO (Chief Technology Officer)',
-                        qualities: '<b>Arquitectura Tecnológica:</b> Diseña y supervisa la implementación de la plataforma, integrando IA y Blockchain. <b>Innovación:</b> Lidera la investigación de nuevas tecnologías (IoT, RA) para mantener a Aurea a la vanguardia. <b>Seguridad:</b> Garantiza la inmutabilidad y seguridad de los datos.'
-                    },
-                    'ashly': {
-                        name: 'Ashly Rosas',
-                        role: 'CMO (Chief Marketing Officer)',
-                        qualities: '<b>Estrategia de Marca:</b> Construye la narrativa de Aurea en torno a la "confianza verificada". <b>Adquisición de Usuarios:</b> Lidera las campañas digitales (B2C) y B2B para atraer a Sofias y profesionales. <b>Crecimiento:</b> Desarrolla estrategias de comunidad y fidelización (Tokens, Eventos).' // Corregido
-                    },
-                    'celeste': {
-                        name: 'Celeste Taya',
-                        role: 'COO (Chief Operating Officer)',
-                        qualities: '<b>Operaciones del Día a Día:</b> Asegura que la plataforma funcione sin fricciones. <b>Procesos de Verificación:</b> Diseña y ejecuta el riguroso *onboarding* de profesionales (validación de antecedentes, certificados, higiene). <b>Soporte:</b> Lidera el equipo de soporte para clientes y profesionales.'
-                    },
-                    'milagros': {
-                        name: 'Milagros Tornero',
-                        role: 'CFO (Chief Financial Officer)',
-                        qualities: '<b>Modelo Financiero:</b> Define y optimiza el modelo de ingresos (comisiones, suscripciones, marketplace). <b>Sostenibilidad:</b> Gestiona la inversión, proyecciones y asegura la rentabilidad a largo plazo de la startup. <b>Métricas:</b> Analiza el LTV, CAC y rentabilidad por vertical.'
-                    }
-                };
-
-                document.querySelectorAll('.team-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        const memberKey = card.getAttribute('data-member');
-                        const member = teamDetails[memberKey];
-                        if (member) {
-                            modalContentInner.innerHTML = `
-                                <h3 class="text-3xl font-bold text-ladrillo mb-2">${member.name}</h3>
-                                <p class="text-xl font-semibold text-borgona mb-4">${member.role}</p>
-                                <div class="text-left text-oscuro space-y-2">
-                                    <p>${member.qualities.replace(/\n/g, '<br>')}</p>
-                                </div>
-                            `;
-                            teamModal.classList.add('visible');
-                        }
-                    });
-                });
-
-                const closeModal = () => {
-                    teamModal.classList.remove('visible');
-                };
-                modalCloseBtn.addEventListener('click', closeModal);
-                teamModal.addEventListener('click', (e) => {
-                    if (e.target === teamModal) {
-                        closeModal();
                     }
                 });
             }
 
-            // --- Script interactividad Tech Cards (Acordeón - Pitch) ---
-            document.querySelectorAll('.tech-card').forEach(card => {
-                const header = card.querySelector('h3');
-                if (header) {
-                    header.addEventListener('click', () => {
-                        document.querySelectorAll('.tech-card.open').forEach(openCard => {
-                            if (openCard !== card) openCard.classList.remove('open');
-                        });
-                        card.classList.toggle('open');
-                    });
-                }
-            });
-            
-             // --- Script menú móvil UNIFICADO ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+            const ctx2 = document.getElementById('impactChart')?.getContext('2d');
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'S/ 100 - S/ 300', 
+                            ['Más de', 'S/ 300'],
+                            ['Menos de', 'S/ 100'],
+                            'Otro'
+                        ],
+                        datasets: [{
+                            label: '% de Profesionales',
+                            data: [50, 20, 20, 10],
+                            backgroundColor: [palette.maroon, palette.deepPink, palette.lightRose, palette.lightGray],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 60,
+                                ticks: {
+                                    callback: function(value) { return value + '%' }
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
 
-            if(mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
+            const ctx3 = document.getElementById('valueChart')?.getContext('d');
+            if (ctx3) {
+                new Chart(ctx3, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            ['Métricas y', 'Gestión'], 
+                            ['Otros (Espacio,', 'Contactos)'] 
+                        ],
+                        datasets: [{
+                            data: [60, 40],
+                            backgroundColor: [palette.deepPink, palette.lightRose],
+                            borderColor: '#FEFBF6',
+                            borderWidth: 6,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    font: { size: 12 }
+                                }
+                            }
+                        }
+                    }
                 });
             }
         });
