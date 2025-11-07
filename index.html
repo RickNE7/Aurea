@@ -10,42 +10,27 @@
     
     <!-- Chosen Palette: Valkiria Rose (#C67891, #A33C54, #7D142D, #4A081F) -->
 
-    <!-- 
-    Application Structure Plan: 
-    La arquitectura de esta SPA sigue la clasificación formal de 8 pasos del informe EA3.
-    Paso 1: Problema, Mercado y Perfil (Buyer Persona).
-    Paso 2: Objetivos (General y Específico).
-    Paso 3: Tipo de Investigación (Cuali/Cuanti) + Justificación Teórica.
-    Paso 4: Hipótesis (El dolor es la inseguridad económica).
-    Paso 5: Muestra (Teórica vs. Real, Embudo de Filtrado).
-    Paso 6: Técnicas (Enlaces a Herramientas, Pregunta de Impacto, Videos).
-    Paso 7: Análisis de Datos (Prompt de IA, Hallazgos Cuali + Fuente Insights, 6 Gráficas Cuanti, Transcripciones PDF, Resumen Paralelismo).
-    Paso 8: Conclusiones (Hipótesis Aceptada, Paralelismo Detallado, Recomendaciones Estratégicas).
-    -->
-
-    <!-- 
-    Visualization & Content Choices:
-    - Todos los pasos están en secciones <section> con un ID (ej. id="paso1") para la navegación.
-    - Mercado (S/ 9.3B): Goal: Informar. Method: Big Number (HTML/Tailwind). CONFIRM: NO SVG/Mermaid.
-    - Buyer Persona: Goal: Informar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
-    - Tipo de Inv (Paso 3): Goal: Organizar. Method: Tabla HTML + Párrafo de Justificación Teórica. CONFIRM: NO SVG/Mermaid.
-    - Hipótesis: Goal: Organizar. Method: Lista HTML estilizada. CONFIRM: NO SVG/Mermaid.
-    - Muestra (Teórica vs. Real): Goal: Comparar. Method: Tarjetas HTML + Tabla de Embudo. CONFIRM: NO SVG/Mermaid.
-    - Herramientas (Enlaces): Goal: Organizar. Method: Lista de enlaces HTML. CONFIRM: NO SVG/Mermaid.
-    - Evidencia Cuali (Videos): Goal: Informar. Method: Grid de Imágenes HTML. CONFIRM: NO SVG/Mermaid.
-    - Análisis Cuali (Tabla): Goal: Comparar. Method: Tabla HTML + Enlace a PDF de Insights (NUEVO). CONFIRM: NO SVG/Mermaid.
-    - Transcripciones (PDFs): Goal: Organizar. Method: Grid de enlaces (Visor Google). CONFIRM: NO SVG/Mermaid.
-    - 6 Gráficas Cuanti: Goal: Comparar (Composición/Distribución). Method: 6 Gráficas (Chart.js/Canvas). CONFIRM: NO SVG/Mermaid.
-    - Recomendaciones: Goal: Organizar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
-    -->
-
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FEFBF6; /* Crema muy claro */
+            
+            /* ACCIÓN: Imagen de fondo atenuada con un overlay de color crema (60% opaco) */
+            background-color: #FEFBF6; /* Color base si la imagen falla */
+            background-image: linear-gradient(rgba(249, 246, 240, 0.92), rgba(249, 246, 240, 0.6)), url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva17.png');
+            
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
             padding-top: 64px; /* Espacio para el header fijo */
+        }
+        
+        /* Tarjetas (sin tocar, se mantienen al 92% de opacidad) */
+        .content-card {
+            background-color: rgba(249, 246, 240, 0.92); /* Crema semi-transparente (92%) */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         .chart-container {
             position: relative;
@@ -88,6 +73,47 @@
         .flex-card > div {
             flex-grow: 1;
         }
+        
+        /* Estilos para el Tooltip Flotante */
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 320px;
+            background-color: #4A081F; /* Dark Maroon */
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 135%; /* Position above the icon */
+            left: 50%;
+            margin-left: -160px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            line-height: 1.6;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* Flecha del tooltip */
+        .info-tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #4A081F transparent transparent transparent;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -129,7 +155,7 @@
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 1: Problema y Perfil</h2>
             
             <!-- 1.1 El Mercado -->
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 border-t-4 border-maroon mb-8">
+            <div class="content-card p-8 md:p-10 border-t-4 border-maroon mb-8">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">1.1 El Problema Central</h3>
                 <p class="text-xl text-center text-gray-700 max-w-3xl mx-auto mb-6">
                     Un mercado de <strong class="font-bold color-deep-pink">S/ 9.3 Mil Millones</strong> está frenado por una ineficiencia estructural: El "Caos de Gestión Manual".
@@ -180,7 +206,7 @@
             </div>
 
             <!-- 1.2 El Perfil (Tabla) -->
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mt-8">
+            <div class="content-card p-8 md:p-10 mt-8">
                 <h3 class="text-2xl font-bold mb-3 color-dark-maroon">1.2 El Perfil: "Carla Rossi"</h3>
                 <p class="text-lg text-gray-700 max-w-3xl mb-6">
                     Carla es el arquetipo de la "Talentosa Desorganizada". Es experta en su arte, pero está atrapada en el ciclo del autoempleo caótico.
@@ -224,7 +250,7 @@
         <!-- PASO 2: OBJETIVOS -->
         <section id="paso2" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 2: Objetivos</h2>
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
+            <div class="content-card p-8 md:p-10">
                  <ul class="list-none space-y-6">
                     <li class="flex items-start">
                         <span class="text-3xl font-bold color-maroon mr-4 mt-1">&#9656;</span>
@@ -247,7 +273,7 @@
         <!-- PASO 3: TIPO DE INVESTIGACIÓN (ACTUALIZADO) -->
         <section id="paso3" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 3: Tipo de Investigación</h2>
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 overflow-x-auto">
+            <div class="content-card p-8 md:p-10 overflow-x-auto">
                 <!-- Tabla existente -->
                 <table class="w-full">
                     <thead>
@@ -281,7 +307,7 @@
         <!-- PASO 4: HIPÓTESIS (con Justificación) -->
         <section id="paso4" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 4: Hipótesis</h2>
-            <div class="bg-dark-maroon rounded-lg shadow-xl p-8 md:p-10 text-white">
+            <div class="content-card bg-dark-maroon rounded-lg p-8 md:p-10 text-white">
                 <h3 class="text-2xl font-bold mb-3 text-white">4.1 Hipótesis Central</h3>
                 <p class="text-lg text-gray-200 mb-6">La baja adopción de software de gestión se debe a que las soluciones actuales son:</p>
                 <ol class="list-none space-y-4">
@@ -305,20 +331,45 @@
             </div>
         </section>
 
-        <!-- PASO 5: MUESTRA (con Embudo) -->
+        <!-- PASO 5: MUESTRA (ACTUALIZADO) -->
         <section id="paso5" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 5: Muestra</h2>
             
             <h3 class="text-2xl font-bold mb-4 color-dark-maroon">5.1 Contraste de Muestra (Teórica vs. Real)</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex-card">
+                
+                <!-- Card 1: Teórica (ACTUALIZADA) -->
+                <div class="content-card p-8 text-center flex-card">
                     <div>
                         <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Teórica (Ideal)</h3>
-                        <p class="text-7xl font-bold color-deep-pink">357</p>
-                        <p class="text-gray-600 text-lg">encuestas (95% confianza, 5% error, N=5,000).</p>
+                        <!-- ACCIÓN: Muestra recalculada -->
+                        <p class="text-7xl font-bold color-deep-pink">381</p>
+                        <div class="flex items-center justify-center text-gray-600 text-lg">
+                            <!-- ACCIÓN: Población actualizada -->
+                            <span>encuestas (N=36,783)</span>
+                            <!-- ACCIÓN: Tooltip Flotante añadido -->
+                            <div class="info-tooltip ml-2">
+                                <span class="text-xs font-bold color-deep-pink border border-deep-pink rounded-full w-5 h-5 flex items-center justify-center">?</span>
+                                <div class="tooltip-text">
+                                    <strong class="text-base" style="color:#C67891;">Fórmula de Población Finita:</strong><br>
+                                    n = [N * Z² * p * q] / [e² * (N-1) + Z² * p * q]<br><br>
+                                    <strong style="color:#C67891;">Donde:</strong><br>
+                                    • N (Población) = 36,783<br>
+                                    • Z (Confianza 95%) = 1.96<br>
+                                    • p (Prob.) = 0.5 | q (Prob.) = 0.5<br>
+                                    • e (Error) = 0.05
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ACCIÓN: Link a la fuente de población añadido -->
+                        <a href="https://iesiperu.org.pe/wp-content/uploads/2025/03/022025_Peluqueria-y-tratamiento-de-belleza.pdf" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold hover:underline color-maroon mt-4 inline-block">
+                            Fuente de Población: INEI (21,783) + Informalidad (~15,000)
+                        </a>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex-card">
+
+                <!-- Card 2: Real (Sin cambios) -->
+                <div class="content-card p-8 text-center flex-card">
                     <div>
                         <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Ejecutada (Real)</h3>
                         <div class="flex justify-around items-center mt-4">
@@ -336,7 +387,7 @@
             </div>
 
             <h3 class="text-2xl font-bold mb-4 color-dark-maroon">5.2 Embudo de Filtrado (Muestra Cuantitativa)</h3>
-            <div class="bg-white rounded-lg shadow-xl p-8 overflow-x-auto">
+            <div class="content-card p-8 overflow-x-auto">
                  <table class="w-full min-w-[600px] text-left">
                     <thead>
                         <tr class="border-b-2 border-light-rose">
@@ -361,14 +412,16 @@
                             <td class="p-3 text-base font-bold">7 Respuestas</td>
                             <td class="p-3 text-base">38.9%</td>
                         </tr>
-                        <tr class="bg-yellow-50">
+                        <tr style="background-color: rgba(253, 242, 242, 0.8);">
                             <td class="p-3 text-base font-bold color-maroon">Muestra Final de Investigación (Paso 7)</td>
                             <td class="p-3 text-base font-bold color-maroon">5 Respuestas</td>
                             <td class="p-3 text-base font-bold color-maroon">27.8%</td>
                         </tr>
                     </tbody>
                  </table>
-                 <p class="text-gray-600 mt-6 text-sm italic">Anécdota: La dificultad para agendar las 4 entrevistas (profesionales en "modo multitarea") validó el problema de "gestión caótica" desde el reclutamiento.</p>
+                 <p class="text-gray-600 mt-6 text-sm italic">
+                    <strong class="font-semibold">Justificación de Muestra Ejecutada:</strong> La muestra real, aunque menor a la teórica (381), superó los mínimos de la rúbrica (10). La alta tasa de abandono (72.2%) se debe a los 4 filtros estrictos, validando la segmentación. La dificultad para agendar las 4 entrevistas (profesionales en "modo multitarea") validó el problema de "gestión caótica" desde el reclutamiento.
+                 </p>
             </div>
         </section>
 
@@ -376,7 +429,7 @@
         <section id="paso6" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 6: Técnicas de Recolección</h2>
             
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mb-8">
+            <div class="content-card p-8 md:p-10 mb-8">
                  <h3 class="text-2xl font-bold mb-8 color-dark-maroon">6.1 Herramientas de Recolección (Evidencia)</h3>
                  <div class="space-y-8">
                      <div>
@@ -403,7 +456,7 @@
                  </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mb-8">
+            <div class="content-card p-8 md:p-10 mb-8">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">6.2 Evidencia Cualitativa (Entrevistas)</h3>
                 <div class="mb-6">
                     <h4 class="text-xl font-semibold mb-3 color-maroon">Pregunta de Mayor Impacto</h4>
@@ -453,13 +506,13 @@
             <!-- 7.1 Hallazgos Cualitativos -->
             <div class="mb-12">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.1 Hallazgos Cualitativos (El "Porqué")</h3>
-                <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-deep-pink mb-8 shadow-inner">
+                <div class="content-card bg-gray-50 p-6 border-l-4 border-deep-pink mb-8 shadow-inner">
                     <h4 class="text-xl font-semibold mb-3 color-dark-maroon">Prompt de Análisis (IA)</h4>
                     <blockquote class="text-gray-700 italic leading-relaxed">
                         "Actúa como un analista experto en UX del sector belleza en Perú. Analiza las 4 transcripciones de las profesionales ('Carla Rossi'). Enfócate en los descubrimientos que expresan la frustración por la gestión manual, el impacto emocional del desorden (estrés/ansiedad) y los obstáculos para crecer. Identifica los <strong class="color-maroon">insights clave</strong>, <strong class="color-maroon">dolores recurrentes</strong> y <strong class="color-maroon">deseos prioritarios</strong> que validan la hipótesis."
                     </blockquote>
                 </div>
-                <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
+                <div class="content-card p-6 overflow-x-auto">
                     <table class="w-full min-w-[700px] text-left">
                         <thead>
                             <tr class="border-b-2 border-light-rose">
@@ -471,27 +524,27 @@
                         <tbody class="divide-y divide-gray-200">
                             <tr>
                                 <td class="p-4 font-semibold text-gray-800 text-base">Emoción Principal</td>
-                                <td class="p-4 text-base" style="background-color: #fdf2f5;">"Estrés", "Ansiedad", "Frustración" (por gestión).</td>
-                                <td class="p-4 text-base" style="background-color: #fcf5f7;">"No me afecta para nada" (por gestión).</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.5);">"Estrés", "Ansiedad", "Frustración" (por gestión).</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.1);">"No me afecta para nada" (por gestión).</td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-gray-800 text-base">Dolor Administrativo</td>
-                                <td class="p-4 text-base" style="background-color: #fdf2f5;">Gestión "Caótica" (WhatsApp en horas de trabajo, "Gestión Nocturna").</td>
-                                <td class="p-4 text-base" style="background-color: #fcf5f7;">Se siente "ordenada" (problema: falta de demanda).</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.5);">Gestión "Caótica" (WhatsApp en horas de trabajo, "Gestión Nocturna").</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.1);">Se siente "ordenada" (problema: falta de demanda).</td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-gray-800 text-base">Manejo de Cancelaciones</td>
-                                <td class="p-4 text-base" style="background-color: #fdf2f5;">Evitan cobrar penalidad por <strong class="font-bold">"miedo al conflicto"</strong>.</td>
-                                <td class="p-4 text-base" style="background-color: #fcf5f7;">No pide adelantos.</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.5);">Evitan cobrar penalidad por <strong class="font-bold">"miedo al conflicto"</strong>.</td>
+                                <td class="p-4 text-base" style="background-color: rgba(249, 246, 240, 0.1);">No pide adelantos.</td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-gray-800 text-base">Deseo Principal (Gain)</td>
-                                <td class="p-4 text-base font-bold" style="background-color: #fdf2f5;"><strong class="font-bold">"Tranquilidad", "Tiempo Libre", "Claridad Mental"</strong></td>
-                                <td class="p-4 text-base font-bold" style="background-color: #fcf5f7;"><strong class="font-bold">"Más capital", "un espacio"</strong> más grande.</td>
+                                <td class="p-4 text-base font-bold" style="background-color: rgba(249, 246, 240, 0.5);"><strong class="font-bold">"Tranquilidad", "Tiempo Libre", "Claridad Mental"</strong></td>
+                                <td class="p-4 text-base font-bold" style="background-color: rgba(249, 246, 240, 0.1);"><strong class="font-bold">"Más capital", "un espacio"</strong> más grande.</td>
                             </tr>
                         </tbody>
                     </table>
-                    <!-- INSERCIÓN DEL ENLACE AL PDF DE INSIGHTS -->
+                    
                     <div class="mt-4 text-right">
                          <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/EA3%20-%20Insights%20(detalle).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold hover:underline color-deep-pink">Ver Análisis Detallado de Insights (PDF) &rarr;</a>
                     </div>
@@ -515,7 +568,7 @@
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Gráfico 4: Perfil (N=18) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 1: Perfil Laboral (N=18)</h4>
                             <div class="chart-container">
@@ -527,7 +580,7 @@
                         </p>
                     </div>
                     <!-- Gráfico 5: Gestión (N=11) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 2: Método de Gestión (N=11)</h4>
                             <div class="chart-container">
@@ -539,7 +592,7 @@
                         </p>
                     </div>
                     <!-- Gráfico 6: Demográfico (N=11) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 3: Demográfico (N=11)</h4>
                             <div class="chart-container">
@@ -561,7 +614,7 @@
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Gráfico 1: Ansiedad (N=7) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1: ¿Qué riesgo genera MÁS ansiedad?</h4>
                             <div class="chart-container">
@@ -581,7 +634,7 @@
                         </p>
                     </div>
                     <!-- Gráfico 2: Impacto (N=5) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1.b: Impacto Económico Mensual</h4>
                              <div class="chart-container" style="max-width: 500px;">
@@ -601,7 +654,7 @@
                         </p>
                     </div>
                     <!-- Gráfico 3: Deseo (N=5) -->
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
+                    <div class="content-card p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P2: ¿Qué valoran para ser "Empresaria"?</h4>
                              <div class="chart-container">
@@ -624,7 +677,7 @@
             </div>
 
             <!-- 7.4 Resumen de Convergencia (Paralelismo) -->
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-8 rounded-lg shadow-xl">
+            <div class="content-card p-8" style="background-color: rgba(253, 242, 211, 0.85); border-left: 4px solid #FBBF24;">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">&#128161; Resumen de Convergencia (Cuali + Cuanti)</h3>
                 <p class="text-lg text-gray-800 leading-relaxed">
                     En resumen, hemos confirmado el problema desde dos perspectivas:
@@ -650,7 +703,7 @@
             </div>
 
             <!-- 8.2 Tabla de Paralelismo -->
-            <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto mb-10">
+            <div class="content-card p-6 overflow-x-auto mb-10">
                 <h3 class="text-2xl font-bold mb-6 color-dark-maroon">8.2 El Paralelismo que Valida la Hipótesis</h3>
                 <table class="w-full min-w-[700px] text-left">
                     <thead>
@@ -681,7 +734,7 @@
             </div>
 
             <!-- 8.3 Recomendaciones -->
-            <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
+            <div class="content-card p-6 overflow-x-auto">
                 <h3 class="text-2xl font-bold mb-6 color-dark-maroon">8.3 Recomendaciones Estratégicas para Aurea</h3>
                 <table class="w-full min-w-[700px] text-left">
                     <thead>
@@ -699,7 +752,7 @@
                         </tr>
                         <tr>
                             <td class="p-4 font-semibold text-gray-800 text-base">Funcionalidad Clave</td>
-                            <td class="p-4 text-base">Priorizar el <strong class="font-bold">Pago de Adelantos</strong> (Smart Contracts) y el <strong class="font-bold">Registro Formal de Ingresos</strong>.</td>
+                            <td class="p-4 text-base">Priorizar el <strong class="font-bold">Pago de Adelantos</strong> (Smart Contracts) y el <strong classG"font-bold">Registro Formal de Ingresos</strong>.</td>
                             <td class="p-4 text-base">Ataca el dolor del <strong class="font-bold color-maroon">80% de la muestra</strong> (pérdidas reales) y el <strong class="font-bold color-maroon">60%</strong> que busca métricas.</td>
                         </tr>
                         <tr>
@@ -785,7 +838,7 @@
                         datasets: [{
                             data: [71.4, 14.3, 14.3],
                             backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
-                            borderColor: '#FEFBF6',
+                            borderColor: 'rgba(249, 246, 240, 0.92)',
                             borderWidth: 6,
                             hoverOffset: 4
                         }]
@@ -855,7 +908,7 @@
                         datasets: [{
                             data: [60, 20, 20],
                             backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
-                            borderColor: '#FEFBF6',
+                            borderColor: 'rgba(249, 246, 240, 0.92)',
                             borderWidth: 6,
                             hoverOffset: 4
                         }]
@@ -885,7 +938,7 @@
                         datasets: [{
                             data: [61.1, 27.8, 11.1],
                             backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
-                            borderColor: '#FEFBF6',
+                            borderColor: 'rgba(249, 246, 240, 0.92)',
                             borderWidth: 6,
                             hoverOffset: 4
                         }]
@@ -913,7 +966,7 @@
                         datasets: [{
                             data: [100],
                             backgroundColor: [palette.deepPink],
-                            borderColor: '#FEFBF6',
+                            borderColor: 'rgba(249, 246, 240, 0.92)',
                             borderWidth: 6,
                             hoverOffset: 4
                         }]
@@ -943,7 +996,7 @@
                         datasets: [{
                             data: [63.6, 18.2, 18.2], 
                             backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
-                            borderColor: '#FEFBF6',
+                            borderColor: 'rgba(249, 246, 240, 0.92)',
                             borderWidth: 6,
                             hoverOffset: 4
                         }]
