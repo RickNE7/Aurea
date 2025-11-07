@@ -12,8 +12,7 @@
 
     <!-- 
     Application Structure Plan: 
-    La arquitectura de esta SPA sigue la clasificación formal de 8 pasos del informe EA3, como se solicitó.
-    Una barra de navegación fija (sticky) permite la interactividad y el salto entre secciones.
+    La arquitectura de esta SPA sigue la clasificación formal de 8 pasos del informe EA3.
     Paso 1: Problema, Mercado y Perfil (Buyer Persona).
     Paso 2: Objetivos (General y Específico).
     Paso 3: Tipo de Investigación (Cuali/Cuanti).
@@ -21,25 +20,11 @@
     Paso 5: Muestra (Teórica vs. Real, Embudo de Filtrado).
     Paso 6: Técnicas (Enlaces a Herramientas, Pregunta de Impacto, Videos).
     Paso 7: Análisis de Datos (Prompt de IA, Hallazgos Cuali, 6 Gráficas Cuanti, Transcripciones PDF).
-    Paso 8: Conclusiones (Hipótesis Aceptada y Recomendaciones Estratégicas).
+        - NUEVO: 7.4 Resumen de Convergencia (Mención breve del paralelismo).
+    Paso 8: Conclusiones (Hipótesis Aceptada).
+        - NUEVO: 8.2 Tabla de Paralelismo (Justificación detallada).
+        - 8.3 Recomendaciones Estratégicas.
     -->
-
-    <!-- 
-    Visualization & Content Choices:
-    - Todos los pasos están en secciones <section> con un ID (ej. id="paso1") para la navegación.
-    - Mercado (S/ 9.3B): Goal: Informar. Method: Big Number (HTML/Tailwind). CONFIRM: NO SVG/Mermaid.
-    - Buyer Persona: Goal: Informar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
-    - Hipótesis: Goal: Organizar. Method: Lista HTML estilizada. CONFIRM: NO SVG/Mermaid.
-    - Muestra (Teórica vs. Real): Goal: Comparar. Method: Tarjetas HTML + Tabla de Embudo. CONFIRM: NO SVG/Mermaid.
-    - Herramientas (Enlaces): Goal: Organizar. Method: Lista de enlaces HTML. CONFIRM: NO SVG/Mermaid.
-    - Evidencia Cuali (Videos): Goal: Informar. Method: Grid de Imágenes HTML. CONFIRM: NO SVG/Mermaid.
-    - Análisis Cuali (Tabla): Goal: Comparar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
-    - Transcripciones (PDFs): Goal: Organizar. Method: Grid de enlaces (Visor Google). CONFIRM: NO SVG/Mermaid.
-    - 6 Gráficas Cuanti: Goal: Comparar (Composición/Distribución). Method: 6 Gráficas (Chart.js/Canvas). CONFIRM: NO SVG/Mermaid.
-    - Recomendaciones: Goal: Organizar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
-    -->
-
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <style>
         body {
@@ -156,22 +141,22 @@
                                 <tr>
                                     <td class="p-3 text-base">Análisis TA6</td>
                                     <td class="p-3 text-base">Ineficiencia en Búsqueda y Centralización</td>
-                                    <td class="p-3 text-base"><a href="https://raw.githubusercontent.com/RickNE7/Aurea/main/TA6%20Paso%202%20(v2)%20-%20Investigaci%C3%B3n%20Mercado%20Belleza%20Per%C3%BA.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon font-semibold">Ver Documento</a></td>
+                                    <td class="p-3 text-base"><a href="https.raw.githubusercontent.com/RickNE7/Aurea/main/TA6%20Paso%202%20(v2)%20-%20Investigaci%C3%B3n%20Mercado%20Belleza%20Per%C3%BA.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon font-semibold">Ver Documento</a></td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-base">Valor Proyectado (2024)</td>
                                     <td class="p-3 text-base"><strong class="font-bold color-deep-pink">S/ 9.3 Mil Millones</strong></td>
-                                    <td class="p-3 text-base"><a href="https://lacamara.pe/sector-cosmeticos-e-higiene-personal-facturaria-mas-de-s-9-000-millones-en-2024/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">CCL, 2024</a></td>
+                                    <td class="p-3 text-base"><a href="https.lacamara.pe/sector-cosmeticos-e-higiene-personal-facturaria-mas-de-s-9-000-millones-en-2024/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">CCL, 2024</a></td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-base">Valor Facturado (2023)</td>
                                     <td class="p-3 text-base">S/ 8.8 Mil Millones</td>
-                                    <td class="p-3 text-base"><a href="https://logistica360.pe/sector-cosmeticos-e-higiene-esta-experimentando-un-crecimiento-notable/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">COPECOH, 2024</a></td>
+                                    <td class="p-3 text-base"><a href="https.logistica360.pe/sector-cosmeticos-e-higiene-esta-experimentando-un-crecimiento-notable/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">COPECOH, 2024</a></td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-base">Panorama de la Industria</td>
                                     <td class="p-3 text-base">Gestión manual impide crecimiento</td>
-                                    <td class="p-3 text-base"><a href="https://www.mincetur.gob.pe/reglamentostecnicos/informacion_general/documentos/Presentaciones_12Julio/1_Panorama_de_la_industria_cosmetica.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">MINCETUR, 2024</a></td>
+                                    <td class="p-3 text-base"><a href="https.www.mincetur.gob.pe/reglamentostecnicos/informacion_general/documentos/Presentaciones_12Julio/1_Panorama_de_la_industria_cosmetica.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">MINCETUR, 2024</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -262,6 +247,9 @@
                         </tr>
                     </tbody>
                 </table>
+                 <p class="text-gray-700 mt-6 text-lg">
+                    <strong class="font-semibold color-maroon">Justificación Teórica:</strong> El componente Cualitativo es vital para entender las <strong class="font-bold">historias de vida</strong> y el <strong class="font-bold">impacto emocional</strong> del problema (empatía). El componente Cuantitativo es necesario para <strong class="font-bold">cuantificar el gasto real</strong> y medir la disposición a pagar por una solución.
+                </p>
             </div>
         </section>
 
@@ -369,21 +357,21 @@
                      <div>
                         <div class="flex items-center text-lg">
                             <span class="text-2xl w-8 text-center mr-3">&#128196;</span>
-                            <a href="https://www.canva.com/design/DAG2pU6Vstw/HBEAAkF6-8e9G2rwkJZyAQ/edit?utm_content=DAG2pU6Vstw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Guía de Entrevista (Canva)</a>
+                            <a href="https.www.canva.com/design/DAG2pU6Vstw/HBEAAkF6-8e9G2rwkJZyAQ/edit?utm_content=DAG2pU6Vstw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Guía de Entrevista (Canva)</a>
                         </div>
                         <p class="text-gray-600 text-base mt-2 ml-11">La presentación de 24 preguntas (basada en el Mapa de Empatía) usada para guiar las 4 entrevistas cualitativas.</p>
                      </div>
                      <div>
                         <div class="flex items-center text-lg">
                             <span class="text-2xl w-8 text-center mr-3">&#128203;</span>
-                            <a href="https://docs.google.com/forms/d/1UeIiOgaYZsXSjtJ7PruHKrFm3IJn94dbN-KWyLm2Gyg/edit#response=ACYDBNif8YPAD3bflgo9vo2GYgrCNYL2Gyg" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Formulario de Encuesta (Google Forms)</a>
+                            <a href="https.docs.google.com/forms/d/1UeIiOgaYZsXSjtJ7PruHKrFm3IJn94dbN-KWyLm2Gyg/edit#response=ACYDBNif8YPAD3bflgo9vo2GYgrCNYL2Gyg" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Formulario de Encuesta (Google Forms)</a>
                         </div>
                          <p class="text-gray-600 text-base mt-2 ml-11">El formulario con 4 filtros (para validar el perfil) y 2 de investigación (para cuantificar el dolor).</p>
                      </div>
                      <div>
                         <div class="flex items-center text-lg">
                             <span class="text-2xl w-8 text-center mr-3">&#128202;</span>
-                            <a href="https://docs.google.com/spreadsheets/d/1jIHQO3Qo0AoBu4Qaovk_KjoPfcS7NSk8QK89uId5u9w/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Resultados de Encuesta (Google Sheets)</a>
+                            <a href="https.docs.google.com/spreadsheets/d/1jIHQO3Qo0AoBu4Qaovk_KjoPfcS7NSk8QK89uId5u9w/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Resultados de Encuesta (Google Sheets)</a>
                         </div>
                          <p class="text-gray-600 text-base mt-2 ml-11">La hoja de cálculo con las 18 respuestas válidas que alimentan los gráficos de esta presentación.</p>
                      </div>
@@ -405,25 +393,25 @@
                 <h4 class="text-xl font-semibold mb-4 text-center color-maroon">Miniaturas de Evidencia</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="text-center">
-                        <a href="https://youtu.be/njjlvwjW_oA" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <a href="https.youtu.be/njjlvwjW_oA" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
                             <img src="https://img.youtube.com/vi/njjlvwjW_oA/mqdefault.jpg" alt="Entrevista 1 (Sara T.)" class="rounded-lg shadow-md w-full">
                         </a>
                         <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 1: Sara T.</p>
                     </div>
                     <div class="text-center">
-                        <a href="https://youtu.be/XMbxL6ALU1I" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <a href="https.youtu.be/XMbxL6ALU1I" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
                             <img src="https://img.youtube.com/vi/XMbxL6ALU1I/mqdefault.jpg" alt="Entrevista 2 (Caro B.)" class="rounded-lg shadow-md w-full">
                         </a>
                         <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 2: Caro B.</p>
                     </div>
                     <div class="text-center">
-                        <a href="https://youtu.be/34E0x0I5FHo" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <a href="https.youtu.be/34E0x0I5FHo" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
                             <img src="https://img.youtube.com/vi/34E0x0I5FHo/mqdefault.jpg" alt="Entrevista 3 (Mari C. - Outlier)" class="rounded-lg shadow-md w-full">
                         </a>
                         <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 3: Mari C. (Outlier)</p>
                     </div>
                     <div class="text-center">
-                        <a href="https://youtu.be/jbK78tPDxPg" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <a href="https.youtu.be/jbK78tPDxPg" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
                             <img src="https://img.youtube.com/vi/jbK78tPDxPg/mqdefault.jpg" alt="Entrevista 4 (Maritza A.)" class="rounded-lg shadow-md w-full">
                         </a>
                         <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 4: Maritza A.</p>
@@ -482,10 +470,10 @@
                 <div class="mt-8">
                     <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Evidencia Primaria (Transcripciones)</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251102%20Milagros.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 1 (Sara T.)</a>
-                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(1).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 2 (Caro B.)</a>
-                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(2).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 3 (Mari C.)</a>
-                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251106%20Ashly.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 4 (Maritza A.)</a>
+                        <a href="https.docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251102%20Milagros.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 1 (Sara T.)</a>
+                        <a href="https.docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(1).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 2 (Caro B.)</a>
+                        <a href="https.docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(2).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 3 (Mari C.)</a>
+                        <a href="https.docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251106%20Ashly.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 4 (Maritza A.)</a>
                     </div>
                 </div>
             </div>
@@ -537,7 +525,7 @@
             </div>
 
             <!-- 7.3 Hallazgos Cuantitativos (Investigación) -->
-            <div>
+            <div class="mb-12">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.3 Hallazgos Cuantitativos (Investigación)</h3>
                 <p class="text-lg text-gray-700 max-w-3xl mb-6">
                     Estas 3 gráficas, basadas en la muestra final filtrada (N=5 a 7), validan la hipótesis.
@@ -605,6 +593,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 7.4 Resumen de Convergencia (NUEVO) -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-8 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">&#128161; Resumen de Convergencia (Cuali + Cuanti)</h3>
+                <p class="text-lg text-gray-800 leading-relaxed">
+                    En resumen, hemos confirmado el problema desde dos perspectivas:
+                </p>
+                <ul class="list-disc list-inside mt-4 space-y-2 text-lg">
+                    <li>El <strong class="font-semibold">Análisis Cualitativo</strong> nos dio el <strong class="font-bold">'Porqué'</strong> emocional: el estrés, la "Gestión Nocturna" y el "miedo al conflicto".</li>
+                    <li>El <strong class="font-semibold">Análisis Cuantitativo</strong> nos dio el <strong class="font-bold">'Cuánto'</strong> económico: la pérdida del <strong class="color-maroon">80%</strong> de la muestra y la ansiedad del <strong class="color-maroon">71.4%</strong>.</li>
+                </ul>
+                <p class="text-lg text-gray-800 leading-relaxed mt-4">
+                    La <strong class="font-bold">convergencia</strong> de estos datos es la prueba más sólida de nuestra hipótesis, y la veremos detalladamente en las conclusiones.
+                </p>
+            </div>
         </section>
 
         <!-- PASO 8: CONCLUSIÓN Y RECOMENDACIONES (Tabla) -->
@@ -616,8 +619,41 @@
                     La investigación confirma que el dolor primario no es solo el desorden, sino la <strong class="font-bold">ansiedad financiera</strong> y la <strong class="font-bold">pérdida económica real</strong>. Las soluciones actuales fallan porque no resuelven la <strong class="font-bold">seguridad económica</strong>.
                 </p>
             </div>
+
+            <!-- 8.2 Tabla de Paralelismo (NUEVO) -->
+            <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto mb-10">
+                <h3 class="text-2xl font-bold mb-6 color-dark-maroon">8.2 El Paralelismo que Valida la Hipótesis</h3>
+                <table class="w-full min-w-[700px] text-left">
+                    <thead>
+                        <tr class="border-b-2 border-light-rose">
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Eje del Paralelismo</th>
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Análisis Cualitativo (El "Porqué" - Emoción)</th>
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Análisis Cuantitativo (El "Cuánto" - Datos)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Dolor Primario</td>
+                            <td class="p-4 text-base">La emoción principal es la <strong class="font-bold">"Ansiedad"</strong> y <strong class="font-bold">"Estrés"</strong> por la gestión caótica.</td>
+                            <td class="p-4 text-base">El <strong class="font-bold color-maroon">71.4%</strong> prioriza la <strong class="font-bold color-maroon">Pérdida de Ingresos</strong> como su mayor riesgo.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Impacto Real</td>
+                            <td class="p-4 text-base">Los testimonios hablan de <strong class="font-bold">"Gestión Nocturna"</strong> y <strong class="font-bold">"miedo al conflicto"</strong> para cobrar.</td>
+                            <td class="p-4 text-base">El <strong class="font-bold color-maroon">80% de la muestra</strong> reporta una <strong class="font-bold color-maroon">pérdida de S/ 100 o más</strong> al mes.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Posicionamiento</td>
+                            <td class="p-4 text-base">El deseo más profundo es la <strong class="font-bold">"Tranquilidad"</strong> y <strong class="font-bold">"Claridad Mental"</strong>.</td>
+                            <td class="p-4 text-base">El <strong class="font-bold color-maroon">60%</strong> valora un sistema de <strong class="font-bold color-maroon">"Métricas y Gestión Profesional"</strong>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 8.3 Recomendaciones -->
             <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
-                <h3 class="text-2xl font-bold mb-6 color-dark-maroon">Recomendaciones Estratégicas para Aurea</h3>
+                <h3 class="text-2xl font-bold mb-6 color-dark-maroon">8.3 Recomendaciones Estratégicas para Aurea</h3>
                 <table class="w-full min-w-[700px] text-left">
                     <thead>
                         <tr class="border-b-2 border-light-rose">
