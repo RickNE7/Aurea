@@ -8,38 +8,38 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Paleta de colores: Valkiria Rose (#C67891, #A33C54, #7D142D, #4A081F) -->
-    
+    <!-- Chosen Palette: Valkiria Rose (#C67891, #A33C54, #7D142D, #4A081F) -->
+
     <!-- 
-    Plan de Estructura de la Aplicación: 
-    La arquitectura sigue los 8 pasos formales del informe EA3.
-    Una barra de navegación fija (sticky) permite la interactividad.
+    Application Structure Plan: 
+    La arquitectura de esta SPA sigue la clasificación formal de 8 pasos del informe EA3, como se solicitó.
+    Una barra de navegación fija (sticky) permite la interactividad y el salto entre secciones.
     Paso 1: Problema, Mercado y Perfil (Buyer Persona).
     Paso 2: Objetivos (General y Específico).
     Paso 3: Tipo de Investigación (Cuali/Cuanti).
     Paso 4: Hipótesis (El dolor es la inseguridad económica).
-    Paso 5: Muestra (Teórica vs. Real).
-    Paso 6: Técnicas (Enlaces a Herramientas).
-    Paso 7: Análisis de Datos (Hallazgos Cuali y Cuanti, incl. gráficos y videos).
-    Paso 8: Conclusiones (Hipótesis Aceptada y Recomendaciones).
+    Paso 5: Muestra (Teórica vs. Real, Embudo de Filtrado).
+    Paso 6: Técnicas (Enlaces a Herramientas, Pregunta de Impacto, Videos).
+    Paso 7: Análisis de Datos (Prompt de IA, Hallazgos Cuali, 6 Gráficas Cuanti, Transcripciones PDF).
+    Paso 8: Conclusiones (Hipótesis Aceptada y Recomendaciones Estratégicas).
     -->
-    
+
     <!-- 
-    Visualización y Elección de Contenido:
+    Visualization & Content Choices:
     - Todos los pasos están en secciones <section> con un ID (ej. id="paso1") para la navegación.
-    - Mercado (S/ 9.3B): Objetivo: Informar. Método: HTML/Tailwind.
-    - Buyer Persona: Objetivo: Informar. Método: Tarjeta HTML (2 columnas Pains/Gains).
-    - Objetivos: Objetivo: Organizar. Método: Lista HTML estilizada.
-    - Tipo de Inv: Objetivo: Comparar. Método: Tarjetas HTML (con 'flex' para altura igual).
-    - Muestra (Teórica vs. Real): Objetivo: Comparar. Método: Tarjetas HTML (con 'flex' para altura igual).
-    - Herramientas (Enlaces): Objetivo: Organizar. Método: Lista de enlaces HTML.
-    - Análisis Cuali: Objetivo: Comparar. Método: Tabla HTML.
-    - YouTube Miniaturas: Objetivo: Informar. Método: Grid de Imágenes HTML.
-    - P1: Riesgo (60%): Objetivo: Comparar (Composición). Método: Gráfica de Dona (Chart.js/Canvas). (Cumple 'torta')
-    - P1.b: Impacto (70%): Objetivo: Comparar (Distribución). Método: Gráfica de Barras (Chart.js/Canvas). (Cumple 'barra')
-    - P2: Deseo (60%): Objetivo: Comparar (Composición). Método: Gráfica de Torta (Chart.js/Canvas). (Cumple 'torta')
-    - Recomendaciones: Objetivo: Organizar. Método: 3 Tarjetas HTML (con 'flex' para altura igual).
+    - Mercado (S/ 9.3B): Goal: Informar. Method: Big Number (HTML/Tailwind). CONFIRM: NO SVG/Mermaid.
+    - Buyer Persona: Goal: Informar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
+    - Hipótesis: Goal: Organizar. Method: Lista HTML estilizada. CONFIRM: NO SVG/Mermaid.
+    - Muestra (Teórica vs. Real): Goal: Comparar. Method: Tarjetas HTML + Tabla de Embudo. CONFIRM: NO SVG/Mermaid.
+    - Herramientas (Enlaces): Goal: Organizar. Method: Lista de enlaces HTML. CONFIRM: NO SVG/Mermaid.
+    - Evidencia Cuali (Videos): Goal: Informar. Method: Grid de Imágenes HTML. CONFIRM: NO SVG/Mermaid.
+    - Análisis Cuali (Tabla): Goal: Comparar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
+    - Transcripciones (PDFs): Goal: Organizar. Method: Grid de enlaces (Visor Google). CONFIRM: NO SVG/Mermaid.
+    - 6 Gráficas Cuanti: Goal: Comparar (Composición/Distribución). Method: 6 Gráficas (Chart.js/Canvas). CONFIRM: NO SVG/Mermaid.
+    - Recomendaciones: Goal: Organizar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
     -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <style>
         body {
@@ -79,14 +79,25 @@
         section[id] {
             scroll-margin-top: 80px; 
         }
+        /* Clases para forzar altura igual en flex/grid */
+        .flex-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .flex-card > div {
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <!-- HEADER INTERACTIVO -->
+    <!-- HEADER INTERACTIVO (Navegación de 8 Pasos) -->
     <header class="sticky top-0 z-50 bg-white shadow-md w-full">
         <nav class="container mx-auto flex justify-between items-center p-4">
-            <div class="text-lg md:text-xl font-bold color-dark-maroon">Proyecto Aurea: EA3 (Grupo 5)</div>
+            <div>
+                <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_logo_banner_W.png" alt="Logo Aurea" class="h-10">
+            </div>
             <!-- Navegación para Desktop -->
             <div class="hidden md:flex flex-wrap space-x-3 lg:space-x-4">
                 <a href="#paso1" class="text-sm font-medium text-gray-600 hover:color-maroon">Paso 1: Problema</a>
@@ -106,6 +117,7 @@
 
         <!-- Título Principal -->
         <section class="text-center my-12">
+            <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_biglogo_imagen.png" alt="Proyecto Aurea" class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6">
             <h1 class="text-4xl md:text-5xl font-bold mb-4 color-dark-maroon">Validación del Proyecto Aurea</h1>
             <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
                 Un informe interactivo de los 8 pasos de la investigación EA3.
@@ -128,49 +140,83 @@
                 <p class="text-lg text-gray-700 leading-relaxed mt-4">
                     Este "abismo entre el descubrimiento y la reserva" genera un constante <strong class="font-bold">desgaste mental</strong> y, como validamos, una <strong class="font-bold">pérdida económica directa</strong> y recurrente.
                 </p>
-                <div class="mt-6 border-t pt-4">
-                    <h4 class="text-sm font-semibold text-gray-500 uppercase">Fuentes de Mercado:</h4>
-                    <!-- ACTUALIZACIÓN: Se agrega el enlace al PDF de TA6 -->
-                    <ul class="text-sm text-gray-600 list-none space-y-1 mt-2">
-                        <li><a href="https://raw.githubusercontent.com/RickNE7/Aurea/main/nombre_del_archivo.pdf" class="hover:underline color-maroon font-semibold">Análisis de Mercado: Ineficiencia y Centralización (TA6)</a></li>
-                        <li><a href="https://lacamara.pe/sector-cosmeticos-e-higiene-personal-facturaria-mas-de-s-9-000-millones-en-2024/" class="hover:underline color-maroon">CCL (2024): Proyección S/ 9.3 Mil Millones</a></li>
-                        <li><a href="https://logistica360.pe/sector-cosmeticos-e-higiene-esta-experimentando-un-crecimiento-notable/" class="hover:underline color-maroon">COPECOH (2024): Facturación S/ 8.8 Mil Millones</a></li>
-                        <li><a href="https://www.mincetur.gob.pe/reglamentostecnicos/informacion_general/documentos/Presentaciones_12Julio/1_Panorama_de_la_industria_cosmetica.pdf" class="hover:underline color-maroon">MINCETUR (2024): Panorama de la Industria</a></li>
-                    </ul>
+                
+                <div class="mt-6 border-t pt-6">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase mb-4">Sustento de Mercado:</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[600px] text-left">
+                            <thead>
+                                <tr class="border-b-2 border-light-rose">
+                                    <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Indicador Económico</th>
+                                    <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Valor</th>
+                                    <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Fuente</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="p-3 text-base">Análisis TA6</td>
+                                    <td class="p-3 text-base">Ineficiencia en Búsqueda y Centralización</td>
+                                    <td class="p-3 text-base"><a href="https://raw.githubusercontent.com/RickNE7/Aurea/main/TA6%20Paso%202%20(v2)%20-%20Investigaci%C3%B3n%20Mercado%20Belleza%20Per%C3%BA.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon font-semibold">Ver Documento</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base">Valor Proyectado (2024)</td>
+                                    <td class="p-3 text-base"><strong class="font-bold color-deep-pink">S/ 9.3 Mil Millones</strong></td>
+                                    <td class="p-3 text-base"><a href="https://lacamara.pe/sector-cosmeticos-e-higiene-personal-facturaria-mas-de-s-9-000-millones-en-2024/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">CCL, 2024</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base">Valor Facturado (2023)</td>
+                                    <td class="p-3 text-base">S/ 8.8 Mil Millones</td>
+                                    <td class="p-3 text-base"><a href="https://logistica360.pe/sector-cosmeticos-e-higiene-esta-experimentando-un-crecimiento-notable/" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">COPECOH, 2024</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-base">Panorama de la Industria</td>
+                                    <td class="p-3 text-base">Gestión manual impide crecimiento</td>
+                                    <td class="p-3 text-base"><a href="https://www.mincetur.gob.pe/reglamentostecnicos/informacion_general/documentos/Presentaciones_12Julio/1_Panorama_de_la_industria_cosmetica.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline color-maroon">MINCETUR, 2024</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- 1.2 El Perfil -->
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
+            <!-- 1.2 El Perfil (Tabla) -->
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mt-8">
                 <h3 class="text-2xl font-bold mb-3 color-dark-maroon">1.2 El Perfil: "Carla Rossi"</h3>
                 <p class="text-lg text-gray-700 max-w-3xl mb-6">
                     Carla es el arquetipo de la "Talentosa Desorganizada". Es experta en su arte, pero está atrapada en el ciclo del autoempleo caótico.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="text-xl font-bold mb-4 color-maroon flex items-center">
-                            <span class="text-3xl mr-2">&#9888;</span>
-                            Dolores (Pains)
-                        </h4>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-lg">
-                            <li>Ansiedad por la <strong class="font-bold">pérdida económica</strong> (no por el desorden).</li>
-                            <li>Pierde <strong class="font-bold">S/ 100 - S/ 300+</strong> al mes por cancelaciones.</li>
-                            <li>Evita cobrar penalidades por <strong class="font-bold">"miedo al conflicto"</strong>.</li>
-                            <li>Sufre de "Gestión Nocturna" (responde chats fuera de horario).</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-4 color-deep-pink flex items-center">
-                            <span class="text-3xl mr-2">&#10004;</span>
-                            Deseos (Gains)
-                        </h4>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-lg">
-                            <li><strong class="font-bold">"Tranquilidad y Claridad Mental"</strong> (más que dinero).</li>
-                            <li>Sentirse como una <strong class="font-bold">empresaria formal</strong>.</li>
-                            <li>Tener <strong class="font-bold">métricas de ganancias</strong> y un sistema de gestión.</li>
-                            <li>Poder tomar vacaciones sin caos.</li>
-                        </ul>
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-[600px] text-left">
+                        <thead>
+                            <tr class="border-b-2 border-light-rose">
+                                <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Dimensión</th>
+                                <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Descripción Basada en Evidencia</th>
+                                <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Evidencia (Paso 7)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="p-3 font-semibold text-gray-800 text-base">Perfil</td>
+                                <td class="p-3 text-base">Profesional independiente (trabajo a domicilio o estudio pequeño), usa herramientas manuales.</td>
+                                <td class="p-3 text-base"><strong class="font-bold color-deep-pink">61.1%</strong> (N=18) de la muestra.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-gray-800 text-base">Dolor (Pains)</td>
+                                <td class="p-3 text-base">La <strong class="font-bold">pérdida económica</strong> por citas no concretadas (no el desorden) es su principal fuente de ansiedad.</td>
+                                <td class="p-3 text-base"><strong class="font-bold color-deep-pink">71.4%</strong> (N=7) prioriza este riesgo.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-gray-800 text-base">Impacto</td>
+                                <td class="p-3 text-base">Su gestión informal le cuesta <strong class="font-bold">S/ 100 - S/ 300+</strong> al mes. Evita cobrar penalidades por "miedo al conflicto".</td>
+                                <td class="p-3 text-base"><strong class="font-bold color-deep-pink">80%</strong> (N=5) reporta estas pérdidas.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-gray-800 text-base">Deseo (Gains)</td>
+                                <td class="p-3 text-base">Busca <strong class="font-bold">"Tranquilidad y Claridad Mental"</strong> para sentirse una empresaria formal.</td>
+                                <td class="p-3 text-base"><strong class="font-bold color-deep-pink">60%</strong> (N=5) valora "Métricas y Gestión".</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -198,62 +244,69 @@
             </div>
         </section>
 
-        <!-- PASO 3: TIPO DE INVESTIGACIÓN -->
+        <!-- PASO 3: TIPO DE INVESTIGACIÓN (Tabla) -->
         <section id="paso3" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 3: Tipo de Investigación</h2>
-            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-lg shadow-xl p-8 flex">
-                    <div>
-                        <h3 class="text-2xl font-bold color-dark-maroon mb-3">Mixta (Cualitativa)</h3>
-                        <p class="text-lg text-gray-700">Entender el <strong class="font-bold">"porqué"</strong> emocional: Ansiedad, historias de vida, miedo al conflicto.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-xl p-8 flex">
-                    <div>
-                        <h3 class="text-2xl font-bold color-dark-maroon mb-3">Mixta (Cuantitativa)</h3>
-                        <p class="text-lg text-gray-700">Cuantificar el <strong class="font-bold">"cuánto"</strong> económico: Frecuencia de pérdidas, impacto en ingresos y validación masiva.</p>
-                    </div>
-                </div>
+            <div class="bg-white rounded-lg shadow-xl p-8 overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-light-rose">
+                            <th class="p-3 text-left text-2xl font-bold color-dark-maroon">Mixta (Cualitativa)</th>
+                            <th class="p-3 text-left text-2xl font-bold color-dark-maroon">Mixta (Cuantitativa)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-3 text-lg text-gray-700 align-top">Entender el <strong class="font-bold">"porqué"</strong> emocional: Ansiedad, historias de vida, miedo al conflicto.</td>
+                            <td class="p-3 text-lg text-gray-700 align-top">Cuantificar el <strong class="font-bold">"cuánto"</strong> económico: Frecuencia de pérdidas, impacto en ingresos y validación masiva.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <!-- PASO 4: HIPÓTESIS -->
+        <!-- PASO 4: HIPÓTESIS (con Justificación) -->
         <section id="paso4" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 4: Hipótesis</h2>
             <div class="bg-dark-maroon rounded-lg shadow-xl p-8 md:p-10 text-white">
-                <p class="text-lg text-gray-200 mb-6">La investigación buscaba probar que el verdadero dolor no es el desorden, sino la <strong class="font-bold">inseguridad económica</strong>. La hipótesis fue que las profesionales no adoptan software porque las soluciones actuales son:</p>
+                <h3 class="text-2xl font-bold mb-3 text-white">4.1 Hipótesis Central</h3>
+                <p class="text-lg text-gray-200 mb-6">La baja adopción de software de gestión se debe a que las soluciones actuales son:</p>
                 <ol class="list-none space-y-4">
                     <li class="flex items-start">
                         <span class="text-2xl font-bold color-light-rose mr-4">1.</span>
-                        <span class="text-lg text-gray-100"><strong class="font-bold color-light-rose">Caras:</strong> Percibidas como un lujo y no como una inversión esencial.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold">Caras:</strong> Percibidas como un lujo.</span>
                     </li>
                     <li class="flex items-start">
                         <span class="text-2xl font-bold color-light-rose mr-4">2.</span>
-                        <span class="text-lg text-gray-100"><strong class="font-bold color-light-rose">Complejas:</strong> Requieren una curva de aprendizaje que consume tiempo valioso.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold">Complejas:</strong> Requieren una curva de aprendizaje.</span>
                     </li>
                     <li class="flex items-start">
                         <span class="text-2xl font-bold color-deep-pink mr-4">3.</span>
-                        <span class="text-lg text-gray-100"><strong class="font-bold color-deep-pink">Ineficaces:</strong> No resuelven el dolor principal: la <strong class="font-bold">pérdida de ingresos por citas canceladas a último minuto</strong>.</span>
+                        <span class="text-lg text-gray-100"><strong class="font-bold color-deep-pink">Ineficaces:</strong> No resuelven el dolor principal: la <strong class="font-bold">pérdida de ingresos por citas canceladas</strong>.</span>
                     </li>
                 </ol>
+                <div class="border-t border-gray-600 mt-6 pt-6">
+                    <h3 class="text-2xl font-bold mb-3 text-white">4.2 Justificación</h3>
+                    <p class="text-lg text-gray-200">La investigación se diseñó para demostrar que el verdadero dolor no es el desorden, sino la <strong class="font-bold">inseguridad económica</strong> generada por la falta de procesos y el riesgo de cancelación.</p>
+                </div>
             </div>
         </section>
 
-        <!-- PASO 5: MUESTRA -->
+        <!-- PASO 5: MUESTRA (con Embudo) -->
         <section id="paso5" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 5: Muestra</h2>
-            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex">
-                    <div class="w-full">
+            
+            <h3 class="text-2xl font-bold mb-4 color-dark-maroon">5.1 Contraste de Muestra (Teórica vs. Real)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex-card">
+                    <div>
                         <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Teórica (Ideal)</h3>
                         <p class="text-7xl font-bold color-deep-pink">357</p>
-                        <p class="text-gray-600 text-lg">encuestas requeridas para 95% de confianza sobre una población de 5,000.</p>
+                        <p class="text-gray-600 text-lg">encuestas (95% confianza, 5% error, N=5,000).</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex">
-                    <div class="w-full">
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center flex-card">
+                    <div>
                         <h3 class="text-2xl font-semibold mb-3 color-dark-maroon">Muestra Ejecutada (Real)</h3>
                         <div class="flex justify-around items-center mt-4">
                             <div>
@@ -262,35 +315,122 @@
                             </div>
                             <div>
                                 <p class="text-7xl font-bold color-maroon">18</p>
-                                <p class="text-gray-600 text-lg">Encuestas Cuanti (válidas)</p>
+                                <p class="text-gray-600 text-lg">Respuestas Cuanti (Totales)</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <p class="text-center text-gray-600 mt-6 text-sm italic">Anécdota: La dificultad para agendar las 4 entrevistas (profesionales en "modo multitarea") validó el problema de "gestión caótica" desde el reclutamiento.</p>
+
+            <h3 class="text-2xl font-bold mb-4 color-dark-maroon">5.2 Embudo de Filtrado (Muestra Cuantitativa)</h3>
+            <div class="bg-white rounded-lg shadow-xl p-8 overflow-x-auto">
+                 <table class="w-full min-w-[600px] text-left">
+                    <thead>
+                        <tr class="border-b-2 border-light-rose">
+                            <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Sección de Filtro</th>
+                            <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">Respuestas Totales</th>
+                            <th class="p-3 text-sm font-semibold color-dark-maroon uppercase">% Retención</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-3 text-base">Inicio (Filtro 1: Perfil Laboral)</td>
+                            <td class="p-3 text-base font-bold">18 Respuestas</td>
+                            <td class="p-3 text-base">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-base">Filtro 2 (Método de Gestión Manual)</td>
+                            <td class="p-3 text-base font-bold">11 Respuestas</td>
+                            <td class="p-3 text-base">61.1%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-base">Filtro 3 (Perfil Demográfico Lima)</td>
+                            <td class="p-3 text-base font-bold">7 Respuestas</td>
+                            <td class="p-3 text-base">38.9%</td>
+                        </tr>
+                        <tr class="bg-yellow-50">
+                            <td class="p-3 text-base font-bold color-maroon">Muestra Final de Investigación (Paso 7)</td>
+                            <td class="p-3 text-base font-bold color-maroon">5 Respuestas</td>
+                            <td class="p-3 text-base font-bold color-maroon">27.8%</td>
+                        </tr>
+                    </tbody>
+                 </table>
+                 <p class="text-gray-600 mt-6 text-sm italic">Anécdota: La dificultad para agendar las 4 entrevistas (profesionales en "modo multitarea") validó el problema de "gestión caótica" desde el reclutamiento.</p>
+            </div>
         </section>
 
-        <!-- PASO 6: TÉCNICAS DE RECOLECCIÓN -->
+        <!-- PASO 6: TÉCNICAS DE RECOLECCIÓN (con Evidencia) -->
         <section id="paso6" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 6: Técnicas de Recolección</h2>
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10">
-                 <h3 class="text-2xl font-bold mb-6 color-dark-maroon">Herramientas de Recolección (Evidencia)</h3>
-                 <ul class="list-none space-y-4">
-                     <li class="flex items-center text-lg">
-                        <span class="text-2xl w-8 text-center mr-3">&#128196;</span>
-                        <a href="https://www.canva.com/design/DAG2pU6Vstw/HBEAAkF6-8e9G2rwkJZyAQ/edit?utm_content=DAG2pU6Vstw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="font-semibold color-maroon hover:underline">Guía de Entrevista (Canva)</a>
-                     </li>
-                     <li class="flex items-center text-lg">
-                        <span class="text-2xl w-8 text-center mr-3">&#128203;</span>
-                        <a href="https://docs.google.com/forms/d/1UeIiOgaYZsXSjtJ7PruHKrFm3IJn94dbN-KWyLm2Gyg/edit#response=ACYDBNif8YPAD3bflgo9vo2GYgrCNYL2QiiDyytMePYBStzLtLZJ7Oag6IpROwDSW9uqYOQ" class="font-semibold color-maroon hover:underline">Formulario de Encuesta (Google Forms)</a>
-                     </li>
-                     <li class="flex items-center text-lg">
-                        <span class="text-2xl w-8 text-center mr-3">&#128202;</span>
-                        <a href="https://docs.google.com/spreadsheets/d/1jIHQO3Qo0AoBu4Qaovk_KjoPfcS7NSk8QK89uId5u9w/edit?usp=sharing" class="font-semibold color-maroon hover:underline">Resultados de Encuesta (Google Sheets)</a>
-                     </li>
-                 </ul>
+            
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mb-8">
+                 <h3 class="text-2xl font-bold mb-8 color-dark-maroon">6.1 Herramientas de Recolección (Evidencia)</h3>
+                 <div class="space-y-8">
+                     <div>
+                        <div class="flex items-center text-lg">
+                            <span class="text-2xl w-8 text-center mr-3">&#128196;</span>
+                            <a href="https://www.canva.com/design/DAG2pU6Vstw/HBEAAkF6-8e9G2rwkJZyAQ/edit?utm_content=DAG2pU6Vstw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Guía de Entrevista (Canva)</a>
+                        </div>
+                        <p class="text-gray-600 text-base mt-2 ml-11">La presentación de 24 preguntas (basada en el Mapa de Empatía) usada para guiar las 4 entrevistas cualitativas.</p>
+                     </div>
+                     <div>
+                        <div class="flex items-center text-lg">
+                            <span class="text-2xl w-8 text-center mr-3">&#128203;</span>
+                            <a href="https://docs.google.com/forms/d/1UeIiOgaYZsXSjtJ7PruHKrFm3IJn94dbN-KWyLm2Gyg/edit#response=ACYDBNif8YPAD3bflgo9vo2GYgrCNYL2Gyg" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Formulario de Encuesta (Google Forms)</a>
+                        </div>
+                         <p class="text-gray-600 text-base mt-2 ml-11">El formulario con 4 filtros (para validar el perfil) y 2 de investigación (para cuantificar el dolor).</p>
+                     </div>
+                     <div>
+                        <div class="flex items-center text-lg">
+                            <span class="text-2xl w-8 text-center mr-3">&#128202;</span>
+                            <a href="https://docs.google.com/spreadsheets/d/1jIHQO3Qo0AoBu4Qaovk_KjoPfcS7NSk8QK89uId5u9w/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="font-semibold color-maroon hover:underline">Resultados de Encuesta (Google Sheets)</a>
+                        </div>
+                         <p class="text-gray-600 text-base mt-2 ml-11">La hoja de cálculo con las 18 respuestas válidas que alimentan los gráficos de esta presentación.</p>
+                     </div>
+                 </div>
             </div>
+
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 mb-8">
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">6.2 Evidencia Cualitativa (Entrevistas)</h3>
+                <div class="mb-6">
+                    <h4 class="text-xl font-semibold mb-3 color-maroon">Pregunta de Mayor Impacto</h4>
+                    <blockquote class="text-gray-700 italic border-l-4 border-light-rose pl-4 text-lg">
+                        "¿Qué te preocupa que tus clientas piensen sobre tu proceso de agendamiento?"
+                    </blockquote>
+                    <p class="text-gray-600 text-base mt-2">
+                        <strong class="font-semibold">Revelación:</strong> Esta pregunta destapó el <strong class="font-bold">"miedo al conflicto"</strong>. Las profesionales (Caro, Sara) admitieron que evitan cobrar penalidades por miedo a "generar incomodidad", validando que el problema es emocional.
+                    </p>
+                </div>
+                
+                <h4 class="text-xl font-semibold mb-4 text-center color-maroon">Miniaturas de Evidencia</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <a href="https://youtu.be/njjlvwjW_oA" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/njjlvwjW_oA/mqdefault.jpg" alt="Entrevista 1 (Sara T.)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 1: Sara T.</p>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://youtu.be/XMbxL6ALU1I" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/XMbxL6ALU1I/mqdefault.jpg" alt="Entrevista 2 (Caro B.)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 2: Caro B.</p>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://youtu.be/34E0x0I5FHo" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/34E0x0I5FHo/mqdefault.jpg" alt="Entrevista 3 (Mari C. - Outlier)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 3: Mari C. (Outlier)</p>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://youtu.be/jbK78tPDxPg" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                            <img src="https://img.youtube.com/vi/jbK78tPDxPg/mqdefault.jpg" alt="Entrevista 4 (Maritza A.)" class="rounded-lg shadow-md w-full">
+                        </a>
+                        <p class="mt-2 font-semibold color-maroon text-sm">Entrevista 4: Maritza A.</p>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
         <!-- PASO 7: ANÁLISIS DE DATOS -->
@@ -300,15 +440,18 @@
             <!-- 7.1 Hallazgos Cualitativos -->
             <div class="mb-12">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.1 Hallazgos Cualitativos (El "Porqué")</h3>
-                <p class="text-lg text-gray-700 max-w-3xl mb-6">
-                    El análisis de las 4 entrevistas reveló dos perfiles: el perfil validado "Carla Rossi" y el perfil "Outlier", que nos enseñó quién NO es nuestro cliente.
-                </p>
+                <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-deep-pink mb-8 shadow-inner">
+                    <h4 class="text-xl font-semibold mb-3 color-dark-maroon">Prompt de Análisis (IA)</h4>
+                    <blockquote class="text-gray-700 italic leading-relaxed">
+                        "Actúa como un analista experto en UX del sector belleza en Perú. Analiza las 4 transcripciones de las profesionales ('Carla Rossi'). Enfócate en los descubrimientos que expresan la frustración por la gestión manual, el impacto emocional del desorden (estrés/ansiedad) y los obstáculos para crecer. Identifica los <strong class="color-maroon">insights clave</strong>, <strong class="color-maroon">dolores recurrentes</strong> y <strong class="color-maroon">deseos prioritarios</strong> que validan la hipótesis."
+                    </blockquote>
+                </div>
                 <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
                     <table class="w-full min-w-[700px] text-left">
                         <thead>
-                            <tr class="border-b-2" style="border-color: #C67891;">
+                            <tr class="border-b-2 border-light-rose">
                                 <th class="p-4 text-lg font-semibold color-dark-maroon">Dimensión Analizada</th>
-                                <th class="p-4 text-lg font-semibold bg-deep-pink text-white">PERFIL VALIDADO (Carol, Maritza, Sara)</th>
+                                <th class="p-4 text-lg font-semibold bg-deep-pink text-white">PERFIL VALIDADO (Caro, Maritza, Sara)</th>
                                 <th class="p-4 text-lg font-semibold bg-maroon text-white">PERFIL OUTLIER (Mari)</th>
                             </tr>
                         </thead>
@@ -337,70 +480,134 @@
                     </table>
                 </div>
                 <div class="mt-8">
-                    <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Evidencia Primaria (Entrevistas)</h4>
+                    <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Evidencia Primaria (Transcripciones)</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <a href="https://youtu.be/njjlvwjW_oA" class="hover:opacity-80 transition-opacity">
-                            <img src="https://img.youtube.com/vi/njjlvwjW_oA/mqdefault.jpg" alt="Entrevista 1 (Milagros/Sara)" class="rounded-lg shadow-md w-full">
-                        </a>
-                        <a href="https://youtu.be/XMbxL6ALU1I" class="hover:opacity-80 transition-opacity">
-                            <img src="https://img.youtube.com/vi/XMbxL6ALU1I/mqdefault.jpg" alt="Entrevista 2 (Celeste/Carol)" class="rounded-lg shadow-md w-full">
-                        </a>
-                        <a href="https://youtu.be/34E0x0I5FHo" class="hover:opacity-80 transition-opacity">
-                            <img src="https://img.youtube.com/vi/34E0x0I5FHo/mqdefault.jpg" alt="Entrevista 3 (Celeste/Mari - Outlier)" class="rounded-lg shadow-md w-full">
-                        </a>
-                        <a href="https://youtu.be/jbK78tPDxPg" class="hover:opacity-80 transition-opacity">
-                            <img src="https://img.youtube.com/vi/jbK78tPDxPg/mqdefault.jpg" alt="Entrevista 4 (Ashly/Maritza)" class="rounded-lg shadow-md w-full">
-                        </a>
+                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251102%20Milagros.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 1 (Sara T.)</a>
+                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(1).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 2 (Caro B.)</a>
+                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(2).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 3 (Mari C.)</a>
+                        <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251106%20Ashly.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 4 (Maritza A.)</a>
                     </div>
                 </div>
             </div>
 
-            <!-- 7.2 Hallazgos Cuantitativos -->
-            <div>
-                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.2 Hallazgos Cuantitativos (El "Cuánto")</h3>
+            <!-- 7.2 Hallazgos Cuantitativos (Embudo) -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.2 Hallazgos Cuantitativos (Embudo de Filtrado)</h3>
                 <p class="text-lg text-gray-700 max-w-3xl mb-6">
-                    Los datos de las 18 encuestas válidas confirmaron las emociones cualitativas. El dolor es primariamente económico.
+                    Las primeras 3 gráficas muestran el proceso de filtrado de las 18 respuestas iniciales para encontrar al perfil "Carla Rossi".
                 </p>
-                <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
+                    <!-- Gráfico 4: Perfil (N=18) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 1: Perfil Laboral (N=18)</h4>
+                            <div class="chart-container">
+                                <canvas id="profileChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                            El <strong class="color-maroon">61.1%</strong> eran profesionales independientes.
+                        </p>
+                    </div>
+                    <!-- Gráfico 5: Gestión (N=11) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 2: Método de Gestión (N=11)</h4>
+                            <div class="chart-container">
+                                <canvas id="managementChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                            El <strong class="color-maroon">100%</strong> de las filtradas usa métodos manuales (WhatsApp/DMs).
+                        </p>
+                    </div>
+                    <!-- Gráfico 6: Demográfico (N=11) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Filtro 3: Demográfico (N=11)</h4>
+                            <div class="chart-container">
+                                <canvas id="demographicChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                            El <strong class="color-maroon">63.6%</strong> se concentra en Lima Metropolitana.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7.3 Hallazgos Cuantitativos (Investigación) -->
+            <div>
+                <h3 class="text-2xl font-bold mb-4 color-dark-maroon">7.3 Hallazgos Cuantitativos (Investigación)</h3>
+                <p class="text-lg text-gray-700 max-w-3xl mb-6">
+                    Estas 3 gráficas, basadas en la muestra final filtrada (N=5 a 7), validan la hipótesis.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gráfico 1: Ansiedad (N=7) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1: ¿Qué riesgo genera MÁS ansiedad?</h4>
                             <div class="chart-container">
                                 <canvas id="anxietyChart"></canvas>
                             </div>
+                            <table class="w-full mt-4 text-sm">
+                                <thead><tr class="border-b"><th class="text-left p-2">Riesgo (N=7)</th><th class="text-right p-2">%</th></tr></thead>
+                                <tbody>
+                                    <tr class="bg-deep-pink bg-opacity-10"><td class="p-2 font-bold color-maroon">Pérdida por Cancelaciones</td><td class="p-2 text-right font-bold color-maroon">71.4%</td></tr>
+                                    <tr><td class="p-2">Competir (Informalidad)</td><td class="p-2 text-right">14.3%</td></tr>
+                                    <tr><td class="p-2">Dudas de Calidad/Higiene</td><td class="p-2 text-right">14.3%</td></tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <p class="text-center text-gray-700 mt-4 text-lg">
-                            El <strong class="font-bold text-xl color-maroon">60%</strong> prioriza la pérdida de ingresos, validando el núcleo de la hipótesis.
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                            Conclusión: El dolor principal es la <strong class="color-maroon">protección del ingreso</strong>.
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
+                    <!-- Gráfico 2: Impacto (N=5) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P1.b: Impacto Económico Mensual</h4>
                              <div class="chart-container" style="max-width: 500px;">
                                 <canvas id="impactChart"></canvas>
                             </div>
+                            <table class="w-full mt-4 text-sm">
+                                <thead><tr class="border-b"><th class="text-left p-2">Pérdida (N=5)</th><th class="text-right p-2">%</th></tr></thead>
+                                <tbody>
+                                    <tr class="bg-maroon bg-opacity-10"><td class="p-2 font-bold color-maroon">Medio (S/ 100-300)</td><td class="p-2 text-right font-bold color-maroon">60%</td></tr>
+                                    <tr class="bg-deep-pink bg-opacity-10"><td class="p-2 font-bold color-maroon">Alto (> S/ 300)</td><td class="p-2 text-right font-bold color-maroon">20%</td></tr>
+                                    <tr><td class="p-2">Bajo (< S/ 100)</td><td class="p-2 text-right">20%</td></tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <p class="text-center text-gray-700 mt-4 text-lg">
-                            El <strong class="font-bold text-xl color-maroon">70%</strong> de las profesionales pierde entre <strong class="font-bold">S/100 y más de S/300</strong> cada mes.
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                           Conclusión: El <strong class="color-maroon">80%</strong> (Alto + Medio) pierde S/ 100 o más al mes.
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between md:col-span-2 lg:col-span-1">
+                    <!-- Gráfico 3: Deseo (N=5) -->
+                    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between flex-card md:col-span-2 lg:col-span-1">
                         <div>
                             <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">P2: ¿Qué valoran para ser "Empresaria"?</h4>
                              <div class="chart-container">
                                 <canvas id="valueChart"></canvas>
                             </div>
+                            <table class="w-full mt-4 text-sm">
+                                <thead><tr class="border-b"><th class="text-left p-2">Valor (N=5)</th><th class="text-right p-2">%</th></tr></thead>
+                                <tbody>
+                                    <tr class="bg-deep-pink bg-opacity-10"><td class="p-2 font-bold color-maroon">Métricas y Gestión</td><td class="p-2 text-right font-bold color-maroon">60%</td></tr>
+                                    <tr><td class="p-2">Contactos</td><td class="p-2 text-right">20%</td></tr>
+                                    <tr><td class="p-2">Espacio Físico</td><td class="p-2 text-right">20%</td></tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <p class="text-center text-gray-700 mt-4 text-lg">
-                            El <strong class="font-bold text-xl color-deep-pink">60%</strong> prioriza tener <strong class="font-bold">métricas y un sistema de gestión</strong> sobre más espacio o contactos.
+                        <p class="text-center text-gray-700 mt-4 text-base font-semibold">
+                            Conclusión: El enfoque debe ser en la <strong class="color-maroon">automatización y métricas</strong> (60%).
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PASO 8: CONCLUSIÓN Y RECOMENDACIONES -->
+        <!-- PASO 8: CONCLUSIÓN Y RECOMENDACIONES (Tabla) -->
         <section id="paso8">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 8: Conclusiones</h2>
             <div class="text-center mb-10">
@@ -409,58 +616,82 @@
                     La investigación confirma que el dolor primario no es solo el desorden, sino la <strong class="font-bold">ansiedad financiera</strong> y la <strong class="font-bold">pérdida económica real</strong>. Las soluciones actuales fallan porque no resuelven la <strong class="font-bold">seguridad económica</strong>.
                 </p>
             </div>
-            <!-- ACTUALIZACIÓN: Se añade 'flex' a los hijos del grid para altura igual -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-deep-pink flex">
-                    <div>
-                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">1. Posicionamiento</h4>
-                        <p class="text-gray-700 text-lg">
-                            Aurea debe ser una herramienta de <strong class="font-bold">"Seguridad Financiera y Control Empresarial"</strong>, no una simple agenda.
-                        </p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-light-rose flex">
-                    <div>
-                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">2. Funcionalidad Clave</h4>
-                        <p class="text-gray-700 text-lg">
-                            Priorizar el <strong class="font-bold">Pago de Adelantos</strong> (Smart Contracts) y el <strong class="font-bold">Registro Formal de Ingresos</strong>.
-                        </p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-xl p-8 border-t-4 border-maroon flex">
-                    <div>
-                        <h4 class="text-2xl font-bold mb-3 color-dark-maroon">3. Comunicación (Pitch)</h4>
-                        <p class="text-gray-700 text-lg">
-                            Prometer <strong class="font-bold">"Tranquilidad y Crecimiento Sólido"</strong>, respondiendo al deseo cualitativo de "claridad mental".
-                        </p>
-                    </div>
-                </div>
+            <div class="bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
+                <h3 class="text-2xl font-bold mb-6 color-dark-maroon">Recomendaciones Estratégicas para Aurea</h3>
+                <table class="w-full min-w-[700px] text-left">
+                    <thead>
+                        <tr class="border-b-2 border-light-rose">
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Área Estratégica</th>
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Recomendación Clave para Aurea</th>
+                            <th class="p-4 text-lg font-semibold color-dark-maroon">Justificación (Dato)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Posicionamiento</td>
+                            <td class="p-4 text-base">Aurea debe ser una herramienta de <strong class="font-bold">"Seguridad Financiera y Control Empresarial"</strong>.</td>
+                            <td class="p-4 text-base">El dolor principal es económico (<strong class="font-bold color-maroon">71.4% Ansiedad</strong>).</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Funcionalidad Clave</td>
+                            <td class="p-4 text-base">Priorizar el <strong class="font-bold">Pago de Adelantos</strong> (Smart Contracts) y el <strong class="font-bold">Registro Formal de Ingresos</strong>.</td>
+                            <td class="p-4 text-base">Ataca el dolor del <strong class="font-bold color-maroon">80% de la muestra</strong> (pérdidas reales) y el <strong class="font-bold color-maroon">60%</strong> que busca métricas.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-gray-800 text-base">Comunicación (Pitch)</td>
+                            <td class="p-4 text-base">Prometer <strong class="font-bold">"Tranquilidad y Crecimiento Sólido"</strong>.</td>
+                            <td class="p-4 text-base">Responde al deseo Cuali ("Tranquilidad") y al deseo Cuanti (<strong class="font-bold color-maroon">60% "Gestión"</strong>).</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
     </main>
 
     <footer class="text-center p-8 mt-10">
-        <p class="text-gray-600">Informe de Validación del Proyecto Aurea | Grupo 5</p>
+        <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/AUREA_logo.png" alt="Logo Aurea" class="h-8 mx-auto opacity-70">
     </footer>
+    
+    <!-- Botón Flotante -->
+    <button onclick="scrollToTop()" id="scrollTopButton" class="hidden fixed bottom-6 right-6 bg-deep-pink text-white w-12 h-12 rounded-full shadow-lg text-2xl" style="background-color: #A33C54;">
+        &#8679;
+    </button>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- INICIO LÓGICA BOTÓN FLOTANTE ---
+            const scrollTopButton = document.getElementById('scrollTopButton');
+            window.onscroll = () => {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollTopButton.classList.remove('hidden');
+                } else {
+                    scrollTopButton.classList.add('hidden');
+                }
+            };
+            window.scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            // --- FIN LÓGICA BOTÓN FLOTANTE ---
+
+            // --- INICIO LÓGICA DE GRÁFICOS ---
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.font.size = 12;
             Chart.defaults.color = '#333';
 
             const customTooltipTitle = {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                                return label.join(' ');
-                            } else {
-                                return label;
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
                             }
                         }
                     }
@@ -475,15 +706,86 @@
                 lightGray: '#F0F0F0'
             };
 
-            const ctx1 = document.getElementById('anxietyChart')?.getContext('2d');
-            if (ctx1) {
-                new Chart(ctx1, {
+            // Gráfico 1: Ansiedad (N=7)
+            const ctxAnxiety = document.getElementById('anxietyChart')?.getContext('2d');
+            if (ctxAnxiety) {
+                new Chart(ctxAnxiety, {
                     type: 'doughnut',
                     data: {
                         labels: [
                             ['Pérdida por', 'Cancelaciones'], 
-                            ['Competencia', 'Informal'], 
+                            ['Competir', '(Informalidad)'], 
                             ['Dudas de', 'Calidad/Higiene'] 
+                        ],
+                        datasets: [{
+                            data: [71.4, 14.3, 14.3],
+                            backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
+                            borderColor: '#FEFBF6',
+                            borderWidth: 6,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico 2: Impacto (N=5)
+            const ctxImpact = document.getElementById('impactChart')?.getContext('2d');
+            if (ctxImpact) {
+                new Chart(ctxImpact, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            ['Medio (S/ 100-300)'], 
+                            ['Alto (> S/ 300)'], 
+                            ['Bajo (< S/ 100)']
+                        ],
+                        datasets: [{
+                            label: '% de Profesionales',
+                            data: [60, 20, 20],
+                            backgroundColor: [palette.maroon, palette.deepPink, palette.lightRose],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 65,
+                                ticks: {
+                                    callback: function(value) { return value + '%' }
+                                }
+                            },
+                            y: { ticks: { font: { size: 12 } } }
+                        },
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico 3: Deseo (N=5)
+            const ctxValue = document.getElementById('valueChart')?.getContext('2d');
+            if (ctxValue) {
+                new Chart(ctxValue, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            ['Métricas y', 'Gestión'], 
+                            'Contactos',
+                            ['Espacio Físico']
                         ],
                         datasets: [{
                             data: [60, 20, 20],
@@ -498,76 +800,26 @@
                         maintainAspectRatio: false,
                         plugins: {
                             ...customTooltipTitle,
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    font: { size: 12 }
-                                }
-                            }
+                            legend: { display: false }
                         }
                     }
                 });
             }
 
-            const ctx2 = document.getElementById('impactChart')?.getContext('2d');
-            if (ctx2) {
-                new Chart(ctx2, {
-                    type: 'bar',
-                    data: {
-                        labels: [
-                            'S/ 100 - S/ 300', 
-                            ['Más de', 'S/ 300'],
-                            ['Menos de', 'S/ 100'],
-                            'Otro'
-                        ],
-                        datasets: [{
-                            label: '% de Profesionales',
-                            data: [50, 20, 20, 10],
-                            backgroundColor: [palette.maroon, palette.deepPink, palette.lightRose, palette.lightGray],
-                            borderRadius: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        indexAxis: 'y',
-                        scales: {
-                            x: {
-                                beginAtZero: true,
-                                max: 60,
-                                ticks: {
-                                    callback: function(value) { return value + '%' }
-                                }
-                            },
-                            y: {
-                                ticks: {
-                                    font: { size: 12 }
-                                }
-                            }
-                        },
-                        plugins: {
-                            ...customTooltipTitle,
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-            }
-
-            const ctx3 = document.getElementById('valueChart')?.getContext('d');
-            if (ctx3) {
-                new Chart(ctx3, {
+            // Gráfico 4: Perfil (N=18)
+            const ctxProfile = document.getElementById('profileChart')?.getContext('2d');
+            if (ctxProfile) {
+                new Chart(ctxProfile, {
                     type: 'pie',
                     data: {
                         labels: [
-                            ['Métricas y', 'Gestión'], 
-                            ['Otros (Espacio,', 'Contactos)'] 
+                            ['Profesional', 'Independiente'], 
+                            'Estudiante', 
+                            'Empleado de Cadena'
                         ],
                         datasets: [{
-                            data: [60, 40],
-                            backgroundColor: [palette.deepPink, palette.lightRose],
+                            data: [61.1, 27.8, 11.1],
+                            backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
                             borderColor: '#FEFBF6',
                             borderWidth: 6,
                             hoverOffset: 4
@@ -578,17 +830,70 @@
                         maintainAspectRatio: false,
                         plugins: {
                             ...customTooltipTitle,
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    font: { size: 12 }
-                                }
-                            }
+                            legend: { display: false }
                         }
                     }
                 });
             }
+            
+            // Gráfico 5: Gestión (N=11)
+            const ctxManagement = document.getElementById('managementChart')?.getContext('2d');
+            if (ctxManagement) {
+                new Chart(ctxManagement, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            ['Uso WhatsApp/DMs', 'y Agenda Manual']
+                        ],
+                        datasets: [{
+                            data: [100],
+                            backgroundColor: [palette.deepPink],
+                            borderColor: '#FEFBF6',
+                            borderWidth: 6,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico 6: Demográfico (N=11)
+            const ctxDemographic = document.getElementById('demographicChart')?.getContext('2d');
+            if (ctxDemographic) {
+                new Chart(ctxDemographic, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            ['20-50 años', 'en Lima Metro'], 
+                            ['20-50 años,', 'Fuera de Lima'],
+                            ['Otras Edades/Zonas']
+                        ],
+                        datasets: [{
+                            data: [63.6, 18.2, 18.2], 
+                            backgroundColor: [palette.deepPink, palette.lightRose, palette.lightGray],
+                            borderColor: '#FEFBF6',
+                            borderWidth: 6,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...customTooltipTitle,
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+            // --- FIN LÓGICA DE GRÁFICOS ---
         });
     </script>
 </body>
