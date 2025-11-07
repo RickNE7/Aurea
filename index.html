@@ -10,19 +10,42 @@
     
     <!-- Chosen Palette: Valkiria Rose (#C67891, #A33C54, #7D142D, #4A081F) -->
 
+    <!-- 
+    Application Structure Plan: 
+    La arquitectura de esta SPA sigue la clasificación formal de 8 pasos del informe EA3.
+    Paso 1: Problema, Mercado y Perfil (Buyer Persona).
+    Paso 2: Objetivos (General y Específico).
+    Paso 3: Tipo de Investigación (Cuali/Cuanti) + Justificación Teórica.
+    Paso 4: Hipótesis (El dolor es la inseguridad económica).
+    Paso 5: Muestra (Teórica vs. Real, Embudo de Filtrado).
+    Paso 6: Técnicas (Enlaces a Herramientas, Pregunta de Impacto, Videos).
+    Paso 7: Análisis de Datos (Prompt de IA, Hallazgos Cuali + Fuente Insights, 6 Gráficas Cuanti, Transcripciones PDF, Resumen Paralelismo).
+    Paso 8: Conclusiones (Hipótesis Aceptada, Paralelismo Detallado, Recomendaciones Estratégicas).
+    -->
+
+    <!-- 
+    Visualization & Content Choices:
+    - Todos los pasos están en secciones <section> con un ID (ej. id="paso1") para la navegación.
+    - Mercado (S/ 9.3B): Goal: Informar. Method: Big Number (HTML/Tailwind). CONFIRM: NO SVG/Mermaid.
+    - Buyer Persona: Goal: Informar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
+    - Tipo de Inv (Paso 3): Goal: Organizar. Method: Tabla HTML + Párrafo de Justificación Teórica. CONFIRM: NO SVG/Mermaid.
+    - Hipótesis: Goal: Organizar. Method: Lista HTML estilizada. CONFIRM: NO SVG/Mermaid.
+    - Muestra (Teórica vs. Real): Goal: Comparar. Method: Tarjetas HTML + Tabla de Embudo. CONFIRM: NO SVG/Mermaid.
+    - Herramientas (Enlaces): Goal: Organizar. Method: Lista de enlaces HTML. CONFIRM: NO SVG/Mermaid.
+    - Evidencia Cuali (Videos): Goal: Informar. Method: Grid de Imágenes HTML. CONFIRM: NO SVG/Mermaid.
+    - Análisis Cuali (Tabla): Goal: Comparar. Method: Tabla HTML + Enlace a PDF de Insights (NUEVO). CONFIRM: NO SVG/Mermaid.
+    - Transcripciones (PDFs): Goal: Organizar. Method: Grid de enlaces (Visor Google). CONFIRM: NO SVG/Mermaid.
+    - 6 Gráficas Cuanti: Goal: Comparar (Composición/Distribución). Method: 6 Gráficas (Chart.js/Canvas). CONFIRM: NO SVG/Mermaid.
+    - Recomendaciones: Goal: Organizar. Method: Tabla HTML. CONFIRM: NO SVG/Mermaid.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FEFBF6; /* Color base */
+            background-color: #FEFBF6; /* Crema muy claro */
             padding-top: 64px; /* Espacio para el header fijo */
-            
-            /* --- ACTUALIZACIÓN DE OPACIDAD DE FONDO --- */
-            /* Se aplica la textura Y una capa de opacidad (85%) del color de fondo para atenuarla */
-            background-image: linear-gradient(rgba(254, 251, 246, 0.85), rgba(254, 251, 246, 0.85)),
-                              url('https://raw.githubusercontent.com/RickNE7/Aurea/main/Diapositiva17.png');
-            background-repeat: repeat, repeat; /* Aplicar repeat a ambas capas */
-            background-attachment: fixed, fixed; /* Aplicar fixed a ambas capas */
-            background-position: center, center; /* Aplicar center a ambas capas */
         }
         .chart-container {
             position: relative;
@@ -221,10 +244,11 @@
             </div>
         </section>
 
-        <!-- PASO 3: TIPO DE INVESTIGACIÓN (Tabla) -->
+        <!-- PASO 3: TIPO DE INVESTIGACIÓN (ACTUALIZADO) -->
         <section id="paso3" class="mb-16">
             <h2 class="text-3xl font-bold mb-6 color-dark-maroon border-b-2 pb-2 border-light-rose">PASO 3: Tipo de Investigación</h2>
-            <div class="bg-white rounded-lg shadow-xl p-8 overflow-x-auto">
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-10 overflow-x-auto">
+                <!-- Tabla existente -->
                 <table class="w-full">
                     <thead>
                         <tr class="border-b-2 border-light-rose">
@@ -239,9 +263,18 @@
                         </tr>
                     </tbody>
                 </table>
-                 <p class="text-gray-700 mt-6 text-lg">
-                    <strong class="font-semibold color-maroon">Justificación Teórica:</strong> El componente Cualitativo es vital para entender las <strong class="font-bold">historias de vida</strong> y el <strong class="font-bold">impacto emocional</strong> del problema (empatía). El componente Cuantitativo es necesario para <strong class="font-bold">cuantificar el gasto real</strong> y medir la disposición a pagar por una solución.
-                </p>
+                
+                <!-- Justificación General (Adaptada) -->
+                <div class="mt-6 border-t border-light-rose pt-6">
+                    <h4 class="text-xl font-bold color-dark-maroon mb-3">Justificación Metodológica</h4>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Se adoptó un enfoque mixto porque el componente <strong class="font-semibold color-maroon">Cualitativo (entrevistas)</strong> es vital para entender las <strong class="font-bold">historias de vida</strong>, el <strong class="font-bold">miedo al conflicto</strong> (al cobrar) y el <strong class="font-bold">impacto emocional</strong> del problema (empatía).
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed mt-4">
+                        A su vez, el componente <strong class="font-semibold color-maroon">Cuantitativo (encuestas)</strong> es necesario para <strong class="font-bold">cuantificar la pérdida económica real</strong> (por citas canceladas) y medir la <strong class="font-bold">prioridad</strong> de una solución de gestión.
+                    </p>
+                </div>
+                
             </div>
         </section>
 
@@ -458,11 +491,14 @@
                             </tr>
                         </tbody>
                     </table>
+                    <!-- INSERCIÓN DEL ENLACE AL PDF DE INSIGHTS -->
+                    <div class="mt-4 text-right">
+                         <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/EA3%20-%20Insights%20(detalle).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold hover:underline color-deep-pink">Ver Análisis Detallado de Insights (PDF) &rarr;</a>
+                    </div>
                 </div>
                 <div class="mt-8">
                     <h4 class="text-xl font-semibold mb-4 text-center color-dark-maroon">Evidencia Primaria (Transcripciones)</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Corrección: Usar visor de Google Docs para evitar descarga forzada -->
                         <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251102%20Milagros.pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 1 (Sara T.)</a>
                         <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(1).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 2 (Caro B.)</a>
                         <a href="https://docs.google.com/gview?url=https://raw.githubusercontent.com/RickNE7/Aurea/main/20251104%20Celeste%20(2).pdf&embedded=true" target="_blank" rel="noopener noreferrer" class="text-sm text-center font-semibold hover:underline color-deep-pink">Ver Transcripción 3 (Mari C.)</a>
@@ -587,7 +623,7 @@
                 </div>
             </div>
 
-            <!-- 7.4 Resumen de Convergencia -->
+            <!-- 7.4 Resumen de Convergencia (Paralelismo) -->
             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-8 rounded-lg shadow-xl">
                 <h3 class="text-2xl font-bold mb-4 color-dark-maroon">&#128161; Resumen de Convergencia (Cuali + Cuanti)</h3>
                 <p class="text-lg text-gray-800 leading-relaxed">
