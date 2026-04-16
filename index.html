@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUREA | Exclusividad y Confianza</title>
+    <!-- Tipografía Roboto (Regular 400, Bold 700) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- PALETA ESTRICTA AUREA --- */
+            --color-beige: #F5F5DC;
+            --color-dorado-brillante: #FFD700;
+            --color-dorado-oscuro: #E6B800;
+            --color-blanco: #FFFFFF;
+            
+            --color-rosa-claro: #FADADD;
+            --color-rosa-medio: #E6A5B0;
+            --color-rosa-intenso: #D46A85;
+            --color-rosa-palido: #F2C6CF; 
+            
+            --color-fucsia: #C2185B;
+
+            /* Sombras Material Design cálidas */
+            --shadow-soft: 0 10px 30px rgba(212, 106, 133, 0.15);
+            --shadow-hover: 0 15px 40px rgba(194, 24, 91, 0.25);
+            --shadow-card: 0 5px 15px rgba(230, 165, 176, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-beige);
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-size: 14px; 
+            color: var(--color-fucsia);
+        }
+
+        h1, h2, h3, h4, strong { font-weight: 700; }
+        p, span, li { font-weight: 400; }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(245, 245, 220, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-rosa-claro);
+            box-shadow: var(--shadow-soft);
+        }
+
+        nav h1 {
+            font-size: 1.3rem;
+            color: var(--color-rosa-intenso);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--color-fucsia);
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--color-rosa-intenso); }
+
+        /* --- SECCIONES PRINCIPALES --- */
+        section {
+            background-color: var(--color-beige);
+            padding: 5rem 2rem;
+            max-width: 1050px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2.section-title {
+            font-size: 2rem;
+            color: var(--color-rosa-intenso);
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            border-bottom: 3px solid var(--color-dorado-brillante);
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- HERO --- */
+        #hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-rosa-palido) 100%);
+            border-radius: 0 0 60px 60px;
+            padding-top: 6rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        #hero h1 {
+            font-size: 4rem; 
+            color: var(--color-rosa-intenso);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(212, 106, 133, 0.2);
+        }
+
+        .team-list {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .team-list li {
+            color: var(--color-fucsia);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hook-box {
+            background-color: var(--color-rosa-intenso);
+            padding: 2.5rem 3rem;
+            border-radius: 20px;
+            max-width: 800px;
+            box-shadow: var(--shadow-hover);
+            border-left: 6px solid var(--color-dorado-brillante);
+        }
+
+        .hook-box p {
+            font-size: 1.25rem;
+            color: var(--color-beige);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* --- 1. EL PROBLEMA (Tarjetas Flip con Imágenes Completas) --- */
+        .grid-problemas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card-flip {
+            perspective: 1000px;
+            height: 400px; /* Tarjeta adaptada para las imágenes */
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .card-flip:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background-color: var(--color-blanco);
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            /* fill asegura que ocupa todo el espacio de la tarjeta, y previene que se recorte la imagen */
+            object-fit: fill; 
+            border-radius: 24px;
+            display: block;
+        }
+
+        .card-back {
+            background-color: var(--color-rosa-intenso);
+            color: var(--color-blanco);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem;
+            text-align: center;
+            border: 2px solid var(--color-rosa-medio);
+        }
+
+        .card-back i { font-size: 2.5rem; color: var(--color-dorado-brillante); margin-bottom: 1rem; }
+        .card-back h3 { font-size: 1.4rem; color: var(--color-dorado-brillante); margin-bottom: 1rem; text-transform: uppercase; }
+        .card-back p { color: var(--color-beige); font-size: 1rem; line-height: 1.6; }
+
+        /* --- 2. CLIENTES (Galería Interactiva Impactante) --- */
+        .target-gallery {
+            display: flex;
+            height: 450px;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .target-item {
+            flex: 1;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: flex 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            box-shadow: var(--shadow-card);
+            background-size: cover;
+            background-position: top center;
+        }
+
+        .target-item:hover { flex: 2; }
+
+        .bg-carla { background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/CarlaRossi.png'); }
+        .bg-sofia { background-image: url('https://raw.githubusercontent.com/RickNE7/Aurea/main/SofiaTorres.png'); }
+
+        .target-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(194, 24, 91, 0.95) 0%, rgba(212, 106, 133, 0.3) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            text-align: left;
+            transition: background 0.4s;
+        }
+
+        .target-item:hover .target-overlay {
+            background: linear-gradient(to top, rgba(194, 24, 91, 0.98) 0%, rgba(212, 106, 133, 0.6) 100%);
+        }
+
+        .target-overlay h3 {
+            color: var(--color-dorado-brillante);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .target-text {
+            color: var(--color-blanco);
+            font-size: 0.95rem;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .target-item:hover .target-text {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+
+        /* --- 3. SOLUCIÓN & BENCHMARKING --- */
+        .solucion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .sol-card {
+            background-color: var(--color-rosa-intenso);
+            padding: 2.5rem 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+            color: var(--color-blanco);
+            transition: transform 0.3s;
+        }
+
+        .sol-card:hover { transform: translateY(-10px); }
+
+        .sol-card i {
+            font-size: 2rem;
+            color: var(--color-rosa-intenso);
+            background: var(--color-dorado-brillante);
+            width: 60px; height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+        }
+
+        .sol-card h4 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--color-dorado-brillante); }
+        .sol-card p { font-size: 0.9rem; color: var(--color-beige); }
+
+        /* Gráfico de Benchmarking Profesional */
+        .chart-wrapper {
+            background: var(--color-rosa-palido);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .chart-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--color-fucsia);
+            font-size: 0.95rem;
+        }
+
+        .chart-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: var(--color-rosa-claro);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--color-dorado-oscuro);
+        }
+
+        .chart-fill-aurea { background: var(--color-rosa-intenso); }
+
+        .chart-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .info-vacio, .info-beneficio {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            background: var(--color-blanco);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .info-beneficio {
+            background: var(--color-rosa-intenso);
+            color: var(--color-beige);
+        }
+
+        .info-vacio strong { color: var(--color-fucsia); }
+        .info-beneficio strong { color: var(--color-dorado-brillante); }
+
+        /* --- CAJAS DE CONCLUSIONES --- */
+        .conclusiones-box {
+            background-color: var(--color-blanco);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: left;
+            border-left: 5px solid var(--color-dorado-brillante);
+            box-shadow: var(--shadow-card);
+        }
+
+        .conclusiones-box h4 {
+            color: var(--color-rosa-intenso);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .conclusiones-box ul { list-style: none; }
+        .conclusiones-box li {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: var(--color-fucsia);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .conclusiones-box li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--color-dorado-oscuro);
+        }
+
+        @media (max-width: 850px) {
+            .grid-problemas, .solucion-grid { grid-template-columns: 1fr; }
+            .target-gallery { flex-direction: column; height: 700px; }
+            .chart-info { flex-direction: column; gap: 0.5rem; }
+            #hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <h1>AUREA</h1>
+        <ul>
+            <li><a href="#problema">1. Problema</a></li>
+            <li><a href="#clientes">2. Clientes</a></li>
+            <li><a href="#solucion">3. Solución</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <h1>AUREA</h1>
+        
+        <ul class="team-list">
+            <li>Abby Bravo</li>
+            <li>Víctor Condori</li>
+            <li>Fátima Huanca</li>
+            <li>Marilin Medina</li>
+            <li>Eric Mozombite</li>
+        </ul>
+        
+        <div class="hook-box">
+            <p>"En el sector belleza, el talento abunda pero la tranquilidad escasea. Carla sacrifica su descanso administrando el caos; Sofía retiene su dinero por miedo a ser engañada. AUREA es el ecosistema de confianza que empodera a ambas."</p>
+        </div>
+    </section>
+
+    <!-- 1. EL PROBLEMA -->
+    <section id="problema">
+        <h2 class="section-title">1. El Problema / Oportunidad</h2>
+        
+        <div class="grid-problemas">
+            <!-- Tarjeta 1 -->
+            <div class="card-flip">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/MiedoConflicto.png" alt="Miedo al Conflicto">
+                    </div>
+                    <!-- Dorso: Texto interactivo al girar -->
+                    <div class="card-back">
+                        <i class="fas fa-comment-slash"></i>
+                        <h3>Miedo al Conflicto</h3>
+                        <p>Pierde 20% de ingresos por cancelaciones de último minuto. Su terror a cobrar adelantos la deja vulnerable financieramente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="card-flip">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/GestionNocturna.png" alt="Gestión Nocturna">
+                    </div>
+                    <div class="card-back">
+                        <i class="fas fa-moon"></i>
+                        <h3>Gestión Nocturna</h3>
+                        <p>Responde mensajes de madrugada por pánico a perder ventas. Su negocio interfiere destructivamente con su salud mental.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="card-flip">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://raw.githubusercontent.com/RickNE7/Aurea/main/TraumaDesconfianza.png" alt="Trauma por Desconfianza">
+                    </div>
+                    <div class="card-back">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Pánico y Desconfianza</h3>
+                        <p>La consumidora no confía en los filtros de redes sociales. Exige pruebas reales y garantías físicas antes de abrir su billetera.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conclusiones-box">
+            <h4>Conclusiones del Análisis de Problema</h4>
+            <ul>
+                <li><strong>El dolor central es psicológico:</strong> Descubrimos que el problema no es la lentitud logística, sino la fricción emocional y el miedo a la pérdida de ambas partes.</li>
+                <li><strong>La informalidad castiga severamente:</strong> La falta de un sistema profesional condena a la especialista a la pérdida monetaria y a la clienta al riesgo físico.</li>
+                <li><strong>La urgencia de un mediador:</strong> Se requiere con urgencia un "Tercero Imparcial" que imponga reglas de cobro y calidad sin deteriorar la relación humana.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 2. EL SEGMENTO DE CLIENTES -->
+    <section id="clientes">
+        <h2 class="section-title">2. Segmento de Clientes</h2>
+
+        <div class="target-gallery">
+            <div class="target-item bg-carla">
+                <div class="target-overlay">
+                    <h3>Carla (28)</h3>
+                    <div class="target-text">
+                        <strong>La Especialista Todista (Oferta)</strong><br><br>
+                        Mezcla sus finanzas en un "bolsillo ciego" y trabaja sin límites de horario. Su deseo más profundo es <strong>profesionalizarse</strong> para recuperar su autonomía y descanso.
+                    </div>
+                </div>
+            </div>
+
+            <div class="target-item bg-sofia">
+                <div class="target-overlay">
+                    <h3>Sofía (23)</h3>
+                    <div class="target-text">
+                        <strong>La Joven Profesional (Demanda)</strong><br><br>
+                        Para ella, su estética es capital laboral. Su urgencia vital es la <strong>certeza absoluta</strong>; exige estándares rigurosos y cero riesgos de mala praxis.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conclusiones-box">
+            <h4>Conclusiones de la Priorización (Early Adopters)</h4>
+            <ul>
+                <li><strong>Conexión de Urgencias:</strong> Elegimos este nicho porque ambas enfrentan puntos críticos: Carla roza el <i>burnout</i> y Sofía sufre de pánico al riesgo estético.</li>
+                <li><strong>Transición a Empresaria:</strong> La especialista empírica debe abandonar la identidad de autoempleada para gestionar su negocio con identidad financiera.</li>
+                <li><strong>La Imagen como Retorno de Inversión (ROI):</strong> La Gen Z no percibe este servicio como vanidad, sino como una inversión profesional que exige garantías transaccionales.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 3. LA SOLUCIÓN & BENCHMARKING -->
+    <section id="solucion">
+        <h2 class="section-title">3. La Solución</h2>
+        
+        <div class="solucion-grid">
+            <div class="sol-card">
+                <i class="fas fa-lock"></i>
+                <h4>Escrow Imparcial</h4>
+                <p>Retenemos los pagos automáticamente. Somos el escudo financiero que elimina la fricción de cobrar.</p>
+            </div>
+            <div class="sol-card">
+                <i class="fas fa-robot"></i>
+                <h4>Asistente Bot 24/7</h4>
+                <p>Agendamiento ininterrumpido que devuelve el sueño a la especialista mientras asegura sus ingresos.</p>
+            </div>
+            <div class="sol-card">
+                <i class="fas fa-certificate"></i>
+                <h4>Filtro Institucional</h4>
+                <p>Certificación de talento con aliados educativos, ofreciendo garantía absoluta contra el fraude y mala praxis.</p>
+            </div>
+        </div>
+
+        <h3 style="color: var(--color-rosa-intenso); margin-bottom: 2rem; font-size: 1.5rem; text-transform: uppercase;">Diferencial Competitivo</h3>
+        
+        <!-- Gráfico de Barras Profesional -->
+        <div class="chart-wrapper">
+            
+            <div class="chart-row">
+                <div class="chart-header"><span>Fresha / Bewe</span><span>Enfoque B2B</span></div>
+                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: 30%;"></div></div>
+                <div class="chart-info">
+                    <div class="info-vacio"><strong>Vacío:</strong> Software contable y corporativo; interfaz fría e intimidante para independientes.</div>
+                    <div class="info-beneficio"><strong>Beneficio AUREA:</strong> <strong>Simplicidad B2C.</strong> Diseño empático centrado en el empoderamiento personal.</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-header"><span>Bookea</span><span>Visibilidad</span></div>
+                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: 45%;"></div></div>
+                <div class="chart-info">
+                    <div class="info-vacio"><strong>Vacío:</strong> Funciona como directorio. No blinda el dinero de la profesional.</div>
+                    <div class="info-beneficio"><strong>Beneficio AUREA:</strong> <strong>Seguridad Escrow.</strong> Únicos en garantizar retenciones por inasistencias.</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-header"><span>Belity</span><span>Logística</span></div>
+                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: 60%;"></div></div>
+                <div class="chart-info">
+                    <div class="info-vacio"><strong>Vacío:</strong> Terceriza a la especialista (modelo Uber), anulando su identidad comercial.</div>
+                    <div class="info-beneficio"><strong>Beneficio AUREA:</strong> <strong>Independencia.</strong> Respetamos y exponenciamos su marca y clientela propia.</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-header"><span style="color: var(--color-rosa-intenso);">AUREA</span><span>Mediación + Protección 360°</span></div>
+                <div class="chart-bar-bg"><div class="chart-bar-fill chart-fill-aurea" style="width: 100%;"></div></div>
+            </div>
+
+        </div>
+
+        <div class="conclusiones-box">
+            <h4>Conclusiones del Benchmarking</h4>
+            <ul>
+                <li><strong>Oportunidad en el Vacío B2C:</strong> La competencia se satura creando software para administradores de grandes salones, ignorando por completo a la trabajadora independiente.</li>
+                <li><strong>Protección sobre Visibilidad:</strong> Mostrar quién está cerca (directorios) ya no es suficiente; la verdadera ventaja injusta es asegurar el dinero de la oferta y la salud de la demanda.</li>
+                <li><strong>Un Modelo Ético y Rentable:</strong> AUREA no compite por volver empleadas a las usuarias; monetizamos garantizando su éxito comercial mediante comisiones seguras y suscripciones de gestión.</li>
+            </ul>
+        </div>
+    </section>
+
+</body>
+</html>
